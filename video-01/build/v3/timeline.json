@@ -1,7 +1,7 @@
 {
  "version": "v3",
- "voice_variant": "el_liam_cta",
- "total": 44.148,
+ "voice_variant": "el_liam_cta2",
+ "total": 43.799,
  "fps": 30,
  "cues": {
   "tapi": 1.739,
@@ -24,7 +24,7 @@
   "kw_val": 35.764,
   "ini": 37.666,
   "sumber": 41.506,
-  "follow": 42.296
+  "follow": 41.936
  },
  "beats": [
   {
@@ -119,10 +119,10 @@
    "id": "B9",
    "framing": "close-card",
    "start": 41.506,
-   "end": 44.148,
+   "end": 43.799,
    "hero": {
     "from": 41.506,
-    "to": 44.148,
+    "to": 43.799,
     "el": "B9-cta"
    }
   }
@@ -1111,7 +1111,7 @@
    }
   },
   {
-   "t": 44.148,
+   "t": 43.799,
    "sel": "#B9",
    "kind": "set",
    "vars": {
@@ -3170,7 +3170,7 @@
    }
   },
   {
-   "t": 44.048,
+   "t": 43.699,
    "sel": "#cap-28",
    "kind": "set",
    "vars": {
@@ -3186,7 +3186,7 @@
    }
   },
   {
-   "t": 41.796,
+   "t": 41.773,
    "sel": "#cw-98",
    "kind": "set",
    "vars": {
@@ -3194,7 +3194,7 @@
    }
   },
   {
-   "t": 42.296,
+   "t": 41.936,
    "sel": "#cw-99",
    "kind": "set",
    "vars": {
@@ -3202,7 +3202,7 @@
    }
   },
   {
-   "t": 42.667,
+   "t": 42.261,
    "sel": "#cw-99",
    "kind": "set",
    "vars": {
@@ -3210,7 +3210,7 @@
    }
   },
   {
-   "t": 42.713,
+   "t": 42.33,
    "sel": "#cw-100",
    "kind": "set",
    "vars": {
@@ -3218,7 +3218,7 @@
    }
   },
   {
-   "t": 43.898,
+   "t": 43.549,
    "sel": "#cw-100",
    "kind": "set",
    "vars": {
@@ -3308,8 +3308,8 @@
   {
    "id": "s6_close",
    "start": 37.666,
-   "vo": "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh. Yuk, follow Dzaky es er de.",
-   "on_screen": "caveat card -> sources (30 px, 2 lines) + CTA pill Follow @dzakysrd; caption shows @dzakysrd while 'Dzaky es er de' is spoken",
+   "vo": "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh. Yuk, follow et Dzaky es er de.",
+   "on_screen": "caveat card -> sources (30 px, 2 lines) + CTA pill Follow @dzakysrd; caption shows @dzakysrd while 'et Dzaky es er de' is spoken",
    "cue_words": [
     "Ini",
     "Yuk",
@@ -3317,14 +3317,14 @@
    ]
   }
  ],
- "words": 104,
- "vo_seconds": 44.136,
- "last_word_end": 43.898,
+ "words": 105,
+ "vo_seconds": 43.776,
+ "last_word_end": 43.549,
  "gates": {
   "hook_span": 3.399,
   "jabar_span": 12.274,
-  "close_span": 6.482,
-  "total": 44.148
+  "close_span": 6.133,
+  "total": 43.799
  },
  "safe": {
   "top": 220,

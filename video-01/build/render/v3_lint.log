@@ -1,4 +1,4 @@
-build_v3: index_v3.html written (voice el_liam_cta), total 44.148s, hook 3.40s, Jawa Barat section 12.27s, close 6.48s, 9 beats, 29 caption chunks, 353 ops
+build_v3: index_v3.html written (voice el_liam_cta2), total 43.799s, hook 3.40s, Jawa Barat section 12.27s, close 6.13s, 9 beats, 29 caption chunks, 353 ops
   B1  claim            0.000 ->   3.559
   B2  locate-java      3.559 ->   6.705
   B3  bars             6.705 ->  12.179
@@ -7,16 +7,16 @@ build_v3: index_v3.html written (voice el_liam_cta), total 44.148s, hook 3.40s, 
   B6  zoom-province   25.392 ->  32.458
   B7  tiles-map       32.458 ->  37.666
   B8  caveat-card     37.666 ->  41.506
-  B9  close-card      41.506 ->  44.148
-ok  script: 104 words, 104 timed words (voice el_liam_cta), no digits in vo_text
+  B9  close-card      41.506 ->  43.799
+ok  script: 105 words, 105 timed words (voice el_liam_cta2), no digits in vo_text
 ok  numbers: 10 registered on-screen numbers, each spoken at its cue and derived from data (24@13.561, 38@14.745, 2026@3.93, 5,73@6.705, 5,23@10.498, 3,93@20.821, 2,71@23.549, 2,32@28.097, 3,71@30.591, 5,89@35.764)
-ok  timing: total 44.148s (last word 43.898s + tail 0.25s, cap 45); hook VO 3.40s (cap 3.5); Jawa Barat + UMK 12.27s (cap 12.5); close 6.48s (cap 7)
+ok  timing: total 43.799s (last word 43.549s + tail 0.25s, cap 45); hook VO 3.40s (cap 3.5); Jawa Barat + UMK 12.27s (cap 12.5); close 6.13s (cap 7)
 ok  dead air: largest gap 0.000 s (limit 1.2)
 ok  framing: claim > locate-java > bars > full-map > locator-bars > zoom-province > tiles-map > caveat-card > close-card
 ok  static: brand present, no DRAFT, no Sakernas, one source line (final card), no per-frame source or map credit, no literal Rp0
-ok  probe: 172 sample times, 380 text-block samples, 139 visible digit runs checked (every digit registered and spoken before it appears)
+ok  probe: 171 sample times, 377 text-block samples, 139 visible digit runs checked (every digit registered and spoken before it appears)
 ok  text blocks: max 3 visible per frame (at t=4); limit 3 (brand tag excluded)
 ok  map: DKI Jakarta, Aceh, Jawa Barat (and Karawang section) lit at their cues; national sweep complete (34 paths); Papua hatch applied; pins on their fills (Jakarta, Aceh, Karawang)
-ok  hero centre at each beat midpoint (y, want 780..940): 1.78:833 5.132:823 9.442:870 15.388:825 21.995:871 28.925:863 35.062:843 39.586:843 42.827:849
+ok  hero centre at each beat midpoint (y, want 780..940): 1.78:833 5.132:823 9.442:870 15.388:825 21.995:871 28.925:863 35.062:843 39.586:843 42.653:849
 ok  sizes: Jakarta bar track 140px, Aceh bar track 76px, Aceh locator 600px, sources 30px
 lint v3: all checks passed

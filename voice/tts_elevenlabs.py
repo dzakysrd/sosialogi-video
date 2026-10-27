@@ -37,6 +37,8 @@ is sent, with the text before it as previous_text, so the new speech follows on 
 The base audio is kept up to the middle of the silence before TEXT, the new audio is
 level-matched to the base (gain clamped to +/-3 dB) and joined there, so the words
 before TEXT keep their times. The joined alignment is kept in raw/combined_alignment.json.
+DIR may itself be a splice take: load_take rebuilds its raw audio and alignment from its own
+splice chain, so no copy of them is stored.
 The outputs are the same as for any take.
 """
 
@@ -377,36 +379,29 @@ def normalize_to_mp3(wav: Path, out_mp3: Path) -> dict:
 
 def splice_plan(args, text: str) -> dict:
     """Check --splice-base and --splice-at against the input and the base take. Nothing is sent
-    to the API here. Returns the parts needed for the request and for the join."""
+    to the API here. Returns the parts needed for the request and for the join. The base is
+    read with load_take, so a base that is itself a splice take is rebuilt in full."""
     n = text.count(args.splice_at)
     if n != 1:
         sys.exit(f"--splice-at text must occur exactly once in the input; it occurs {n} times")
     k = text.index(args.splice_at)
     if not text[:k].strip():
         sys.exit("--splice-at must come after some text")
-    base_raw = args.splice_base / "raw"
     try:
-        base_req = json.loads((base_raw / "request.json").read_text(encoding="utf-8"))
-        base_doc = json.loads((base_raw / "alignment.json").read_text(encoding="utf-8"))
+        base_req = json.loads((args.splice_base / "raw" / "request.json").read_text(encoding="utf-8"))
     except (OSError, ValueError) as e:
-        sys.exit(f"--splice-base {args.splice_base}: cannot read raw/request.json and "
-                 f"raw/alignment.json ({e})")
-    if not (base_raw / "audio.mp3").is_file():
-        sys.exit(f"--splice-base {args.splice_base}: raw/audio.mp3 is missing")
-    if not isinstance(base_doc, dict) or not isinstance(base_doc.get("alignment"), dict):
-        sys.exit(f"--splice-base {args.splice_base}: raw/alignment.json has no alignment")
-    base_text = base_req.get("text")
-    if not isinstance(base_text, str) or not base_text.startswith(text[:k]) \
+        sys.exit(f"--splice-base {args.splice_base}: cannot read raw/request.json ({e})")
+    base_text, base_pcm, base_alignment = load_take(args.splice_base)
+    if not base_text.startswith(text[:k]) \
             or base_text[k:k + len(args.splice_at)] != args.splice_at:
         sys.exit(f"--splice-base {args.splice_base}: its text does not start with the input before "
                  f"--splice-at, or does not continue with {args.splice_at!r} at index {k}")
     if base_req.get("voice_id") != args.voice_id or base_req.get("model_id") != args.model:
         sys.exit(f"--splice-base {args.splice_base}: made with voice {base_req.get('voice_id')!r} "
                  f"and model {base_req.get('model_id')!r}, not {args.voice_id!r} and {args.model!r}")
-    check_alignment(base_doc["alignment"], base_text)
     return {"k": k, "prefix": text[:k], "suffix": text[k:],
-            "base": repo_relative(args.splice_base), "base_raw": base_raw,
-            "base_alignment": base_doc["alignment"]}
+            "base": repo_relative(args.splice_base), "base_pcm": base_pcm,
+            "base_alignment": base_alignment}
 
 
 def _samples(pcm: bytes) -> array:
@@ -487,6 +482,52 @@ def splice_join(base_pcm: bytes, base_alignment: dict, k: int, text: str,
     return pcm, alignment, info
 
 
+def load_take(take: Path):
+    """(full_text, pcm, alignment) of a take's raw (pre-edit) audio, read from take/raw/.
+
+    A take made without splice mode holds all of it: text, audio and alignment. A take made
+    with splice mode (raw/request.json has "splice_base") is rebuilt: its base is loaded the
+    same way, then joined as splice mode joins it, with the same cut point. The cut and the
+    gain must match the splice block in raw/combined_alignment.json (within 1e-3). Nothing is
+    sent to the API and nothing is written.
+    """
+    raw = take / "raw"
+    where = repo_relative(take)
+    try:
+        req = json.loads((raw / "request.json").read_text(encoding="utf-8"))
+        doc = json.loads((raw / "alignment.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        sys.exit(f"{where}: cannot read raw/request.json and raw/alignment.json ({e})")
+    if not isinstance(req.get("text"), str) or not isinstance(doc, dict) \
+            or not isinstance(doc.get("alignment"), dict):
+        sys.exit(f"{where}: raw/request.json has no text, or raw/alignment.json has no alignment")
+    own_pcm = tts.decode_pcm(raw / "audio.mp3", sr=SR)
+    if "splice_base" not in req:
+        check_alignment(doc["alignment"], req["text"])
+        return req["text"], own_pcm, doc["alignment"]
+
+    prefix, splice_at = req.get("previous_text"), req.get("splice_at")
+    if not isinstance(prefix, str) or not isinstance(splice_at, str) \
+            or not req["text"].startswith(splice_at):
+        sys.exit(f"{where}: raw/request.json needs a previous_text, and its text must start "
+                 "with splice_at")
+    base_text, base_pcm, base_alignment = load_take(REPO_ROOT / req["splice_base"])
+    full_text = prefix + req["text"]
+    k = len(prefix)
+    pcm, alignment, info = splice_join(base_pcm, base_alignment, k, full_text,
+                                       own_pcm, doc["alignment"])
+    check_alignment(alignment, full_text)
+    try:
+        stored = json.loads((raw / "combined_alignment.json").read_text(encoding="utf-8"))["splice"]
+    except (OSError, ValueError, KeyError, TypeError) as e:
+        sys.exit(f"{where}: cannot read the splice block of raw/combined_alignment.json ({e})")
+    for key in ("t_cut", "gain_db"):
+        s = stored.get(key) if isinstance(stored, dict) else None
+        if not isinstance(s, (int, float)) or abs(info[key] - s) > 1e-3:
+            sys.exit(f"{where}: rebuilt {key} {info[key]} does not match the stored {s!r}")
+    return full_text, pcm, alignment
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Indonesian TTS with word timestamps (ElevenLabs).")
     ap.add_argument("input", type=Path, help="narration .txt or .json")
@@ -555,9 +596,8 @@ def main() -> None:
         pcm = tts.decode_pcm(raw_mp3, sr=SR)
         alignment, splice = doc["alignment"], None
         if plan:
-            base_pcm = tts.decode_pcm(plan["base_raw"] / "audio.mp3", sr=SR)
-            pcm, alignment, info = splice_join(base_pcm, plan["base_alignment"], plan["k"], text,
-                                               pcm, alignment)
+            pcm, alignment, info = splice_join(plan["base_pcm"], plan["base_alignment"], plan["k"],
+                                               text, pcm, alignment)
             check_alignment(alignment, text)
             splice = {"base": plan["base"], "at": args.splice_at, **info}
             combined = {"alignment": alignment, "splice": splice}

@@ -76,3 +76,5 @@ Finding: the subscription counter lags. On the smoke call it still read 0 two se
 Revision 2 (PRD-03a): loudness now uses gain + 192 kHz limiter at -2 dBFS before MP3 encoding, target -14 +/- 0.3 LUFS, true peak <= -1.5 dBTP; tts.py is unchanged.
 
 Revision 3 (PRD-04a): splice mode. --splice-base DIR --splice-at TEXT re-voices only the input from TEXT on (TEXT must occur exactly once) and sends the text before it as previous_text, so the new speech follows on from it. The new audio is level-matched to the base audio in DIR (gain clamped to +/-3 dB) and joined at the middle of the silence before TEXT, so the words before TEXT keep their base times; the joined alignment is kept in raw/combined_alignment.json. Without these options the script behaves as before.
+
+Revision 4 (PRD-04c): a spliced take can be a splice base; its raw audio and alignment are rebuilt from its splice chain, with no stored copy.

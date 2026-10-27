@@ -2,7 +2,7 @@
 
 Canvas 1080x1920, 30 fps, Instagram Reels (TikTok-compatible). `tools/lint_v3.mjs` reads the framing column (column 3)
 and checks it against the timeline and the probe. Times are word cues from the voice variant named in
-`video.v3.config.json` (`voice.variant`, now el_liam_cta = ElevenLabs premade voice Liam, eleven_multilingual_v2, close re-voiced with the spoken username), so they move when the variant changes.
+`video.v3.config.json` (`voice.variant`, now el_liam_cta2 = ElevenLabs premade voice Liam, eleven_multilingual_v2, close re-voiced with the spoken username (@ read as et)), so they move when the variant changes.
 
 Safe box: x 65..940, y 220..1500. Hero band: y 420..1320; hero centre at y 780..940 (middle 860).
 Captions: one pill, bottom edge y 1440, at most 5 words and 2 lines. Brand tag top-right (not a text block).

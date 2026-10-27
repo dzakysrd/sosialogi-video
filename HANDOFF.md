@@ -12,7 +12,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 - `template/`: reusable 1080x1920 HyperFrames template. `scenes.json` drives timings and text. All assets are vendored, with no CDN. `README.md` documents it. `demo.mp4` is its demo render.
 - `voice/`: `tts.py`, edge-tts Indonesian voiceover with per-word timestamps (`words.json`, `sentences.json`). Loudness is -14 LUFS with true peak <= -1 dBTP. Options include `--max-pause` and `--tail-pad`. `samples/` holds voice previews (`ardi`, `gadis`, and `v3/v1..v3`). `tts_elevenlabs.py` is the ElevenLabs equivalent with the same outputs; it caches API responses in `raw/` and logs credit use in `voice/elevenlabs_usage.csv`. ElevenLabs previews are in `samples/elevenlabs/preview/` and the full v3 take in `samples/v3/el_liam/`.
-- `docs/prd/`: one PRD per delegated task (01 ElevenLabs TTS script, 02 voice previews, 03a loudness fix and Liam take, 03b v3 render), each with its measured outcome.
+- `docs/prd/`: one PRD per delegated task (01 ElevenLabs TTS script, 02 voice previews, 03a loudness fix and Liam take, 03b v3 render, 04a-04c spoken username in the close), each with its measured outcome.
 - `research/`: `bps_upah_feb2026.csv` (the BPS download, unedited), `data.csv` (merged 38-province table), `tools/merge.py` (re-runnable merge), `script.json` / `script_v2.json` / `script_v3.json` (narration per version), `findings.md`, `sources.md`, `umk_examples.csv`.
 - `video-01/`: video #1 project.
   - `tools/`: `build.mjs` (v1), `build_v2.mjs`, `build_v3.mjs`. `lint.mjs`, `lint_v2.mjs`, `lint_v3.mjs`. `geometry.mjs`, `make-map.mjs`. `render.sh`, `render_v2.sh`, `render_v3.sh`.
@@ -29,14 +29,14 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 - **v1**: `out/draft.mp4`, 45.5 s.
 - **v2**: `out/v2.mp4`, 46.1 s. The render completed (`build/render/v2_render2.log`). The "complete and reviewed" status comes from the previous session. No review record is in the repo.
-- **v3**: `out/v3.mp4`, 44.63 s (1339 frames, 1080x1920, 30 fps), rendered 2026-10-27 with the ElevenLabs Liam take (`voice.variant` `el_liam`). `lint_v3.mjs` passed (`build/render/v3_lint.log`). Audio -14.0 LUFS integrated, true peak -4.1 dBTP (ebur128). Contact sheet `out/v3_sheet.jpg` (29 frames). Gates: hook 3.40 s (3.5), Jawa Barat 12.27 s (12.5, raised from 11.0 by the user on 2026-10-27), close 6.94 s (7.0), total 44.61 s (45).
+- **v3**: `out/v3.mp4`, 43.80 s (1314 frames, 1080x1920, 30 fps), rendered 2026-10-27 with voice variant `el_liam_cta2` (ElevenLabs Liam; the close was re-voiced so the CTA says "Yuk, follow et Dzaky es er de." and the caption shows `@dzakysrd`). `lint_v3.mjs` passed (`build/render/v3_lint.log`). Audio -13.9 LUFS integrated, true peak -4.4 dBTP (ebur128). Contact sheet `out/v3_sheet.jpg` (31 frames). Gates: hook 3.40 s (3.5), Jawa Barat 12.27 s (12.5, raised from 11.0 by the user on 2026-10-27), close 6.13 s (7.0), total 43.80 s (45).
   - To redo it, run `bash video-01/tools/render_v3.sh` (build, lint, render, two-pass loudnorm). It needs node, npx, ffmpeg, python3, network access for `npx hyperframes@0.8.206`, and the HyperFrames browser (`npx hyperframes@0.8.206 browser ensure`).
 
 ## v3 content (verified in files)
 
 - Hook (B1): "UMP TERTINGGI" on frame 1, then at "Tapi" the claim "TAPI GAJI RATA-RATANYA DI BAWAH UMP" (`beats_v3.md`). Caption: "UMP Jakarta tertinggi se-Indonesia, tapi rata-rata gaji bersih buruhnya di bawah UMP."
 - Less on-screen text: the sources line appears once, on the final card (B9), and in `out/v3_caption.txt`.
-- Voice: ElevenLabs premade voice Liam (`TX3LPaxmHKxFdv7VOQHJ`), model `eleven_multilingual_v2`, default voice settings, `--max-pause 0.16 --lead-keep 0.05 --tail-pad 0.2`. The earlier edge-tts take (Ardi, variant `v2`) was too stiff for the user. A free account cannot use Voice Library voices through the API (HTTP 402 `paid_plan_required`), so only premade voices work on the free plan. The caption credits "Suara: ElevenLabs".
+- Voice: ElevenLabs premade voice Liam (`TX3LPaxmHKxFdv7VOQHJ`), model `eleven_multilingual_v2`, default voice settings, `--max-pause 0.16 --lead-keep 0.05 --tail-pad 0.2`. The earlier edge-tts take (Ardi, variant `v2`) was too stiff for the user. A free account cannot use Voice Library voices through the API (HTTP 402 `paid_plan_required`), so only premade voices work on the free plan. The caption credits "Suara: ElevenLabs". The close was re-voiced with splice mode (PRD-04a, 04c): "Sumbernya ada di layar." was dropped, and the CTA became "Yuk, follow et Dzaky es er de." (the user's pronunciation of @dzakysrd). Takes: `el_liam` -> `el_liam_cta` -> `el_liam_cta2`.
 
 ## Rules and decisions (enforced in code or docs)
 
@@ -61,8 +61,8 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 ## Next steps (ordered)
 
-1. User review of `out/v3.mp4`. The voice is an English-accent premade voice speaking Indonesian; it was measured (timing, loudness) but not judged by ear by the reviewer.
-2. ElevenLabs credits: 1,258 of 10,000 used this period (resets 2026-11-26), per `voice/elevenlabs_usage.csv` and the subscription endpoint.
+1. User review of `out/v3.mp4`. The voice is an English-accent premade voice speaking Indonesian; it was measured (timing, loudness) but not judged by ear by the reviewer. The pause after "Yuk," is 0.16 s in `el_liam_cta2` (0.50 s in `el_liam_cta`, which the user had approved); waiting for the user to confirm.
+2. ElevenLabs credits: 1,384 of 10,000 used this period (resets 2026-11-26), per `voice/elevenlabs_usage.csv` and the subscription endpoint.
 3. **[session note]** The free plan is reported as non-commercial with attribution required. Not checked here; check ElevenLabs' terms before any monetised use.
 4. Optional: the HyperFrames CLI lint reports 12 structural warnings for `index_v3.html` (file size, dense tracks, nested structure). Not errors; not reviewed.
 

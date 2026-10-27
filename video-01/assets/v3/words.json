@@ -492,31 +492,36 @@
   {
     "text": "Yuk",
     "start": 41.506,
-    "end": 41.796
+    "end": 41.773
   },
   {
     "text": "follow",
-    "start": 42.296,
-    "end": 42.667
+    "start": 41.936,
+    "end": 42.261
+  },
+  {
+    "text": "et",
+    "start": 42.33,
+    "end": 42.493
   },
   {
     "text": "Dzaky",
-    "start": 42.713,
-    "end": 43.12
+    "start": 42.563,
+    "end": 42.957
   },
   {
     "text": "es",
-    "start": 43.19,
-    "end": 43.352
+    "start": 43.004,
+    "end": 43.097
   },
   {
     "text": "er",
-    "start": 43.433,
-    "end": 43.584
+    "start": 43.155,
+    "end": 43.306
   },
   {
     "text": "de",
-    "start": 43.654,
-    "end": 43.898
+    "start": 43.375,
+    "end": 43.549
   }
 ]
