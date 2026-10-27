@@ -1,7 +1,7 @@
 {
  "version": "v3",
- "voice_variant": "el_liam",
- "total": 44.61,
+ "voice_variant": "el_liam_cta",
+ "total": 44.148,
  "fps": 30,
  "cues": {
   "tapi": 1.739,
@@ -23,8 +23,8 @@
   "karawang": 34.197,
   "kw_val": 35.764,
   "ini": 37.666,
-  "sumber": 42.017,
-  "follow": 43.988
+  "sumber": 41.506,
+  "follow": 42.296
  },
  "beats": [
   {
@@ -108,21 +108,21 @@
    "id": "B8",
    "framing": "caveat-card",
    "start": 37.666,
-   "end": 42.017,
+   "end": 41.506,
    "hero": {
     "from": 37.666,
-    "to": 42.017,
+    "to": 41.506,
     "el": "B8-card"
    }
   },
   {
    "id": "B9",
    "framing": "close-card",
-   "start": 42.017,
-   "end": 44.61,
+   "start": 41.506,
+   "end": 44.148,
    "hero": {
-    "from": 42.017,
-    "to": 44.61,
+    "from": 41.506,
+    "to": 44.148,
     "el": "B9-cta"
    }
   }
@@ -1095,7 +1095,7 @@
    }
   },
   {
-   "t": 42.017,
+   "t": 41.506,
    "sel": "#B8",
    "kind": "set",
    "vars": {
@@ -1103,7 +1103,7 @@
    }
   },
   {
-   "t": 42.017,
+   "t": 41.506,
    "sel": "#B9",
    "kind": "set",
    "vars": {
@@ -1111,7 +1111,7 @@
    }
   },
   {
-   "t": 44.61,
+   "t": 44.148,
    "sel": "#B9",
    "kind": "set",
    "vars": {
@@ -1119,7 +1119,7 @@
    }
   },
   {
-   "t": 42.017,
+   "t": 41.506,
    "sel": "#B9-cta",
    "kind": "fromTo",
    "from": {
@@ -1134,7 +1134,7 @@
    "ease": "back.out(2)"
   },
   {
-   "t": 42.017,
+   "t": 41.506,
    "sel": "#B9-src",
    "kind": "fromTo",
    "from": {
@@ -2978,7 +2978,7 @@
    }
   },
   {
-   "t": 39.836,
+   "t": 39.546,
    "sel": "#cap-26",
    "kind": "set",
    "vars": {
@@ -2994,7 +2994,7 @@
    }
   },
   {
-   "t": 37.875,
+   "t": 37.887,
    "sel": "#cw-88",
    "kind": "set",
    "vars": {
@@ -3010,7 +3010,7 @@
    }
   },
   {
-   "t": 38.432,
+   "t": 38.374,
    "sel": "#cw-89",
    "kind": "set",
    "vars": {
@@ -3018,7 +3018,7 @@
    }
   },
   {
-   "t": 38.513,
+   "t": 38.432,
    "sel": "#cw-90",
    "kind": "set",
    "vars": {
@@ -3026,7 +3026,7 @@
    }
   },
   {
-   "t": 38.815,
+   "t": 38.688,
    "sel": "#cw-90",
    "kind": "set",
    "vars": {
@@ -3034,7 +3034,7 @@
    }
   },
   {
-   "t": 38.885,
+   "t": 38.734,
    "sel": "#cw-91",
    "kind": "set",
    "vars": {
@@ -3042,7 +3042,7 @@
    }
   },
   {
-   "t": 39.21,
+   "t": 39.013,
    "sel": "#cw-91",
    "kind": "set",
    "vars": {
@@ -3050,7 +3050,7 @@
    }
   },
   {
-   "t": 39.245,
+   "t": 39.036,
    "sel": "#cw-92",
    "kind": "set",
    "vars": {
@@ -3058,7 +3058,7 @@
    }
   },
   {
-   "t": 39.686,
+   "t": 39.396,
    "sel": "#cw-92",
    "kind": "set",
    "vars": {
@@ -3066,7 +3066,7 @@
    }
   },
   {
-   "t": 39.857,
+   "t": 39.671,
    "sel": "#cap-27",
    "kind": "set",
    "vars": {
@@ -3074,7 +3074,7 @@
    }
   },
   {
-   "t": 41.957,
+   "t": 41.446,
    "sel": "#cap-27",
    "kind": "set",
    "vars": {
@@ -3082,7 +3082,7 @@
    }
   },
   {
-   "t": 39.907,
+   "t": 39.721,
    "sel": "#cw-93",
    "kind": "set",
    "vars": {
@@ -3090,11 +3090,19 @@
    }
   },
   {
-   "t": 40.185,
+   "t": 39.976,
    "sel": "#cw-93",
    "kind": "set",
    "vars": {
     "className": "-=on"
+   }
+  },
+  {
+   "t": 40.023,
+   "sel": "#cw-94",
+   "kind": "set",
+   "vars": {
+    "className": "+=on"
    }
   },
   {
@@ -3102,19 +3110,11 @@
    "sel": "#cw-94",
    "kind": "set",
    "vars": {
-    "className": "+=on"
-   }
-  },
-  {
-   "t": 40.51,
-   "sel": "#cw-94",
-   "kind": "set",
-   "vars": {
     "className": "-=on"
    }
   },
   {
-   "t": 40.568,
+   "t": 40.29,
    "sel": "#cw-95",
    "kind": "set",
    "vars": {
@@ -3122,7 +3122,7 @@
    }
   },
   {
-   "t": 41.102,
+   "t": 40.685,
    "sel": "#cw-95",
    "kind": "set",
    "vars": {
@@ -3130,7 +3130,7 @@
    }
   },
   {
-   "t": 41.16,
+   "t": 40.731,
    "sel": "#cw-96",
    "kind": "set",
    "vars": {
@@ -3138,7 +3138,7 @@
    }
   },
   {
-   "t": 41.404,
+   "t": 40.94,
    "sel": "#cw-96",
    "kind": "set",
    "vars": {
@@ -3146,7 +3146,7 @@
    }
   },
   {
-   "t": 41.427,
+   "t": 40.963,
    "sel": "#cw-97",
    "kind": "set",
    "vars": {
@@ -3154,7 +3154,7 @@
    }
   },
   {
-   "t": 41.857,
+   "t": 41.346,
    "sel": "#cw-97",
    "kind": "set",
    "vars": {
@@ -3162,7 +3162,7 @@
    }
   },
   {
-   "t": 41.967,
+   "t": 41.456,
    "sel": "#cap-28",
    "kind": "set",
    "vars": {
@@ -3170,7 +3170,7 @@
    }
   },
   {
-   "t": 43.499,
+   "t": 44.048,
    "sel": "#cap-28",
    "kind": "set",
    "vars": {
@@ -3178,7 +3178,7 @@
    }
   },
   {
-   "t": 42.017,
+   "t": 41.506,
    "sel": "#cw-98",
    "kind": "set",
    "vars": {
@@ -3186,7 +3186,7 @@
    }
   },
   {
-   "t": 42.563,
+   "t": 41.796,
    "sel": "#cw-98",
    "kind": "set",
    "vars": {
@@ -3194,7 +3194,7 @@
    }
   },
   {
-   "t": 42.644,
+   "t": 42.296,
    "sel": "#cw-99",
    "kind": "set",
    "vars": {
@@ -3202,7 +3202,7 @@
    }
   },
   {
-   "t": 42.83,
+   "t": 42.667,
    "sel": "#cw-99",
    "kind": "set",
    "vars": {
@@ -3210,7 +3210,7 @@
    }
   },
   {
-   "t": 42.876,
+   "t": 42.713,
    "sel": "#cw-100",
    "kind": "set",
    "vars": {
@@ -3218,72 +3218,8 @@
    }
   },
   {
-   "t": 42.946,
+   "t": 43.898,
    "sel": "#cw-100",
-   "kind": "set",
-   "vars": {
-    "className": "-=on"
-   }
-  },
-  {
-   "t": 43.004,
-   "sel": "#cw-101",
-   "kind": "set",
-   "vars": {
-    "className": "+=on"
-   }
-  },
-  {
-   "t": 43.399,
-   "sel": "#cw-101",
-   "kind": "set",
-   "vars": {
-    "className": "-=on"
-   }
-  },
-  {
-   "t": 43.509,
-   "sel": "#cap-29",
-   "kind": "set",
-   "vars": {
-    "autoAlpha": 1
-   }
-  },
-  {
-   "t": 44.51,
-   "sel": "#cap-29",
-   "kind": "set",
-   "vars": {
-    "autoAlpha": 0
-   }
-  },
-  {
-   "t": 43.559,
-   "sel": "#cw-102",
-   "kind": "set",
-   "vars": {
-    "className": "+=on"
-   }
-  },
-  {
-   "t": 43.803,
-   "sel": "#cw-102",
-   "kind": "set",
-   "vars": {
-    "className": "-=on"
-   }
-  },
-  {
-   "t": 43.988,
-   "sel": "#cw-103",
-   "kind": "set",
-   "vars": {
-    "className": "+=on"
-   }
-  },
-  {
-   "t": 44.36,
-   "sel": "#cw-103",
    "kind": "set",
    "vars": {
     "className": "-=on"
@@ -3372,23 +3308,23 @@
   {
    "id": "s6_close",
    "start": 37.666,
-   "vo": "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh. Sumbernya ada di layar. Yuk, follow.",
-   "on_screen": "caveat card -> sources (30 px, 2 lines) + CTA pill Follow @dzakysrd",
+   "vo": "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh. Yuk, follow Dzaky es er de.",
+   "on_screen": "caveat card -> sources (30 px, 2 lines) + CTA pill Follow @dzakysrd; caption shows @dzakysrd while 'Dzaky es er de' is spoken",
    "cue_words": [
     "Ini",
-    "Sumbernya",
+    "Yuk",
     "Follow"
    ]
   }
  ],
  "words": 104,
- "vo_seconds": 44.592,
- "last_word_end": 44.36,
+ "vo_seconds": 44.136,
+ "last_word_end": 43.898,
  "gates": {
   "hook_span": 3.399,
   "jabar_span": 12.274,
-  "close_span": 6.944,
-  "total": 44.61
+  "close_span": 6.482,
+  "total": 44.148
  },
  "safe": {
   "top": 220,

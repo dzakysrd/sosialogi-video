@@ -2,7 +2,7 @@
 
 Canvas 1080x1920, 30 fps, Instagram Reels (TikTok-compatible). `tools/lint_v3.mjs` reads the framing column (column 3)
 and checks it against the timeline and the probe. Times are word cues from the voice variant named in
-`video.v3.config.json` (`voice.variant`, now el_liam = ElevenLabs premade voice Liam, eleven_multilingual_v2), so they move when the variant changes.
+`video.v3.config.json` (`voice.variant`, now el_liam_cta = ElevenLabs premade voice Liam, eleven_multilingual_v2, close re-voiced with the spoken username), so they move when the variant changes.
 
 Safe box: x 65..940, y 220..1500. Hero band: y 420..1320; hero centre at y 780..940 (middle 860).
 Captions: one pill, bottom edge y 1440, at most 5 words and 2 lines. Brand tag top-right (not a text block).
@@ -17,8 +17,8 @@ Text rule: at most 3 text blocks per frame (captions count, the brand tag does n
 | B5 | aceh-locator | locator-bars | "ACEH" title, north-Sumatra locator (600 px frame, Aceh lit and pinned), full-width bars (track 76 px) | title y 430..550; map y 560..900; bars y 940..1312 | Yang (15.39) | Jawa Barat (21.81) | Aceh lit at "Aceh" (16.59); UMP value at "tiga koma sembilan tiga juta" (17.93); average value at "dua koma tujuh satu juta" (20.26) | Aceh has the lowest ratio and the largest gap. |
 | B6 | jawa-barat-zoom | zoom-province | Jawa Barat lit (60% of frame width); "JAWA BARAT" kicker, tiles "UMP terendah" and "Rata-rata gaji" | map y 470..970; tiles y 1000..1256 | Jawa Barat (21.81) | UMP cuma batas provinsi (27.94) | UMP tile value at "dua koma tiga dua juta" (24.05); average value at "tiga koma tujuh satu juta" (26.29) | Lowest UMP in Indonesia, average above it. |
 | B7 | karawang-umk | tiles-map | Jawa Barat with a labelled pin on Karawang; "UMP = batas provinsi" kicker, tiles "UMP Jabar" Rp2,32 jt vs "UMK Karawang" Rp5,89 jt | map y 470..910; kicker and tiles y 960..1216 | UMP cuma batas provinsi (27.94) | Ini (32.76) | pin at "Karawang" (29.70); UMK value at "lima koma delapan sembilan juta" (31.09) | UMP is a provincial floor; Karawang has its own UMK. The pin is approximate, not a district border. |
-| B8 | caveat | caveat-card | Caveat card: "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh." | card y 690..1000 | Ini (32.76) | Sumbernya (36.38) | none | Honest caveat (average net wage, not proof of a violation). |
-| B9 | final-card | close-card | CTA pill "Follow @dzakysrd" and one sources line (30 px, two lines) | pill y 720..840; sources y 900..980 | Sumbernya (36.38) | END (last word + 0.25 s) | sources fade in at "Sumbernya" (36.38) | Sources once, then follow. Close holds about 3 s. |
+| B8 | caveat | caveat-card | Caveat card: "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh." | card y 690..1000 | Ini (32.76) | Yuk | none | Honest caveat (average net wage, not proof of a violation). |
+| B9 | final-card | close-card | CTA pill "Follow @dzakysrd" and one sources line (30 px, two lines) | pill y 720..840; sources y 900..980 | Yuk | END (last word + 0.25 s) | sources fade in at "Yuk" | Sources once, then follow. Close holds about 2.6 s; the caption shows @dzakysrd while the username is spoken. |
 
 Framing check: claim > locate-java > bars > full-map > locator-bars > zoom-province > tiles-map > caveat-card > close-card.
 No two consecutive beats share a framing.

@@ -150,7 +150,7 @@ C("batas", "UMP cuma batas provinsi", T.jb_avg);
 C("karawang", "Karawang", T.batas);
 C("kw_val", spokenShort(fmtShort(umk.Karawang)), T.karawang);
 C("ini", "Ini", T.kw_val);
-C("sumber", "Sumbernya", T.ini);
+C("sumber", "Yuk", T.ini); // final card starts at the CTA ("Sumbernya ada di layar." was dropped)
 C("follow", "Follow", T.sumber);
 const lastWordEnd = words[words.length - 1].end;
 const TOTAL = r3(lastWordEnd + cfg.tail_s);
@@ -382,22 +382,41 @@ show(T.sumber, "#B9-src", 0.3);
 
 // ---------- captions (word-synced; chunks of at most 5 words and 34 characters; a new chunk at each sentence) ----------
 const sentStartIdx = new Set(sentences.map((s) => words.findIndex((w) => Math.abs(w.start - s.start) < 1e-6)).filter((i) => i >= 0));
+// caption_display runs (e.g. "Dzaky es er de") become one caption word, timed from the first word's start to the last word's end
+const norm = (t) => t.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
+const capRuns = new Map();
+scenes.forEach((s, si) => {
+  for (const cd of s.caption_display ?? []) {
+    const toks = cd.spoken.split(/\s+/).filter(Boolean).map(norm);
+    let hits = 0;
+    for (let i = wordStartIdx[si]; i + toks.length <= wordStartIdx[si] + wordCounts[si]; i++) {
+      if (toks.every((t, j) => norm(words[i + j].text) === t)) { capRuns.set(i, { n: toks.length, show: cd.show }); hits++; i += toks.length - 1; }
+    }
+    if (!hits) fail(`caption_display "${cd.spoken}" -> "${cd.show}" matches no words in ${s.id}`);
+  }
+});
+const capWords = [];
+for (let i = 0; i < words.length; ) {
+  const run = capRuns.get(i);
+  if (run) { capWords.push({ text: run.show, start: words[i].start, end: words[i + run.n - 1].end, i }); i += run.n; }
+  else { capWords.push({ ...words[i], i }); i++; }
+}
 const capGroups = [];
 {
   const NUMW = new Set(["nol", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas", "belas", "puluh", "ratus", "ribu", "seratus", "seribu", "koma", "juta"]);
   const isNum = (w) => NUMW.has(w.text.toLowerCase().replace(/[^\p{L}]/gu, ""));
   let cur = [];
   const chars = (g) => g.map((w) => w.text).join(" ").length;
-  words.forEach((w, i) => {
+  capWords.forEach((w) => {
     if (cur.length) {
       const prev = cur[cur.length - 1];
-      const sentenceBreak = sentStartIdx.has(i);
+      const sentenceBreak = sentStartIdx.has(w.i);
       const phraseBreak = /[,.;:!?]$/.test(prev.text) && cur.length >= 2;
       const tooBig = cur.length >= 5 || chars(cur) + 1 + w.text.length > 34;
       const numStart = isNum(w) && !isNum(prev);     // a number phrase starts its own caption
       if (sentenceBreak || phraseBreak || numStart || tooBig) { capGroups.push(cur); cur = []; }
     }
-    cur.push({ ...w, i });
+    cur.push(w);
   });
   if (cur.length) capGroups.push(cur);
 }

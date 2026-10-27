@@ -15,7 +15,7 @@
   "total_max_s": 45,
   "tail_s": 0.25,
   "loudness": { "I": -14, "TP_max": -1.0, "LRA": 11 },
-  "voice": { "dir": "../voice/samples/v3", "variant": "el_liam" },
+  "voice": { "dir": "../voice/samples/v3", "variant": "el_liam_cta" },
   "inputs": {
     "script": "../research/script_v3.json",
     "data": "../research/data.csv",
