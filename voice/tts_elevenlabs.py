@@ -8,6 +8,8 @@ Usage:
   python3 tts_elevenlabs.py narration.txt --voice-id VOICE_ID --out-dir out/
   python3 tts_elevenlabs.py narration.json --voice-id VOICE_ID --out-dir out/ \
       --stability 0.5 --similarity 0.8 --max-pause 0.25
+  python3 tts_elevenlabs.py narration.txt --voice-id VOICE_ID --out-dir out/ \
+      --splice-base BASE_DIR --splice-at TEXT
 
 Input: a .txt file (plain text) or a .json file holding a string, a list of
 strings, or {"text": "..."}.
@@ -27,6 +29,15 @@ Timing comes from the /with-timestamps character alignment. --max-pause shortens
 silence between sentences to at most that many seconds by cutting it out of the
 PCM (speech is never stretched or sped up). Silence after the last word is
 trimmed to --tail-pad.
+
+Splice mode (--splice-base DIR --splice-at TEXT) re-voices only the input from TEXT on
+(TEXT must occur exactly once) and joins it onto an existing take in DIR, whose raw/
+holds the full-text response for the same voice and model. Only the part from TEXT on
+is sent, with the text before it as previous_text, so the new speech follows on from it.
+The base audio is kept up to the middle of the silence before TEXT, the new audio is
+level-matched to the base (gain clamped to +/-3 dB) and joined there, so the words
+before TEXT keep their times. The joined alignment is kept in raw/combined_alignment.json.
+The outputs are the same as for any take.
 """
 
 import argparse
@@ -34,10 +45,12 @@ import base64
 import csv
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
 import time
+from array import array
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -61,6 +74,10 @@ TP_MAX = -1.5  # accepted true peak, dBTP (headroom for the linear loudnorm in r
 LIMIT_START = -2.0  # first limiter ceiling, dBFS
 LIMIT_STEP = 0.5  # dB the ceiling is lowered when the true peak is over TP_MAX
 MAX_ENCODES = 4  # MP3 encodes allowed in normalize_to_mp3, the first one included
+SPLICE_FADE_OUT = 0.010  # s, linear fade-out at the end of the base audio kept (at the cut)
+SPLICE_FADE_IN = 0.005  # s, linear fade-in at the start of the re-voiced audio
+SPLICE_LOUD_WINDOW = 10.0  # s of base audio before the cut that set the level
+SPLICE_GAIN_MAX = 3.0  # dB, clamp on the level-match gain of the re-voiced audio
 
 
 def api_key() -> str:
@@ -94,9 +111,11 @@ def build_request(args, text: str) -> dict:
 
 
 def request_body(req: dict) -> dict:
-    """JSON body of the POST: the request without the parts that go in the URL.
+    """JSON body of the POST: the request without the parts that go in the URL, and the
+    splice_base and splice_at keys, which are kept in raw/request.json only.
     An empty voice_settings is left out, so the voice's own defaults apply."""
-    body = {k: v for k, v in req.items() if k not in ("voice_id", "output_format")}
+    body = {k: v for k, v in req.items()
+            if k not in ("voice_id", "output_format", "splice_base", "splice_at")}
     if not body.get("voice_settings"):
         body.pop("voice_settings", None)
     return body
@@ -209,13 +228,18 @@ def read_credits(key: str, before: dict, header_used):
     return after, None, "unknown"
 
 
-def usage_out_dir(out: Path) -> str:
-    """out_dir for the usage log: relative to the repo root if inside the repo, else absolute."""
-    p = out.resolve()
+def repo_relative(p: Path) -> str:
+    """p relative to the repo root if inside the repo, else absolute."""
+    p = p.resolve()
     try:
         return str(p.relative_to(REPO_ROOT))
     except ValueError:
         return str(p)
+
+
+def usage_out_dir(out: Path) -> str:
+    """out_dir for the usage log: relative to the repo root if inside the repo, else absolute."""
+    return repo_relative(out)
 
 
 def check_usage_log() -> None:
@@ -351,6 +375,118 @@ def normalize_to_mp3(wav: Path, out_mp3: Path) -> dict:
              f"limiter {limit:.2f} dBFS, gain {gain:.2f} dB")
 
 
+def splice_plan(args, text: str) -> dict:
+    """Check --splice-base and --splice-at against the input and the base take. Nothing is sent
+    to the API here. Returns the parts needed for the request and for the join."""
+    n = text.count(args.splice_at)
+    if n != 1:
+        sys.exit(f"--splice-at text must occur exactly once in the input; it occurs {n} times")
+    k = text.index(args.splice_at)
+    if not text[:k].strip():
+        sys.exit("--splice-at must come after some text")
+    base_raw = args.splice_base / "raw"
+    try:
+        base_req = json.loads((base_raw / "request.json").read_text(encoding="utf-8"))
+        base_doc = json.loads((base_raw / "alignment.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        sys.exit(f"--splice-base {args.splice_base}: cannot read raw/request.json and "
+                 f"raw/alignment.json ({e})")
+    if not (base_raw / "audio.mp3").is_file():
+        sys.exit(f"--splice-base {args.splice_base}: raw/audio.mp3 is missing")
+    if not isinstance(base_doc, dict) or not isinstance(base_doc.get("alignment"), dict):
+        sys.exit(f"--splice-base {args.splice_base}: raw/alignment.json has no alignment")
+    base_text = base_req.get("text")
+    if not isinstance(base_text, str) or not base_text.startswith(text[:k]) \
+            or base_text[k:k + len(args.splice_at)] != args.splice_at:
+        sys.exit(f"--splice-base {args.splice_base}: its text does not start with the input before "
+                 f"--splice-at, or does not continue with {args.splice_at!r} at index {k}")
+    if base_req.get("voice_id") != args.voice_id or base_req.get("model_id") != args.model:
+        sys.exit(f"--splice-base {args.splice_base}: made with voice {base_req.get('voice_id')!r} "
+                 f"and model {base_req.get('model_id')!r}, not {args.voice_id!r} and {args.model!r}")
+    check_alignment(base_doc["alignment"], base_text)
+    return {"k": k, "prefix": text[:k], "suffix": text[k:],
+            "base": repo_relative(args.splice_base), "base_raw": base_raw,
+            "base_alignment": base_doc["alignment"]}
+
+
+def _samples(pcm: bytes) -> array:
+    """16-bit little-endian mono PCM as a list of ints."""
+    a = array("h")
+    a.frombytes(pcm)
+    if sys.byteorder == "big":
+        a.byteswap()
+    return a
+
+
+def _pcm(a: array) -> bytes:
+    if sys.byteorder == "big":
+        a = array("h", a)  # a copy, so the caller's array is not changed
+        a.byteswap()
+    return a.tobytes()
+
+
+def pcm_lufs(pcm: bytes, sr: int) -> float:
+    """Integrated loudness (EBU R128, ffmpeg ebur128) of 16-bit mono PCM."""
+    with tempfile.TemporaryDirectory() as tmp:
+        wav = Path(tmp) / "segment.wav"
+        tts.write_wav(wav, pcm, sr=sr)
+        err = tts._ffmpeg(["-i", str(wav), "-af", "ebur128", "-f", "null", "-"])
+    return float(re.findall(r"I:\s+(-?[\d.]+) LUFS", err)[-1])
+
+
+def splice_join(base_pcm: bytes, base_alignment: dict, k: int, text: str,
+                new_pcm: bytes, new_alignment: dict):
+    """Join the base take up to the cut onto the re-voiced part. Returns (pcm, alignment, info).
+
+    Both alignments are in raw time, before silence editing. The cut is the middle of the gap
+    between the last non-whitespace character before index k and character k. The base is kept
+    up to the cut and the new audio starts there, so the base words before index k keep their
+    times. The new audio is gained to the base level (clamped) and faded in at the cut.
+    """
+    chars = base_alignment["characters"]
+    starts = base_alignment["character_start_times_seconds"]
+    ends = base_alignment["character_end_times_seconds"]
+    if "".join(chars[:k]) != text[:k]:
+        sys.exit("base alignment does not spell the input text before --splice-at")
+    last = next((j for j in range(k - 1, -1, -1) if chars[j].strip()), None)
+    if last is None:
+        sys.exit("nothing before --splice-at to join onto")
+    prev_end, next_start = ends[last], starts[k]
+    t_cut = (prev_end + next_start) / 2
+    cut = round(t_cut * SR)  # sample index of the cut in the base PCM
+
+    head = _samples(base_pcm[:2 * cut])
+    n_out = round(SPLICE_FADE_OUT * SR)
+    if len(head) < n_out:
+        sys.exit("base audio is too short for the splice")
+    lo = max(0, round((t_cut - SPLICE_LOUD_WINDOW) * SR))
+    base_tail_lufs = pcm_lufs(base_pcm[2 * lo:2 * cut], SR)
+    new_lufs = pcm_lufs(new_pcm, SR)
+    gain_db = max(-SPLICE_GAIN_MAX, min(SPLICE_GAIN_MAX, base_tail_lufs - new_lufs))
+
+    for i in range(n_out):  # linear fade-out to silence at the cut
+        j = len(head) - n_out + i
+        head[j] = round(head[j] * (n_out - 1 - i) / n_out)
+    tail = _samples(new_pcm)
+    g = 10 ** (gain_db / 20)
+    n_in = round(SPLICE_FADE_IN * SR)
+    for i in range(len(tail)):  # gain, then linear fade-in from silence
+        tail[i] = max(-32768, min(32767, round(tail[i] * g * min(1.0, i / n_in))))
+    pcm = _pcm(head) + _pcm(tail)
+
+    alignment = {
+        "characters": list(chars[:k]) + list(new_alignment["characters"]),
+        "character_start_times_seconds": [float(s) for s in starts[:k]]
+            + [s + t_cut for s in new_alignment["character_start_times_seconds"]],
+        "character_end_times_seconds": [min(float(e), t_cut) for e in ends[:k]]
+            + [e + t_cut for e in new_alignment["character_end_times_seconds"]],
+    }
+    info = {"t_cut": round(t_cut, 4), "prev_end": round(prev_end, 4),
+            "next_start": round(next_start, 4), "base_tail_lufs": round(base_tail_lufs, 2),
+            "new_lufs": round(new_lufs, 2), "gain_db": round(gain_db, 3)}
+    return pcm, alignment, info
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Indonesian TTS with word timestamps (ElevenLabs).")
     ap.add_argument("input", type=Path, help="narration .txt or .json")
@@ -374,11 +510,24 @@ def main() -> None:
                     help="trim silence before the first word, keeping SEC of it (off by default)")
     ap.add_argument("--force-api", action="store_true",
                     help="call the API even if raw/ holds this request")
+    ap.add_argument("--splice-base", type=Path, metavar="DIR",
+                    help="join the re-voiced part onto this existing take (DIR/raw/ must hold "
+                         "request.json, alignment.json and audio.mp3)")
+    ap.add_argument("--splice-at", metavar="TEXT",
+                    help="where the re-voiced part starts in the input text (must occur once)")
     args = ap.parse_args()
+    if (args.splice_base is None) != (args.splice_at is None):
+        ap.error("--splice-base and --splice-at must be given together")
 
     key = api_key()
     text = tts.load_text(args.input)
-    req = build_request(args, text)
+    plan = splice_plan(args, text) if args.splice_base is not None else None
+    api_text = plan["suffix"] if plan else text  # the text sent to the API
+    req = build_request(args, api_text)
+    if plan:
+        req["previous_text"] = plan["prefix"]
+        req["splice_base"] = plan["base"]  # raw/ only, see request_body
+        req["splice_at"] = args.splice_at
     out = args.out_dir
     out.mkdir(parents=True, exist_ok=True)
     raw = out / "raw"
@@ -391,22 +540,32 @@ def main() -> None:
               file=sys.stderr)
     else:
         check_usage_log()  # before any paid call
-        print(f"calling ElevenLabs: {len(text)} characters, model {args.model}", file=sys.stderr)
+        print(f"calling ElevenLabs: {len(api_text)} characters, model {args.model}", file=sys.stderr)
         before = subscription(key)
         audio, doc, headers = tts_call(key, req)
         write_raw(raw, req, audio, doc)  # kept even if the checks below fail, so a retry costs nothing
         after, used, source = read_credits(key, before, header_credits(headers))
-        log_usage(out, args, text, before, after, used, source, headers)
+        log_usage(out, args, api_text, before, after, used, source, headers)
         reused = False
-    check_alignment(doc["alignment"], text)
+    check_alignment(doc["alignment"], api_text)
 
     with tempfile.TemporaryDirectory() as tmp:
         raw_mp3 = Path(tmp) / "raw.mp3"
         raw_mp3.write_bytes(audio)
         pcm = tts.decode_pcm(raw_mp3, sr=SR)
+        alignment, splice = doc["alignment"], None
+        if plan:
+            base_pcm = tts.decode_pcm(plan["base_raw"] / "audio.mp3", sr=SR)
+            pcm, alignment, info = splice_join(base_pcm, plan["base_alignment"], plan["k"], text,
+                                               pcm, alignment)
+            check_alignment(alignment, text)
+            splice = {"base": plan["base"], "at": args.splice_at, **info}
+            combined = {"alignment": alignment, "splice": splice}
+            (raw / "combined_alignment.json").write_text(
+                json.dumps(combined, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         raw_seconds = len(pcm) / 2 / SR
 
-        words_raw = alignment_words(doc["alignment"])
+        words_raw = alignment_words(alignment)
         check_timing(words_raw, raw_seconds)
         sentences = tts.group_sentences(text, words_raw)
         pcm_out, cuts = tts.edit_timeline(pcm, sentences, args.max_pause, args.tail_pad,
@@ -441,13 +600,15 @@ def main() -> None:
         "limiter_db": round(norm["limiter_db"], 2),
         "gain_db": round(norm["gain_db"], 2),
         "encodes": norm["encodes"],
-        "text_chars": len(text),
+        "text_chars": len(api_text),
         "reused_raw": reused,
         "credits_used": used,
         "credits_source": source,
         "credits_remaining": None if reused or used is None
                              else after["character_limit"] - (before["character_count"] + used),
     }
+    if splice is not None:
+        summary["splice"] = splice
     print(json.dumps(summary, indent=2))
 
 
