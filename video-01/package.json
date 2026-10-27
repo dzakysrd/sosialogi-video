@@ -1,0 +1,17 @@
+{
+  "name": "video-01-ump-vs-gaji-asli",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "lint": "node tools/lint.mjs",
+    "check": "npm run build && npm run lint && npx --yes hyperframes@0.8.206 check",
+    "render": "bash tools/render.sh",
+    "build:v2": "node tools/build_v2.mjs",
+    "lint:v2": "node tools/lint_v2.mjs",
+    "render:v2": "bash tools/render_v2.sh",
+    "build:v3": "node tools/build_v3.mjs",
+    "lint:v3": "node tools/lint_v3.mjs",
+    "render:v3": "bash tools/render_v3.sh"
+  }
+}

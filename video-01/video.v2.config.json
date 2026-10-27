@@ -1,0 +1,26 @@
+{
+  "platform": "Instagram Reels (also fine for TikTok)",
+  "version": "v2",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "brand": "@dzakysrd",
+  "badge": null,
+  "safe": { "top": 220, "bottom": 420, "left": 65, "right": 140 },
+  "hero_band": { "top": 340, "bottom": 1240 },
+  "map_credit": "Peta: MapSVG (CC BY 4.0), diubah",
+  "source_credit": "Sumber: BPS, Sakernas Feb 2026 (upah bersih buruh) · UMP 2026: Kemnaker via media",
+  "hook_card_s": 2.5,
+  "close_max_s": 5.0,
+  "tail_s": 0.25,
+  "loudness": { "I": -14, "TP_max": -1.0, "LRA": 11 },
+  "inputs": {
+    "script": "../research/script_v2.json",
+    "data": "../research/data.csv",
+    "umk": "../research/umk_examples.csv",
+    "words": "assets/v2/words.json",
+    "sentences": "assets/v2/sentences.json",
+    "vo": "assets/v2/vo.mp3",
+    "map": "assets/map/indonesia-34.svg"
+  }
+}

@@ -1,0 +1,30 @@
+# Local secrets written by `elevenlabs onboard`
+/.env.local
+
+# Dependencies, caches, OS and Python artifacts
+node_modules/
+.cache/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Nested third-party git clone, excluded as a whole (it would become a broken gitlink).
+# Upstream URL and reviewed commit are recorded in thirdparty/REVIEW.md.
+/thirdparty/hyperframe-pro/
+
+# HyperFrames per-project state and lock files
+.hyperframes/
+
+# Regenerable render output, probes, frame dumps and symlinks made by snap/probe scripts.
+# Contact sheets (*.jpg), timelines (*.json), logs and build scripts stay tracked.
+/video-01/build/render/*.mp4
+/video-01/build/**/*.png
+/video-01/build/**/*.html
+!/video-01/build/v1/index_v1_snapshot.html
+/video-01/build/**/probe/
+/video-01/build/**/snap/assets
+/video-01/build/**/snap/vendor
+/video-01/out/snap/*.png
+/video-01/out/v2_frames/
+**/frames/
+/voice/samples/*/checks/

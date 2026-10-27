@@ -1,0 +1,13 @@
+{
+  "name": "sosialogi-video-template",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "make-map": "node tools/make-map.mjs",
+    "dev": "npm run build && npx --yes hyperframes@0.8.206 preview",
+    "check": "npm run build && npx --yes hyperframes@0.8.206 check",
+    "render": "npm run build && npx --yes hyperframes@0.8.206 render --resolution portrait --fps 30 -o video.mp4",
+    "publish": "npx --yes hyperframes@0.8.206 publish"
+  }
+}

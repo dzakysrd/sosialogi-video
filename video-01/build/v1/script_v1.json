@@ -1,0 +1,60 @@
+{
+ "status": "PROVISIONAL_DRAFT - avg_wage not from official source; do not publish until BPS table verified",
+ "word_count": 122,
+ "scenes": [
+  {
+   "id": "s1_hook",
+   "vo_text": "UMP naik, tapi isi amplop gajimu belum tentu ikut naik. Coba cek slip gajimu.",
+   "on_screen_text": "UMP vs gaji asli",
+   "visual": "title + Indonesia map",
+   "cue_words": [
+    "UMP"
+   ]
+  },
+  {
+   "id": "s2_jakarta",
+   "vo_text": "Tahun dua ribu dua puluh enam, UMP tertinggi ada di Jakarta, lima koma tujuh tiga juta rupiah sebulan. Terendah di Jawa Barat, dua koma tiga dua juta.",
+   "on_screen_text": "Jakarta Rp5,73 jt | Jawa Barat Rp2,32 jt",
+   "visual": "map highlight DKI Jakarta then Jawa Barat, big numbers",
+   "cue_words": [
+    "Jakarta",
+    "lima koma tujuh tiga juta",
+    "Jawa Barat",
+    "dua koma tiga dua juta"
+   ]
+  },
+  {
+   "id": "s3_aceh",
+   "vo_text": "Tapi lihat Aceh. UMP-nya tiga koma sembilan tiga juta. Rata-rata gaji bersih buruhnya cuma dua koma delapan empat juta. Kurang lebih satu juta di bawah UMP.",
+   "on_screen_text": "Aceh: UMP Rp3,93 jt vs gaji rata-rata Rp2,84 jt",
+   "visual": "bar compare UMP vs avg wage, Aceh highlighted",
+   "cue_words": [
+    "Aceh",
+    "tiga koma sembilan tiga juta",
+    "dua koma delapan empat juta"
+   ]
+  },
+  {
+   "id": "s4_bottom10",
+   "vo_text": "Dari sepuluh provinsi dengan gaji rata-rata terendah, tujuh provinsi rata-ratanya masih di bawah UMP, termasuk Lampung dan Sumatera Utara. Artinya banyak pekerja menerima lebih kecil dari angka di aturan.",
+   "on_screen_text": "7 dari 10 provinsi: gaji rata-rata < UMP",
+   "visual": "map highlight 7 provinces (Lampung, Sumut, Sumbar, NTB, Sulbar, Gorontalo, Aceh) red; 3 others (Jateng, NTT, Jatim) green",
+   "cue_words": [
+    "tujuh provinsi",
+    "di bawah UMP",
+    "Lampung",
+    "Sumatera Utara"
+   ]
+  },
+  {
+   "id": "s5_close",
+   "vo_text": "Rata-rata memang bukan nasib semua orang, tapi jaraknya nyata. UMP itu batas bawah di atas kertas, bukan jaminan kenyataan. Follow untuk data yang bikin kamu mikir.",
+   "on_screen_text": "Sumber: Kemnaker (via media) & BPS Sakernas Agt 2025 (via GoodStats)",
+   "visual": "source credit + follow",
+   "cue_words": [
+    "Follow"
+   ]
+  }
+ ],
+ "source_credit": "Sumber: Kemnaker (UMP 2026), BPS Sakernas Agustus 2025 (upah buruh)"
+}

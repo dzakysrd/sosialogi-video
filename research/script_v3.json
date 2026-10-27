@@ -1,0 +1,83 @@
+{
+ "version": "v3",
+ "status": "DRAFT v3 - rewrite for spoken rhythm after v2 feedback. Data unchanged: BPS Feb 2026 (kolom Total) in data.csv; UMP: unverified-media (detik/kompas.tv); UMK Karawang: detik (umk_examples.csv)",
+ "word_count_target": [
+  100,
+  130
+ ],
+ "max_seconds": 45,
+ "scenes": [
+  {
+   "id": "s1_hook",
+   "vo_text": "UMP Jakarta tertinggi. Tapi rata-ratanya di bawah UMP.",
+   "on_screen_text": "frame 1: UMP TERTINGGI -> frame 2: TAPI GAJI RATA-RATANYA DI BAWAH UMP",
+   "visual": "claim headline, two states; switch at 'Tapi'",
+   "cue_words": [
+    "Tapi"
+   ],
+   "vo_max_seconds": 3.5
+  },
+  {
+   "id": "s2_jakarta",
+   "vo_text": "Tahun dua ribu dua puluh enam, UMP Jakarta lima koma tujuh tiga juta. Rata-rata gaji bersihnya cuma lima koma dua tiga juta.",
+   "on_screen_text": "UMP 2026 · DKI Jakarta (map) -> UMP Rp5,73 jt | Gaji rata-rata Rp5,23 jt (bars)",
+   "visual": "Java locator, DKI Jakarta lit with pin and label; then two bars",
+   "cue_words": [
+    "Tahun",
+    "dua ribu dua puluh enam",
+    "lima koma tujuh tiga juta",
+    "lima koma dua tiga juta"
+   ]
+  },
+  {
+   "id": "s3_nasional",
+   "vo_text": "Secara nasional, dua puluh empat dari tiga puluh delapan provinsi rata-ratanya masih di bawah UMP.",
+   "on_screen_text": "24 / dari 38 provinsi; legend (merah = di bawah UMP, teal = di atas UMP, campuran = Papua)",
+   "visual": "full map, provinces turn red one by one (below UMP); Papua shape hatched red/teal",
+   "cue_words": [
+    "Secara",
+    "dua puluh empat",
+    "tiga puluh delapan"
+   ]
+  },
+  {
+   "id": "s4_aceh",
+   "vo_text": "Yang paling jauh? Aceh. UMP-nya tiga koma sembilan tiga juta, rata-ratanya dua koma tujuh satu juta.",
+   "on_screen_text": "ACEH · Sumatra locator · UMP Rp3,93 jt | Gaji rata-rata Rp2,71 jt",
+   "visual": "Sumatra locator (Aceh lit), two bars",
+   "cue_words": [
+    "Yang",
+    "Aceh",
+    "tiga koma sembilan tiga juta",
+    "dua koma tujuh satu juta"
+   ]
+  },
+  {
+   "id": "s5_jabar",
+   "vo_text": "Jawa Barat UMP-nya terendah se-Indonesia, dua koma tiga dua juta. Rata-ratanya tiga koma tujuh satu juta. UMP cuma batas provinsi. Karawang, UMK-nya lima koma delapan sembilan juta.",
+   "on_screen_text": "Jabar lit: UMP Rp2,32 jt | Rata-rata Rp3,71 jt -> UMP Jabar Rp2,32 jt vs UMK Karawang Rp5,89 jt (pin on Karawang)",
+   "visual": "Jawa Barat lit with two value tiles; then Jawa Barat map with Karawang pin and UMP vs UMK tiles",
+   "cue_words": [
+    "Jawa Barat",
+    "dua koma tiga dua juta",
+    "tiga koma tujuh satu juta",
+    "UMP cuma batas provinsi",
+    "Karawang",
+    "lima koma delapan sembilan juta"
+   ]
+  },
+  {
+   "id": "s6_close",
+   "vo_text": "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh. Sumbernya ada di layar. Yuk, follow.",
+   "on_screen_text": "caveat card -> sources (30 px, 2 lines) + CTA pill Follow @dzakysrd",
+   "visual": "caveat card; then final card with sources and CTA",
+   "cue_words": [
+    "Ini",
+    "Sumbernya",
+    "Follow"
+   ]
+  }
+ ],
+ "cta": "Follow @dzakysrd",
+ "sources_line": "Sumber: BPS (upah bersih buruh, Feb 2026) · UMP & UMK: Kemnaker via media · Peta: MapSVG CC BY 4.0, diubah"
+}

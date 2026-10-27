@@ -1,0 +1,83 @@
+{
+  "_help": "The ONLY file to edit per video (plus assets/vo.mp3). Run `npm run build` after changing it. Durations are seconds; start times are computed. Tones: good | bad | neutral | ink | accent. Formats: full (Rp5.729.876) | short (Rp5,73 jt). See README.md.",
+  "demo": true,
+  "fps": 30,
+  "brand": "/NamaAkun",
+  "source": "Sumber: DATA DEMO. Peta: MapSVG (CC BY 4.0), diubah",
+  "audio": {
+    "file": "assets/vo.mp3",
+    "volume": 1
+  },
+  "scenes": [
+    {
+      "type": "title",
+      "duration": 1.8,
+      "kicker": "DEMO · ANGKA CONTOH",
+      "text": "*UMP* 2026 vs upah riil",
+      "caption": "Ini video contoh. Semua angka DEMO."
+    },
+    {
+      "type": "map",
+      "duration": 4.0,
+      "title": "3 provinsi contoh (DEMO)",
+      "format": "short",
+      "focus": "provinces",
+      "provinces": [
+        {
+          "id": "id-bt",
+          "value": 1234567,
+          "tone": "bad",
+          "pos": "above"
+        },
+        {
+          "id": "id-jt",
+          "value": 2345678,
+          "tone": "neutral",
+          "pos": "below"
+        },
+        {
+          "id": "id-ji",
+          "value": 3456789,
+          "tone": "good",
+          "pos": "above"
+        }
+      ],
+      "caption": "Warna = kategori contoh, bukan penilaian."
+    },
+    {
+      "type": "bignumber",
+      "duration": 3.0,
+      "label": "Satu angka contoh (DEMO)",
+      "value": 1234567,
+      "format": "full",
+      "alt": "short",
+      "sublabel": "Angka dummy, bukan UMP.",
+      "tone": "ink",
+      "caption": "Format penuh dan format singkat."
+    },
+    {
+      "type": "bars",
+      "duration": 3.2,
+      "title": "Perbandingan contoh (DEMO)",
+      "format": "full",
+      "bars": [
+        {
+          "label": "UMP (contoh)",
+          "value": 2345678,
+          "tone": "neutral"
+        },
+        {
+          "label": "Upah rata-rata (contoh)",
+          "value": 3456789,
+          "tone": "good"
+        },
+        {
+          "label": "Upah median (contoh)",
+          "value": 1234567,
+          "tone": "bad"
+        }
+      ],
+      "caption": "Ganti angka ini dengan data riil."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "platform": "Instagram Reels (also fine for TikTok)",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "brand": "@dzakysrd",
+  "badge": "DRAFT · data belum final",
+  "safe": { "top": 220, "bottom": 420, "left": 65, "right": 140 },
+  "hero_band": { "top": 560, "bottom": 1360 },
+  "map_credit": "Peta: MapSVG (CC BY 4.0), diubah",
+  "tail_s": 0.8,
+  "inputs": {
+    "script": "../research/script.json",
+    "data": "../research/data.csv",
+    "words": "assets/words.json",
+    "sentences": "assets/sentences.json",
+    "map": "assets/map/indonesia-34.svg"
+  }
+}

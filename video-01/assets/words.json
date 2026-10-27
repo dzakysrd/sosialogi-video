@@ -1,0 +1,612 @@
+[
+  {
+    "text": "UMP",
+    "start": 0.1,
+    "end": 0.475
+  },
+  {
+    "text": "naik",
+    "start": 0.475,
+    "end": 0.963
+  },
+  {
+    "text": "tapi",
+    "start": 1.238,
+    "end": 1.462
+  },
+  {
+    "text": "isi",
+    "start": 1.462,
+    "end": 1.637
+  },
+  {
+    "text": "amplop",
+    "start": 1.637,
+    "end": 1.913
+  },
+  {
+    "text": "gajimu",
+    "start": 1.913,
+    "end": 2.337
+  },
+  {
+    "text": "belum",
+    "start": 2.337,
+    "end": 2.55
+  },
+  {
+    "text": "tentu",
+    "start": 2.55,
+    "end": 2.75
+  },
+  {
+    "text": "ikut",
+    "start": 2.75,
+    "end": 2.975
+  },
+  {
+    "text": "naik",
+    "start": 2.975,
+    "end": 3.425
+  },
+  {
+    "text": "Coba",
+    "start": 3.675,
+    "end": 4.0
+  },
+  {
+    "text": "cek",
+    "start": 4.0,
+    "end": 4.2
+  },
+  {
+    "text": "slip",
+    "start": 4.2,
+    "end": 4.412
+  },
+  {
+    "text": "gajimu",
+    "start": 4.412,
+    "end": 5.062
+  },
+  {
+    "text": "Tahun",
+    "start": 5.312,
+    "end": 5.562
+  },
+  {
+    "text": "dua",
+    "start": 5.562,
+    "end": 5.688
+  },
+  {
+    "text": "ribu",
+    "start": 5.688,
+    "end": 5.862
+  },
+  {
+    "text": "dua",
+    "start": 5.862,
+    "end": 6.0
+  },
+  {
+    "text": "puluh",
+    "start": 6.0,
+    "end": 6.175
+  },
+  {
+    "text": "enam",
+    "start": 6.175,
+    "end": 6.6
+  },
+  {
+    "text": "UMP",
+    "start": 6.9,
+    "end": 7.25
+  },
+  {
+    "text": "tertinggi",
+    "start": 7.25,
+    "end": 7.7
+  },
+  {
+    "text": "ada",
+    "start": 7.7,
+    "end": 7.925
+  },
+  {
+    "text": "di",
+    "start": 7.925,
+    "end": 8.0
+  },
+  {
+    "text": "Jakarta",
+    "start": 8.0,
+    "end": 8.688
+  },
+  {
+    "text": "lima",
+    "start": 8.963,
+    "end": 9.238
+  },
+  {
+    "text": "koma",
+    "start": 9.238,
+    "end": 9.438
+  },
+  {
+    "text": "tujuh",
+    "start": 9.438,
+    "end": 9.713
+  },
+  {
+    "text": "tiga",
+    "start": 9.713,
+    "end": 9.95
+  },
+  {
+    "text": "juta",
+    "start": 9.95,
+    "end": 10.2
+  },
+  {
+    "text": "rupiah",
+    "start": 10.2,
+    "end": 10.488
+  },
+  {
+    "text": "sebulan",
+    "start": 10.488,
+    "end": 11.088
+  },
+  {
+    "text": "Terendah",
+    "start": 11.338,
+    "end": 11.688
+  },
+  {
+    "text": "di",
+    "start": 11.688,
+    "end": 11.787
+  },
+  {
+    "text": "Jawa",
+    "start": 11.787,
+    "end": 12.025
+  },
+  {
+    "text": "Barat",
+    "start": 12.025,
+    "end": 12.5
+  },
+  {
+    "text": "dua",
+    "start": 12.75,
+    "end": 13.0
+  },
+  {
+    "text": "koma",
+    "start": 13.0,
+    "end": 13.213
+  },
+  {
+    "text": "tiga",
+    "start": 13.213,
+    "end": 13.475
+  },
+  {
+    "text": "dua",
+    "start": 13.475,
+    "end": 13.65
+  },
+  {
+    "text": "juta",
+    "start": 13.65,
+    "end": 14.175
+  },
+  {
+    "text": "Tapi",
+    "start": 14.425,
+    "end": 14.762
+  },
+  {
+    "text": "lihat",
+    "start": 14.762,
+    "end": 15.037
+  },
+  {
+    "text": "Aceh",
+    "start": 15.037,
+    "end": 15.587
+  },
+  {
+    "text": "UMP-nya",
+    "start": 15.837,
+    "end": 16.462
+  },
+  {
+    "text": "tiga",
+    "start": 16.462,
+    "end": 16.8
+  },
+  {
+    "text": "koma",
+    "start": 16.8,
+    "end": 17.012
+  },
+  {
+    "text": "sembilan",
+    "start": 17.012,
+    "end": 17.387
+  },
+  {
+    "text": "tiga",
+    "start": 17.387,
+    "end": 17.625
+  },
+  {
+    "text": "juta",
+    "start": 17.625,
+    "end": 18.15
+  },
+  {
+    "text": "Rata-rata",
+    "start": 18.4,
+    "end": 18.875
+  },
+  {
+    "text": "gaji",
+    "start": 18.875,
+    "end": 19.188
+  },
+  {
+    "text": "bersih",
+    "start": 19.188,
+    "end": 19.462
+  },
+  {
+    "text": "buruhnya",
+    "start": 19.462,
+    "end": 19.912
+  },
+  {
+    "text": "cuma",
+    "start": 19.912,
+    "end": 20.175
+  },
+  {
+    "text": "dua",
+    "start": 20.175,
+    "end": 20.362
+  },
+  {
+    "text": "koma",
+    "start": 20.362,
+    "end": 20.587
+  },
+  {
+    "text": "delapan",
+    "start": 20.587,
+    "end": 20.9
+  },
+  {
+    "text": "empat",
+    "start": 20.9,
+    "end": 21.137
+  },
+  {
+    "text": "juta",
+    "start": 21.137,
+    "end": 21.662
+  },
+  {
+    "text": "Kurang",
+    "start": 21.912,
+    "end": 22.175
+  },
+  {
+    "text": "lebih",
+    "start": 22.175,
+    "end": 22.35
+  },
+  {
+    "text": "satu",
+    "start": 22.35,
+    "end": 22.562
+  },
+  {
+    "text": "juta",
+    "start": 22.562,
+    "end": 22.912
+  },
+  {
+    "text": "di",
+    "start": 22.912,
+    "end": 23.037
+  },
+  {
+    "text": "bawah",
+    "start": 23.037,
+    "end": 23.337
+  },
+  {
+    "text": "UMP",
+    "start": 23.337,
+    "end": 23.962
+  },
+  {
+    "text": "Dari",
+    "start": 24.212,
+    "end": 24.438
+  },
+  {
+    "text": "sepuluh",
+    "start": 24.438,
+    "end": 24.737
+  },
+  {
+    "text": "provinsi",
+    "start": 24.737,
+    "end": 25.2
+  },
+  {
+    "text": "dengan",
+    "start": 25.2,
+    "end": 25.45
+  },
+  {
+    "text": "gaji",
+    "start": 25.45,
+    "end": 25.737
+  },
+  {
+    "text": "rata-rata",
+    "start": 25.737,
+    "end": 26.075
+  },
+  {
+    "text": "terendah",
+    "start": 26.075,
+    "end": 26.662
+  },
+  {
+    "text": "tujuh",
+    "start": 26.95,
+    "end": 27.225
+  },
+  {
+    "text": "provinsi",
+    "start": 27.225,
+    "end": 27.637
+  },
+  {
+    "text": "rata-ratanya",
+    "start": 27.637,
+    "end": 28.187
+  },
+  {
+    "text": "masih",
+    "start": 28.187,
+    "end": 28.5
+  },
+  {
+    "text": "di",
+    "start": 28.5,
+    "end": 28.587
+  },
+  {
+    "text": "bawah",
+    "start": 28.587,
+    "end": 28.837
+  },
+  {
+    "text": "UMP",
+    "start": 28.837,
+    "end": 29.437
+  },
+  {
+    "text": "termasuk",
+    "start": 29.675,
+    "end": 30.05
+  },
+  {
+    "text": "Lampung",
+    "start": 30.05,
+    "end": 30.462
+  },
+  {
+    "text": "dan",
+    "start": 30.462,
+    "end": 30.612
+  },
+  {
+    "text": "Sumatera",
+    "start": 30.612,
+    "end": 30.962
+  },
+  {
+    "text": "Utara",
+    "start": 30.962,
+    "end": 31.512
+  },
+  {
+    "text": "Artinya",
+    "start": 31.762,
+    "end": 32.25
+  },
+  {
+    "text": "banyak",
+    "start": 32.25,
+    "end": 32.5
+  },
+  {
+    "text": "pekerja",
+    "start": 32.5,
+    "end": 32.875
+  },
+  {
+    "text": "menerima",
+    "start": 32.875,
+    "end": 33.237
+  },
+  {
+    "text": "lebih",
+    "start": 33.237,
+    "end": 33.45
+  },
+  {
+    "text": "kecil",
+    "start": 33.45,
+    "end": 33.787
+  },
+  {
+    "text": "dari",
+    "start": 33.787,
+    "end": 33.975
+  },
+  {
+    "text": "angka",
+    "start": 33.975,
+    "end": 34.275
+  },
+  {
+    "text": "di",
+    "start": 34.275,
+    "end": 34.362
+  },
+  {
+    "text": "aturan",
+    "start": 34.362,
+    "end": 34.962
+  },
+  {
+    "text": "Rata-rata",
+    "start": 35.212,
+    "end": 35.712
+  },
+  {
+    "text": "memang",
+    "start": 35.712,
+    "end": 35.95
+  },
+  {
+    "text": "bukan",
+    "start": 35.95,
+    "end": 36.175
+  },
+  {
+    "text": "nasib",
+    "start": 36.175,
+    "end": 36.438
+  },
+  {
+    "text": "semua",
+    "start": 36.438,
+    "end": 36.7
+  },
+  {
+    "text": "orang",
+    "start": 36.7,
+    "end": 37.163
+  },
+  {
+    "text": "tapi",
+    "start": 37.425,
+    "end": 37.712
+  },
+  {
+    "text": "jaraknya",
+    "start": 37.712,
+    "end": 38.087
+  },
+  {
+    "text": "nyata",
+    "start": 38.087,
+    "end": 38.612
+  },
+  {
+    "text": "UMP",
+    "start": 38.862,
+    "end": 39.2
+  },
+  {
+    "text": "itu",
+    "start": 39.2,
+    "end": 39.425
+  },
+  {
+    "text": "batas",
+    "start": 39.425,
+    "end": 39.712
+  },
+  {
+    "text": "bawah",
+    "start": 39.712,
+    "end": 40.0
+  },
+  {
+    "text": "di",
+    "start": 40.0,
+    "end": 40.075
+  },
+  {
+    "text": "atas",
+    "start": 40.075,
+    "end": 40.312
+  },
+  {
+    "text": "kertas",
+    "start": 40.312,
+    "end": 40.85
+  },
+  {
+    "text": "bukan",
+    "start": 41.075,
+    "end": 41.388
+  },
+  {
+    "text": "jaminan",
+    "start": 41.388,
+    "end": 41.75
+  },
+  {
+    "text": "kenyataan",
+    "start": 41.75,
+    "end": 42.425
+  },
+  {
+    "text": "Follow",
+    "start": 42.675,
+    "end": 43.05
+  },
+  {
+    "text": "untuk",
+    "start": 43.05,
+    "end": 43.25
+  },
+  {
+    "text": "data",
+    "start": 43.25,
+    "end": 43.512
+  },
+  {
+    "text": "yang",
+    "start": 43.512,
+    "end": 43.662
+  },
+  {
+    "text": "bikin",
+    "start": 43.662,
+    "end": 43.962
+  },
+  {
+    "text": "kamu",
+    "start": 43.962,
+    "end": 44.15
+  },
+  {
+    "text": "mikir",
+    "start": 44.15,
+    "end": 44.662
+  }
+]
