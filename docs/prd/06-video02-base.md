@@ -81,3 +81,8 @@ Paste `report.md` in full: inventory, matrix, step 4 outputs, work items, and a 
 - Not verified: the video-01 build, lint and render were not run in this task. The line classification is a reading of the code, not a measurement.
 - Reviewed by the main agent: git status, ffprobe of the demo, check and render log lines, and the cited lines in `template/components/sos.js`, `template/tools/build.mjs`, `video-01/tools/lint_v3.mjs`, `video-01/tools/render_v3.sh` and `video-01/video.v3.config.json`.
 - Recommendation (main agent): option C (hybrid). Decision: pending; the user decides.
+
+## Decision (2026-10-28 WIB, user)
+- Option C (hybrid), as recommended.
+- Safe box: the video-01 v3 Reels values (top 220, bottom 420, left 65, right 140).
+- The user noted that Hari Listrik Nasional (27 October) was the day before this decision. Whether the hook refers to the day is decided with the script.

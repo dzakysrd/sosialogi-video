@@ -12,7 +12,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 - `template/`: reusable 1080x1920 HyperFrames template. `scenes.json` drives timings and text. All assets are vendored, with no CDN. `README.md` documents it. `demo.mp4` is its demo render.
 - `voice/`: `tts.py`, edge-tts Indonesian voiceover with per-word timestamps (`words.json`, `sentences.json`). Loudness is -14 LUFS with true peak <= -1 dBTP. Options include `--max-pause` and `--tail-pad`. `samples/` holds voice previews (`ardi`, `gadis`, and `v3/v1..v3`). `tts_elevenlabs.py` is the ElevenLabs equivalent with the same outputs; it caches API responses in `raw/` and logs credit use in `voice/elevenlabs_usage.csv`. ElevenLabs previews are in `samples/elevenlabs/preview/` and the full v3 take in `samples/v3/el_liam/`.
-- `docs/prd/`: one PRD per delegated task (01 ElevenLabs TTS script, 02 voice previews, 03a loudness fix and Liam take, 03b v3 render, 04a-04c spoken username in the close), each with its measured outcome.
+- `docs/prd/`: one PRD per delegated task (01 ElevenLabs TTS script, 02 voice previews, 03a loudness fix and Liam take, 03b v3 render, 04a-04c spoken username in the close, 05 workflow skill, 06 video-02 base), each with its measured outcome.
 - `.claude/skills/data-explainer-video/`: project skill with the working mode and the per-video workflow (PRD-05). The root `CLAUDE.md` points to it.
 - `research/`: `bps_upah_feb2026.csv` (the BPS download, unedited), `data.csv` (merged 38-province table), `tools/merge.py` (re-runnable merge), `script.json` / `script_v2.json` / `script_v3.json` (narration per version), `findings.md`, `sources.md`, `umk_examples.csv`.
 - `video-01/`: video #1 project.
@@ -38,6 +38,14 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 - Hook (B1): "UMP TERTINGGI" on frame 1, then at "Tapi" the claim "TAPI GAJI RATA-RATANYA DI BAWAH UMP" (`beats_v3.md`). Caption: "UMP Jakarta tertinggi se-Indonesia, tapi rata-rata gaji bersih buruhnya di bawah UMP."
 - Less on-screen text: the sources line appears once, on the final card (B9), and in `out/v3_caption.txt`.
 - Voice: ElevenLabs premade voice Liam (`TX3LPaxmHKxFdv7VOQHJ`), model `eleven_multilingual_v2`, default voice settings, `--max-pause 0.16 --lead-keep 0.05 --tail-pad 0.2`. The earlier edge-tts take (Ardi, variant `v2`) was too stiff for the user. A free account cannot use Voice Library voices through the API (HTTP 402 `paid_plan_required`), so only premade voices work on the free plan. The caption credits "Suara: ElevenLabs". The close was re-voiced with splice mode (PRD-04a, 04c): "Sumbernya ada di layar." was dropped, and the CTA became "Yuk, follow et Dzaky es er de." (the user's pronunciation of @dzakysrd). Takes: `el_liam` -> `el_liam_cta` -> `el_liam_cta2`.
+
+## Video #2 status
+
+- Topic: Hari Listrik Nasional (27 October). No data researched yet. No `video-02/` folder yet.
+- Base: option C, chosen by the user on 2026-10-28 (WIB) in PRD-06 (`docs/prd/06-video02-base.md`). `template/` is the scene engine (`scenes.json`-driven). Ported in from video-01: word-cue timing (`video-01/tools/lib/cue.mjs`), word-synced captions (the caption block of `video-01/tools/build_v3.mjs`), the two-pass loudnorm (`video-01/tools/render_v3.sh`) and the generic lint checks.
+- Safe box: the video-01 v3 Reels values (top 220, bottom 420, left 65, right 140), not the template's TikTok values.
+- Gaps in both bases: number formats are Rupiah only (no percent, kWh or GW), no line chart, no share chart, and the map has 34 provinces.
+- Next: a research PRD once the user picks the data, then the script, then a port PRD for only the components the script needs.
 
 ## Rules and decisions (enforced in code or docs)
 

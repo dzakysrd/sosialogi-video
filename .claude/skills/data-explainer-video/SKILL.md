@@ -37,7 +37,7 @@ Use this skill for any video task in this repo. Read `HANDOFF.md` first for the 
 - Label figures not yet checked against an official source `unverified-media`, and say so in the caption.
 - Do not invent numbers, sources or URLs. Say what is unverified.
 - Do not commit or push unless the task is a commit task.
-- For a new video, make a PRD that picks the base first. The video-02 base has not been evaluated.
+- For a new video, make a PRD that picks the base first. video-02 uses option C: `template/` plus the generic video-01 parts (PRD-06).
 - ElevenLabs free-plan terms are unverified. See `references/elevenlabs.md`.
 
 ## Where things are
@@ -47,7 +47,7 @@ Use this skill for any video task in this repo. Read `HANDOFF.md` first for the 
 - `research/`: `bps_upah_feb2026.csv` (raw, unchanged), `data.csv` (merged), `tools/merge.py`, `sources.md`, `script_v3.json`.
 - `video-01/`: `beats_v3.md`, `video.v3.config.json` (gates and voice settings), `tools/` (`build_v3.mjs`, `lint_v3.mjs`, `render_v3.sh`), `build/v3/` (`timeline.json`, `sheet.py`), `out/` (`v3.mp4`, `v3_caption.txt`), `index_v3.html` (generated).
 - `voice/`: `tts_elevenlabs.py` (ElevenLabs), `tts.py` (edge-tts), `samples/v3/` (narration and takes), `samples/elevenlabs/preview/` (previews), `elevenlabs_usage.csv` (log of paid calls).
-- `template/`: scenes.json-driven template (`template/README.md`). Not evaluated for video-02.
+- `template/`: scenes.json-driven template (`template/README.md`). The scene engine for video-02 (PRD-06).
 
 ## References
 

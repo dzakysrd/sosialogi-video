@@ -56,7 +56,7 @@ Steps:
 
 The build and the render rewrite tracked files: `video-01/index_v3.html`, `video-01/build/v3/timeline.json`, the copies `video-01/assets/v3/` (`vo.mp3`, `words.json`, `sentences.json`) and `video-01/out/v3.mp4`. Check `git status` and include them in the expected commit list when they change.
 
-New video: the build and lint tools in `video-01/tools/` are specific to video-01. `template/` is a scenes.json-driven template (`template/README.md`). Which base suits video-02 has not been evaluated. Make that its own PRD before building.
+New video: the build and lint tools in `video-01/tools/` are specific to video-01. `template/` is a scenes.json-driven template (`template/README.md`). For video-02 the user chose option C: `template/` as the scene engine, plus the generic video-01 parts ported in (word cues, word-synced captions, loudnorm, lint). See `docs/prd/06-video02-base.md`. For later videos, make the base choice its own PRD before building.
 
 ## 6. Review
 
