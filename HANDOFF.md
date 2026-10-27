@@ -13,6 +13,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 - `template/`: reusable 1080x1920 HyperFrames template. `scenes.json` drives timings and text. All assets are vendored, with no CDN. `README.md` documents it. `demo.mp4` is its demo render.
 - `voice/`: `tts.py`, edge-tts Indonesian voiceover with per-word timestamps (`words.json`, `sentences.json`). Loudness is -14 LUFS with true peak <= -1 dBTP. Options include `--max-pause` and `--tail-pad`. `samples/` holds voice previews (`ardi`, `gadis`, and `v3/v1..v3`). `tts_elevenlabs.py` is the ElevenLabs equivalent with the same outputs; it caches API responses in `raw/` and logs credit use in `voice/elevenlabs_usage.csv`. ElevenLabs previews are in `samples/elevenlabs/preview/` and the full v3 take in `samples/v3/el_liam/`.
 - `docs/prd/`: one PRD per delegated task (01 ElevenLabs TTS script, 02 voice previews, 03a loudness fix and Liam take, 03b v3 render, 04a-04c spoken username in the close), each with its measured outcome.
+- `.claude/skills/data-explainer-video/`: project skill with the working mode and the per-video workflow (PRD-05). The root `CLAUDE.md` points to it.
 - `research/`: `bps_upah_feb2026.csv` (the BPS download, unedited), `data.csv` (merged 38-province table), `tools/merge.py` (re-runnable merge), `script.json` / `script_v2.json` / `script_v3.json` (narration per version), `findings.md`, `sources.md`, `umk_examples.csv`.
 - `video-01/`: video #1 project.
   - `tools/`: `build.mjs` (v1), `build_v2.mjs`, `build_v3.mjs`. `lint.mjs`, `lint_v2.mjs`, `lint_v3.mjs`. `geometry.mjs`, `make-map.mjs`. `render.sh`, `render_v2.sh`, `render_v3.sh`.
@@ -68,7 +69,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 ## Session notes (not in the repo, not re-verified)
 
-- Working mode: the main Claude plans, reviews and writes PRDs. Coding goes to haiku sub-agents, escalating to sonnet (medium) if haiku struggles. Not written in `CLAUDE.md`.
+- Working mode: the main Claude plans, reviews and writes PRDs. Coding goes to haiku sub-agents, escalating to sonnet (medium) if haiku struggles. Now written in the root `CLAUDE.md` and the data-explainer-video skill.
 - The BPS website blocks requests from servers (Cloudflare). Do not try to get around this.
 - Network: allowed domains include speech.platform.bing.com, kemnaker.go.id, satudata.kemnaker.go.id, detik.com, kompas.tv and api.elevenlabs.io. CDNs and Google Fonts are blocked, so assets are vendored from npm.
 - The ElevenLabs key is read from the `ELEVENLABS_API_KEY` environment variable (51 characters). The scripts do not use `.env.local`.
