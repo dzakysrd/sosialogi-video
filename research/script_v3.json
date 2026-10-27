@@ -1,6 +1,6 @@
 {
  "version": "v3",
- "status": "DRAFT v3 - rewrite for spoken rhythm after v2 feedback. Data unchanged: BPS Feb 2026 (kolom Total) in data.csv; UMP: unverified-media (detik/kompas.tv); UMK Karawang: detik (umk_examples.csv)",
+ "status": "DRAFT v3 - rewrite for spoken rhythm after v2 feedback. Data unchanged: BPS Feb 2026 (kolom Total) in data.csv; UMP: unverified-media (detik/kompas.tv); UMK Karawang: detik (umk_examples.csv) | v3 close: username spoken as 'Dzaky es er de', 'Sumbernya ada di layar.' dropped (2026-10-27) | '@' spoken as 'et' (2026-10-27)",
  "word_count_target": [
   100,
   130
@@ -68,13 +68,19 @@
   },
   {
    "id": "s6_close",
-   "vo_text": "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh. Sumbernya ada di layar. Yuk, follow.",
-   "on_screen_text": "caveat card -> sources (30 px, 2 lines) + CTA pill Follow @dzakysrd",
+   "vo_text": "Ini rata-rata gaji bersih buruh, bukan bukti perusahaan tidak patuh. Yuk, follow et Dzaky es er de.",
+   "on_screen_text": "caveat card -> sources (30 px, 2 lines) + CTA pill Follow @dzakysrd; caption shows @dzakysrd while 'et Dzaky es er de' is spoken",
    "visual": "caveat card; then final card with sources and CTA",
    "cue_words": [
     "Ini",
-    "Sumbernya",
+    "Yuk",
     "Follow"
+   ],
+   "caption_display": [
+    {
+     "spoken": "et Dzaky es er de",
+     "show": "@dzakysrd"
+    }
    ]
   }
  ],

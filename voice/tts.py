@@ -30,8 +30,6 @@ import tempfile
 import wave
 from pathlib import Path
 
-import edge_tts
-
 SR = 24000  # edge-tts MP3 is 24 kHz mono; decode to this rate
 TICKS_PER_SEC = 10_000_000
 LOUD_I, LOUD_LRA = -14.0, 11.0
@@ -57,6 +55,8 @@ def load_text(path: Path) -> str:
 
 
 async def _synthesize(text: str, voice: str, rate: str, pitch: str, proxy: str | None):
+    import edge_tts  # imported here so `import tts` works without edge-tts installed
+
     comm = edge_tts.Communicate(
         text, voice, rate=rate, pitch=pitch, boundary="WordBoundary", proxy=proxy
     )
@@ -86,9 +86,9 @@ def _ffmpeg(args: list[str]) -> str:
     return r.stderr
 
 
-def decode_pcm(mp3: Path) -> bytes:
+def decode_pcm(mp3: Path, sr: int = SR) -> bytes:
     r = subprocess.run(
-        ["ffmpeg", "-v", "error", "-i", str(mp3), "-ac", "1", "-ar", str(SR),
+        ["ffmpeg", "-v", "error", "-i", str(mp3), "-ac", "1", "-ar", str(sr),
          "-f", "s16le", "-"],
         check=True, capture_output=True,
     )
@@ -128,21 +128,21 @@ def group_sentences(text: str, words: list[dict]) -> list[dict]:
     return sentences
 
 
-def _slice(pcm: bytes, a: float, b: float) -> bytes:
-    lo = max(0, round(a * SR)) * 2
-    hi = max(lo, round(b * SR) * 2)
+def _slice(pcm: bytes, a: float, b: float, sr: int = SR) -> bytes:
+    lo = max(0, round(a * sr)) * 2
+    hi = max(lo, round(b * sr) * 2)
     return pcm[lo:hi]
 
 
 def edit_timeline(pcm: bytes, sentences: list[dict], max_pause: float | None,
-                  tail_pad: float, lead_keep: float | None = None):
+                  tail_pad: float, lead_keep: float | None = None, sr: int = SR):
     """Remove over-long inter-sentence silence and trailing silence.
 
     Returns (new_pcm, cuts) where cuts is a list of removed (start, end) spans
     in original seconds. Each gap longer than max_pause keeps max_pause/2 of
     silence on each side of the removed span, so the new gap is exactly max_pause.
     """
-    dur = len(pcm) / 2 / SR
+    dur = len(pcm) / 2 / sr
     cuts: list[tuple[float, float]] = []
     if lead_keep is not None:
         first = sentences[0]["words"][0]["start"]
@@ -162,7 +162,7 @@ def edit_timeline(pcm: bytes, sentences: list[dict], max_pause: float | None,
         segments.append((pos, cs))
         pos = ce
     segments.append((pos, keep_until))
-    new_pcm = b"".join(_slice(pcm, a, b) for a, b in segments)
+    new_pcm = b"".join(_slice(pcm, a, b, sr) for a, b in segments)
     return new_pcm, cuts
 
 
@@ -186,11 +186,11 @@ def retime(sentences: list[dict], cuts: list[tuple[float, float]]):
     return words_out, sents_out
 
 
-def write_wav(path: Path, pcm: bytes) -> None:
+def write_wav(path: Path, pcm: bytes, sr: int = SR) -> None:
     with wave.open(str(path), "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
-        w.setframerate(SR)
+        w.setframerate(sr)
         w.writeframes(pcm)
 
 
