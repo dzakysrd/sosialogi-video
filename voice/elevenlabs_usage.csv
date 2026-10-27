@@ -1,0 +1,2 @@
+utc_time,out_dir,voice_id,model_id,text_chars,credits_used,credits_source,subscription_before,subscription_after_read,cost_headers
+2026-10-27T10:08:08Z,/tmp/claude-0/-home-user-sosialogi-video/37ce8e47-91b2-5470-94d6-bb0c712f3c74/scratchpad/prd01/smoke,hpp4J3VqNfWAUOO0d1Us,eleven_multilingual_v2,54,54,character-cost header,0,0,character-cost=54

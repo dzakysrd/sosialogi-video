@@ -1,0 +1,411 @@
+#!/usr/bin/env python3
+"""Indonesian voiceover with per-word timestamps, built on the ElevenLabs API.
+
+Drop-in alternative to tts.py (edge-tts): same outputs, same timing rules.
+
+Usage:
+  export ELEVENLABS_API_KEY=...   # read from the environment only, never a flag
+  python3 tts_elevenlabs.py narration.txt --voice-id VOICE_ID --out-dir out/
+  python3 tts_elevenlabs.py narration.json --voice-id VOICE_ID --out-dir out/ \
+      --stability 0.5 --similarity 0.8 --max-pause 0.25
+
+Input: a .txt file (plain text) or a .json file holding a string, a list of
+strings, or {"text": "..."}.
+
+Writes to --out-dir:
+  vo.mp3          narration, loudness-normalised to -14 LUFS, true peak <= -1 dBTP
+  words.json      [{"text", "start", "end"}, ...]  every word, seconds
+  sentences.json  [{"text", "start", "end"}, ...]  every sentence, seconds
+  raw/            the API response and the request it answers (a cache)
+
+If raw/request.json matches the request being made, the cached response is
+reused and the API is not called (0 credits). --force-api always calls it.
+Each real call appends a row to voice/elevenlabs_usage.csv.
+
+Timing comes from the /with-timestamps character alignment. --max-pause shortens
+silence between sentences to at most that many seconds by cutting it out of the
+PCM (speech is never stretched or sped up). Silence after the last word is
+trimmed to --tail-pad.
+"""
+
+import argparse
+import base64
+import csv
+import json
+import os
+import sys
+import tempfile
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+import requests
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import tts  # voice/tts.py, next to this file
+
+API = "https://api.elevenlabs.io"
+OUTPUT_FORMAT = "mp3_44100_128"
+SR = 44100  # ElevenLabs MP3 is 44.1 kHz; decode to this rate
+TIMEOUT = 120  # seconds, for the TTS call
+SUB_POLL_EVERY = 3  # seconds between subscription reads when there is no character-cost header
+SUB_POLL_MAX = 30  # stop polling the subscription after this many seconds
+REPO_ROOT = Path(__file__).resolve().parent.parent
+USAGE_CSV = Path(__file__).resolve().parent / "elevenlabs_usage.csv"
+USAGE_HEADER = ["utc_time", "out_dir", "voice_id", "model_id", "text_chars", "credits_used",
+                "credits_source", "subscription_before", "subscription_after_read", "cost_headers"]
+
+
+def api_key() -> str:
+    key = os.environ.get("ELEVENLABS_API_KEY")
+    if not key:
+        sys.exit("ELEVENLABS_API_KEY is not set. Export it in this shell and run again.")
+    return key
+
+
+def build_request(args, text: str) -> dict:
+    """The request as cached in raw/request.json. Only the settings that were passed appear."""
+    settings = {}
+    for arg, api_name in (("stability", "stability"), ("similarity", "similarity_boost"),
+                          ("style", "style"), ("speed", "speed"),
+                          ("speaker_boost", "use_speaker_boost")):
+        value = getattr(args, arg)
+        if value is not None:
+            settings[api_name] = value
+    req = {
+        "text": text,
+        "voice_id": args.voice_id,
+        "model_id": args.model,
+        "output_format": OUTPUT_FORMAT,
+        "voice_settings": settings,
+    }
+    if args.seed is not None:
+        req["seed"] = args.seed
+    if args.language_code is not None:
+        req["language_code"] = args.language_code
+    return req
+
+
+def request_body(req: dict) -> dict:
+    """JSON body of the POST: the request without the parts that go in the URL.
+    An empty voice_settings is left out, so the voice's own defaults apply."""
+    body = {k: v for k, v in req.items() if k not in ("voice_id", "output_format")}
+    if not body.get("voice_settings"):
+        body.pop("voice_settings", None)
+    return body
+
+
+def load_cache(raw: Path, req: dict):
+    """(audio, alignment doc) from raw/ if it was made by exactly this request, else None."""
+    try:
+        if json.loads((raw / "request.json").read_text(encoding="utf-8")) != req:
+            return None
+        audio = (raw / "audio.mp3").read_bytes()
+        doc = json.loads((raw / "alignment.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if not isinstance(doc, dict) or not isinstance(doc.get("alignment"), dict):
+        return None
+    return audio, doc
+
+
+def write_raw(raw: Path, req: dict, audio: bytes, doc: dict) -> None:
+    raw.mkdir(parents=True, exist_ok=True)
+    # Drop the old request first, so a crash mid-write cannot pair it with new audio.
+    (raw / "request.json").unlink(missing_ok=True)
+    (raw / "audio.mp3").write_bytes(audio)
+    (raw / "alignment.json").write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n",
+                                        encoding="utf-8")
+    (raw / "request.json").write_text(json.dumps(req, ensure_ascii=False, indent=2) + "\n",
+                                     encoding="utf-8")
+
+
+def cost_headers(headers) -> dict:
+    """Response headers that report characters or cost. Auth headers are never kept."""
+    kept = {}
+    for name, value in headers.items():
+        low = name.lower()
+        if ("character" in low or "cost" in low) and "api-key" not in low and "auth" not in low:
+            kept[name] = value
+    return kept
+
+
+def tts_call(key: str, req: dict):
+    """POST to /with-timestamps. Returns (audio bytes, alignment doc, cost headers)."""
+    url = f"{API}/v1/text-to-speech/{req['voice_id']}/with-timestamps?output_format={OUTPUT_FORMAT}"
+    try:
+        r = requests.post(url, headers={"xi-api-key": key}, json=request_body(req),
+                          timeout=TIMEOUT)
+    except requests.RequestException as e:
+        sys.exit(f"ElevenLabs request failed: {e}")
+    if not 200 <= r.status_code < 300:
+        sys.exit(f"ElevenLabs TTS failed: HTTP {r.status_code}\n{r.text}")
+    try:
+        data = r.json()
+    except ValueError:
+        sys.exit("ElevenLabs returned a body that is not JSON")
+    if not isinstance(data, dict) or not data.get("audio_base64") \
+            or not isinstance(data.get("alignment"), dict):
+        keys = sorted(data) if isinstance(data, dict) else type(data).__name__
+        sys.exit(f"ElevenLabs response has no audio_base64 or alignment (keys: {keys})")
+    audio = base64.b64decode(data["audio_base64"])
+    doc = {"alignment": data["alignment"], "normalized_alignment": data.get("normalized_alignment")}
+    return audio, doc, cost_headers(r.headers)
+
+
+def subscription(key: str) -> dict:
+    try:
+        r = requests.get(f"{API}/v1/user/subscription", headers={"xi-api-key": key}, timeout=30)
+    except requests.RequestException as e:
+        sys.exit(f"ElevenLabs subscription check failed: {e}")
+    if not 200 <= r.status_code < 300:
+        sys.exit(f"ElevenLabs subscription check failed: HTTP {r.status_code}\n{r.text}")
+    try:
+        d = r.json()
+        return {"character_count": int(d["character_count"]),
+                "character_limit": int(d["character_limit"])}
+    except (ValueError, KeyError, TypeError):
+        sys.exit("ElevenLabs subscription response has no character_count or character_limit")
+
+
+def header_credits(headers: dict):
+    """credits_used from the character-cost response header (any letter case), or None if the
+    header is absent or its value is not an integer."""
+    for name, value in headers.items():
+        if name.lower() == "character-cost":
+            try:
+                return int(str(value).strip())
+            except ValueError:
+                return None
+    return None
+
+
+def read_credits(key: str, before: dict, header_used):
+    """Subscription read after the call. Returns (after, credits_used, credits_source).
+
+    With the character-cost header its value is the charge, and one read is enough (the
+    counter may lag). Without it, the subscription is polled every SUB_POLL_EVERY s for up
+    to SUB_POLL_MAX s until it changes, and the delta is the charge. If it never moves, the
+    charge is unknown (None).
+    """
+    after = subscription(key)
+    if header_used is not None:
+        return after, header_used, "character-cost header"
+    waited = 0
+    while after["character_count"] == before["character_count"] and waited < SUB_POLL_MAX:
+        time.sleep(SUB_POLL_EVERY)
+        waited += SUB_POLL_EVERY
+        after = subscription(key)
+    delta = after["character_count"] - before["character_count"]
+    if delta > 0:
+        return after, delta, "subscription delta"
+    return after, None, "unknown"
+
+
+def usage_out_dir(out: Path) -> str:
+    """out_dir for the usage log: relative to the repo root if inside the repo, else absolute."""
+    p = out.resolve()
+    try:
+        return str(p.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(p)
+
+
+def check_usage_log() -> None:
+    """Refuse a paid call if the usage log has other columns, so no spend goes unlogged."""
+    if USAGE_CSV.exists() and USAGE_CSV.stat().st_size > 0:
+        with USAGE_CSV.open(newline="", encoding="utf-8") as f:
+            header = next(csv.reader(f), None)
+        if header != USAGE_HEADER:
+            sys.exit(f"{USAGE_CSV} has other columns than this script writes; "
+                     "migrate or move it before a paid call")
+
+
+def log_usage(out: Path, args, text: str, before: dict, after: dict, used, source: str,
+              headers: dict) -> None:
+    fresh = not USAGE_CSV.exists() or USAGE_CSV.stat().st_size == 0
+    with USAGE_CSV.open("a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if fresh:
+            w.writerow(USAGE_HEADER)
+        w.writerow([
+            datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            usage_out_dir(out), args.voice_id, args.model, len(text),
+            "" if used is None else used, source,
+            before["character_count"], after["character_count"],
+            "; ".join(f"{k}={v}" for k, v in headers.items()),
+        ])
+
+
+def check_alignment(alignment: dict, text: str) -> None:
+    """The character alignment must spell the input text exactly. Nothing is repaired."""
+    chars = alignment.get("characters")
+    starts = alignment.get("character_start_times_seconds")
+    ends = alignment.get("character_end_times_seconds")
+    if not all(isinstance(x, list) for x in (chars, starts, ends)):
+        sys.exit("alignment is missing characters or per-character times")
+    if not all(isinstance(c, str) for c in chars):
+        sys.exit("alignment characters are not all strings")
+    if not len(chars) == len(starts) == len(ends):
+        sys.exit(f"alignment lengths differ: {len(chars)} characters, {len(starts)} starts, "
+                 f"{len(ends)} ends")
+    joined = "".join(chars)
+    if joined != text:
+        i = next((k for k, (a, b) in enumerate(zip(joined, text)) if a != b),
+                 min(len(joined), len(text)))
+        sys.exit(f"alignment does not match the input text at index {i}: "
+                 f"got {joined[i:i + 20]!r}, expected {text[i:i + 20]!r}")
+
+
+def alignment_words(alignment: dict) -> list[dict]:
+    """Group the character alignment into words, with the same text rules as tts.py."""
+    chars = alignment["characters"]
+    starts = alignment["character_start_times_seconds"]
+    ends = alignment["character_end_times_seconds"]
+    tokens, cur = [], []  # a token is a run of non-whitespace characters
+    for i, ch in enumerate(chars):
+        if ch.strip():
+            cur.append(i)
+        elif cur:
+            tokens.append(cur)
+            cur = []
+    if cur:
+        tokens.append(cur)
+    words = []
+    for idx in tokens:
+        pairs = [(c, i) for i in idx for c in chars[i]]
+        if not tts.WORD_RE.search("".join(c for c, _ in pairs)):
+            continue  # punctuation-only token, dropped as in tts.py
+        kept = [k for k, (c, _) in enumerate(pairs) if c.isalnum()]
+        if not kept:
+            sys.exit(f"token {''.join(c for c, _ in pairs)!r} has no letter or digit; "
+                     "check the input text")
+        lo, hi = kept[0], kept[-1]  # strip leading and trailing non-letters and digits
+        words.append({
+            "text": "".join(c for c, _ in pairs[lo:hi + 1]),
+            "start": starts[pairs[lo][1]],
+            "end": ends[pairs[hi][1]],
+        })
+    return words
+
+
+def check_timing(words: list[dict], raw_seconds: float) -> None:
+    if not words:
+        sys.exit("alignment has no words")
+    for i, w in enumerate(words):
+        if w["end"] < w["start"]:
+            sys.exit(f"word {i} {w['text']!r}: ends at {w['end']} before it starts at {w['start']}")
+        if i and w["start"] < words[i - 1]["start"]:
+            sys.exit(f"word {i} {w['text']!r}: starts at {w['start']}, before the previous word "
+                     f"at {words[i - 1]['start']}")
+    if words[-1]["end"] > raw_seconds + 0.05:
+        sys.exit(f"last word ends at {words[-1]['end']} s but the raw audio is "
+                 f"{raw_seconds:.3f} s long")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description="Indonesian TTS with word timestamps (ElevenLabs).")
+    ap.add_argument("input", type=Path, help="narration .txt or .json")
+    ap.add_argument("--voice-id", required=True, help="ElevenLabs voice ID")
+    ap.add_argument("--out-dir", type=Path, required=True)
+    ap.add_argument("--model", default="eleven_multilingual_v2", help="model_id")
+    ap.add_argument("--stability", type=float, metavar="F", help="voice setting, sent only if given")
+    ap.add_argument("--similarity", type=float, metavar="F",
+                    help="voice setting, sent as similarity_boost, only if given")
+    ap.add_argument("--style", type=float, metavar="F", help="voice setting, sent only if given")
+    ap.add_argument("--speed", type=float, metavar="F", help="voice setting, sent only if given")
+    ap.add_argument("--speaker-boost", action=argparse.BooleanOptionalAction, default=None,
+                    help="voice setting use_speaker_boost, sent only if given")
+    ap.add_argument("--seed", type=int, metavar="N", help="sent only if given")
+    ap.add_argument("--language-code", metavar="CODE", help="sent only if given")
+    ap.add_argument("--max-pause", type=float, default=None, metavar="SEC",
+                    help="shorten silences between sentences to at most SEC seconds")
+    ap.add_argument("--tail-pad", type=float, default=0.2, metavar="SEC",
+                    help="silence kept after the last word (default 0.2)")
+    ap.add_argument("--lead-keep", type=float, default=None, metavar="SEC",
+                    help="trim silence before the first word, keeping SEC of it (off by default)")
+    ap.add_argument("--force-api", action="store_true",
+                    help="call the API even if raw/ holds this request")
+    args = ap.parse_args()
+
+    key = api_key()
+    text = tts.load_text(args.input)
+    req = build_request(args, text)
+    out = args.out_dir
+    out.mkdir(parents=True, exist_ok=True)
+    raw = out / "raw"
+
+    cached = None if args.force_api else load_cache(raw, req)
+    if cached:
+        audio, doc = cached
+        reused, before, after, used, source = True, None, None, 0, None
+        print("raw/ matches this request: reusing it, no API call, 0 credits used",
+              file=sys.stderr)
+    else:
+        check_usage_log()  # before any paid call
+        print(f"calling ElevenLabs: {len(text)} characters, model {args.model}", file=sys.stderr)
+        before = subscription(key)
+        audio, doc, headers = tts_call(key, req)
+        write_raw(raw, req, audio, doc)  # kept even if the checks below fail, so a retry costs nothing
+        after, used, source = read_credits(key, before, header_credits(headers))
+        log_usage(out, args, text, before, after, used, source, headers)
+        reused = False
+    check_alignment(doc["alignment"], text)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        raw_mp3 = Path(tmp) / "raw.mp3"
+        raw_mp3.write_bytes(audio)
+        pcm = tts.decode_pcm(raw_mp3, sr=SR)
+        raw_seconds = len(pcm) / 2 / SR
+
+        words_raw = alignment_words(doc["alignment"])
+        check_timing(words_raw, raw_seconds)
+        sentences = tts.group_sentences(text, words_raw)
+        pcm_out, cuts = tts.edit_timeline(pcm, sentences, args.max_pause, args.tail_pad,
+                                          args.lead_keep, sr=SR)
+        words, sents = tts.retime(sentences, cuts)
+
+        wav = Path(tmp) / "edited.wav"
+        tts.write_wav(wav, pcm_out, sr=SR)
+        tp_used = None
+        for tp in tts.TP_TARGETS:
+            tts.loudnorm_to_mp3(wav, out / "vo.mp3", tp)
+            i_lufs, tp_db = tts.measure_loudness(out / "vo.mp3")
+            tp_used = tp
+            if tp_db <= -1.0:
+                break
+
+    (out / "words.json").write_text(json.dumps(words, ensure_ascii=False, indent=2) + "\n",
+                                    encoding="utf-8")
+    (out / "sentences.json").write_text(json.dumps(sents, ensure_ascii=False, indent=2) + "\n",
+                                        encoding="utf-8")
+
+    summary = {
+        "engine": "elevenlabs",
+        "voice_id": args.voice_id,
+        "model_id": args.model,
+        "voice_settings": req["voice_settings"],
+        "max_pause": args.max_pause,
+        "lead_keep": args.lead_keep,
+        "words": len(words),
+        "sentences": len(sents),
+        "raw_seconds": round(raw_seconds, 3),
+        "removed_pause_seconds": round(sum(ce - cs for cs, ce in cuts), 3),
+        "pauses_shortened": len(cuts),
+        "vo_seconds": round(tts.duration_of(out / "vo.mp3"), 3),
+        "last_word_end": words[-1]["end"],
+        "integrated_lufs": round(i_lufs, 2),
+        "true_peak_dbtp": round(tp_db, 2),
+        "tp_target_used": tp_used,
+        "text_chars": len(text),
+        "reused_raw": reused,
+        "credits_used": used,
+        "credits_source": source,
+        "credits_remaining": None if reused or used is None
+                             else after["character_limit"] - (before["character_count"] + used),
+    }
+    print(json.dumps(summary, indent=2))
+
+
+if __name__ == "__main__":
+    main()
