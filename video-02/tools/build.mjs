@@ -19,6 +19,10 @@ const norm = (s) => String(s).toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 const BRAND_IN_S = 0.6; // the brand tag fades in at this time (PRD-12)
 const CAP_PAD_IN = 0.05; // caption chunk starts this long before its first word (video-01 v3)
 const CAP_PAD_OUT = 0.15; // and ends this long after its last word
+const CAP_MAX_WORDS = 5; // a caption chunk: at most 5 caption words and 34 characters (PRD-13)
+const CAP_MAX_CHARS = 34;
+const CAP_MERGE_WORDS = 6; // a one-word chunk merges into a neighbour of its sentence if the result has at most 6 words and 40 characters
+const CAP_MERGE_CHARS = 40;
 const SAFE_CANVAS = { w: 1080, h: 1920 };
 
 const problems = [];
@@ -44,11 +48,13 @@ const wordCounts = S.map((s) => s.vo_text.split(/\s+/).filter(Boolean).length);
 const wordStartIdx = [];
 { let acc = 0; for (const c of wordCounts) { wordStartIdx.push(acc); acc += c; } }
 const scriptTokens = S.flatMap((s) => s.vo_text.split(/\s+/).filter(Boolean));
+const punct = scriptTokens.map((t) => t.match(/[^\p{L}\p{N}]+$/u)?.[0] ?? ""); // trailing punctuation of each script word (PRD-13)
 if (words.length !== scriptTokens.length) {
   bad(`words.json has ${words.length} entries, script has ${scriptTokens.length} words`);
 } else {
   words.forEach((w, k) => {
     if (norm(w.text) !== norm(scriptTokens[k])) bad(`word ${k}: take "${w.text}" != script "${scriptTokens[k]}"`);
+    if (w.text + punct[k] !== scriptTokens[k]) bad(`word ${k}: take "${w.text}" + script punctuation "${punct[k]}" != script token "${scriptTokens[k]}"`);
   });
 }
 if (/\d/.test(S.map((s) => s.vo_text).join(" "))) bad("digits in vo_text (speak numbers in words)");
@@ -83,6 +89,20 @@ function cueIn(si, phrase, where) {
   }
 }
 const containsPhrase = (text, phrase) => ` ${phraseTokens(text).join(" ")} `.includes(` ${phraseTokens(phrase).join(" ")} `);
+
+// Visual timing (PRD-13): a scene's visuals start at visual_start_cue when it is set; the previous scene's visuals stay on until
+// then. Captions and audio keep the word timing above. visEnd of a scene is the next scene's visual start (or its scene end).
+const visStart = S.map((s, si) => {
+  const vc = planScenes[si]?.visual_start_cue;
+  if (vc === undefined) return sceneStart[si];
+  if (si === 0) { bad(`${s.id}: visual_start_cue is not allowed on the first scene`); return sceneStart[si]; }
+  const t = cueIn(si, vc, `${s.id} visual_start_cue`);
+  return Number.isNaN(t) ? sceneStart[si] : t;
+});
+const visEnd = S.map((_, si) => (si + 1 < N ? visStart[si + 1] : sceneEnd[si]));
+visStart.forEach((t, si) => {
+  if (si > 0 && !(t > visStart[si - 1])) bad(`${S[si].id}: visuals start at ${r3(t)}, not after ${S[si - 1].id} at ${r3(visStart[si - 1])}`);
+});
 
 // ---------- data (every number comes from here) ----------
 const numVal = (raw) => (raw === "" || raw === undefined ? 0 : Number(raw)); // empty cell = 0
@@ -167,10 +187,21 @@ function refValue(ref, where) {
 
 // ---------- number elements ----------
 const numbers = []; // numbers registry
+// Caption runs: a span of words shown as one caption word. runs maps its first word index to { n, show }; runOwner marks the words taken.
+const runs = new Map();
+const runOwner = new Array(words.length).fill(null);
+function addRun(wi, n, show, where) {
+  for (let j = wi; j < wi + n; j++) {
+    if (runOwner[j]) { bad(`${where}: caption run "${show}" overlaps ${runOwner[j]}`); return; }
+  }
+  for (let j = wi; j < wi + n; j++) runOwner[j] = where;
+  runs.set(wi, { n, show });
+}
 function numEl(e, si, where) {
   const sid = S[si].id;
   let v = null;
   let text;
+  let caption;
   let spoken;
   let derive;
   let lines = null;
@@ -178,12 +209,15 @@ function numEl(e, si, where) {
     try { v = refValue(e, where); } catch (err) { bad(err.message); return null; }
     if (v.text === null) { bad(`${where}: a displayed number needs as: "pct" or "year"`); return null; }
     text = (e.prefix ?? "") + v.text + (e.suffix ?? "");
+    caption = v.text; // the bare number as on screen ("80,51%", "2013"): no prefix or suffix
     spoken = v.spoken;
     derive = v.derive;
   } else {
     if (!e.spoken) { bad(`${where}: a literal number needs "spoken"`); return null; }
+    if (!e.caption) { bad(`${where}: a literal number needs "caption" (its display in the captions)`); return null; }
     lines = Array.isArray(e.lines) ? e.lines : null;
     text = lines ? lines.join(" ") : e.text;
+    caption = e.caption;
     spoken = e.spoken;
     derive = "literal number; the spoken form is written in scenes.json and tied to its data check";
   }
@@ -192,7 +226,15 @@ function numEl(e, si, where) {
   checkRef(e.check, where);
   if (e.check && checkResults[e.check] && !checkResults[e.check].ok) bad(`${where}: data check ${e.check} failed`);
   const t = cueIn(si, spoken, where);
-  numbers.push({ text, spoken, t: r3(t), scene: sid, derive, check: e.check ?? null });
+  // the number's words: one caption run, from its first to its last spoken word
+  let wi = -1;
+  if (!Number.isNaN(t)) {
+    wi = words.findIndex((w) => Math.abs(w.start - t) < 1e-9);
+    const toks = phraseTokens(spoken);
+    if (wi < 0 || !toks.every((tk, j) => norm(words[wi + j]?.text ?? "") === tk)) bad(`${where}: spoken "${spoken}" is not the words at its cue`);
+    else addRun(wi, toks.length, caption, where);
+  }
+  numbers.push({ text, caption, spoken, t: r3(t), scene: sid, derive, check: e.check ?? null, words: wi >= 0 ? [wi, wi + phraseTokens(spoken).length - 1] : null });
   return { text, lines, spoken, t: r3(t), value: v ? v.value : null, color: e.color ?? null };
 }
 
@@ -255,7 +297,7 @@ const RESOLVE = {
     const lowest = [...province].sort((a, b) => numVal(a.re_total) - numVal(b.re_total)).slice(0, n);
     const ordered = [...lowest].sort((a, b) => (100 - numVal(b.re_total)) - (100 - numVal(a.re_total)));
     const max = Math.max(...ordered.map((r) => 100 - numVal(r.re_total)));
-    const tTer = cueIn(si, p.rows.cue, `${where}.rows`);
+    const tRows = cueIn(si, p.rows.cue, `${where}.rows`);
     const hl = p.rows.highlight;
     const hlT = cueIn(si, hl.cue, `${where}.rows.highlight`);
     if (!ordered.some((r) => r.province === hl.key)) bad(`${where}: highlight "${hl.key}" is not one of the ${n} rows`);
@@ -263,7 +305,8 @@ const RESOLVE = {
       const isHl = r.province === hl.key;
       return {
         name: r.province,
-        t: r3(tTer + k * p.rows.stagger_s),
+        t: r3(tRows), // all five rows appear together at the rows cue
+        grow_t: r3(tRows + k * p.rows.stagger_s), // each bar grows in its own step
         frac_pct: r3((100 * (100 - numVal(r.re_total))) / max),
         highlight: isHl ? { t: r3(hlT), color: hl.color } : null,
       };
@@ -273,7 +316,7 @@ const RESOLVE = {
       title: textOf([p.title], `${where}.title`)[0],
       subtitle: { text: sub ? sub.text : null, t: sub ? sub.t : NaN },
       rows,
-      label: { text: label ? label.text : null, t: label ? label.t : NaN },
+      label: { lines: textOf(p.label.lines ?? [], `${where}.label`), text: label ? label.text : null, t: label ? label.t : NaN },
     };
   },
   stack(p, si, where) {
@@ -327,13 +370,14 @@ S.forEach((s, si) => {
   const planParts = planScenes[si]?.parts ?? [];
   if (planParts.length === 0) bad(`${s.id}: no parts in scenes.json`);
   const parts = [];
-  let prevTo = sceneStart[si];
+  let prevTo = visStart[si];
   planParts.forEach((p, pi) => {
     const where = `${s.id} part ${pi} (${p.type})`;
-    const from = p.from !== undefined ? cueIn(si, p.from, `${where} from`) : pi === 0 ? sceneStart[si] : prevTo;
-    const to = p.to !== undefined ? cueIn(si, p.to, `${where} to`) : pi === planParts.length - 1 ? sceneEnd[si] : NaN;
+    const from = p.from !== undefined ? cueIn(si, p.from, `${where} from`) : pi === 0 ? visStart[si] : prevTo;
+    const to = p.to !== undefined ? cueIn(si, p.to, `${where} to`) : pi === planParts.length - 1 ? visEnd[si] : NaN;
+    if (pi === 0 && Math.abs(from - visStart[si]) > 1e-9) bad(`${where}: starts at ${r3(from)}, the scene visuals start at ${r3(visStart[si])}`);
     if (pi > 0 && Math.abs(from - prevTo) > 1e-9) bad(`${where}: starts at ${from}, the previous part ends at ${prevTo}`);
-    if (pi === planParts.length - 1 && Math.abs(to - sceneEnd[si]) > 1e-9) bad(`${where}: last part must end at the scene end`);
+    if (pi === planParts.length - 1 && Math.abs(to - visEnd[si]) > 1e-9) bad(`${where}: last part must end at ${r3(visEnd[si])}, the scene visuals end`);
     if (!(to > from)) bad(`${where}: part must end after it starts (from ${from}, to ${to}); a middle part needs "to"`);
     prevTo = to;
     const fn = RESOLVE[p.type];
@@ -348,7 +392,7 @@ S.forEach((s, si) => {
     if (body.card?.cite) citations.push({ scene: s.id, text: body.card.sources });
     parts.push({ type: p.type, from: r3(from), to: r3(to), ...body });
   });
-  sceneOut.push({ index: si, id: s.id, start: r3(sceneStart[si]), end: r3(sceneEnd[si]), parts });
+  sceneOut.push({ index: si, id: s.id, start: r3(sceneStart[si]), end: r3(sceneEnd[si]), vis_start: r3(visStart[si]), vis_end: r3(visEnd[si]), parts });
 });
 
 // ---------- gates ----------
@@ -366,14 +410,13 @@ for (const g of gates) {
 
 // ---------- captions (word-synced; port of video-01 v3 build_v3.mjs) ----------
 const sentStartIdx = new Set(sentStart.filter((i) => i >= 0));
-const runs = new Map();
 S.forEach((s, si) => {
   for (const cd of s.caption_display ?? []) {
     const toks = cd.spoken.split(/\s+/).filter(Boolean).map(norm);
     let hits = 0;
     for (let i = wordStartIdx[si]; i + toks.length <= wordStartIdx[si] + wordCounts[si]; i++) {
       if (toks.every((t, j) => norm(words[i + j].text) === t)) {
-        runs.set(i, { n: toks.length, show: cd.show });
+        addRun(i, toks.length, cd.show, `${s.id} caption_display "${cd.spoken}"`);
         hits++;
         i += toks.length - 1;
       }
@@ -381,42 +424,68 @@ S.forEach((s, si) => {
     if (!hits) bad(`caption_display "${cd.spoken}" -> "${cd.show}" matches no words in ${s.id}`);
   }
 });
+const sentenceOf = []; // sentence index of each word (from sentences.json)
+{ let sent = -1; for (let k = 0; k < words.length; k++) { if (sentStartIdx.has(k)) sent++; sentenceOf[k] = sent; } }
+// Caption words: one per word, or one per run (a number run or a caption_display run, its whole spoken span). Each carries the
+// punctuation of its last script word, so the caption shows the script's punctuation.
 const capWords = [];
 for (let i = 0; i < words.length; ) {
   const run = runs.get(i);
-  if (run) {
-    capWords.push({ text: run.show, start: words[i].start, end: words[i + run.n - 1].end, i });
-    i += run.n;
-  } else {
-    capWords.push({ text: words[i].text, start: words[i].start, end: words[i].end, i });
-    i++;
-  }
+  const n = run ? run.n : 1;
+  const last = i + n - 1;
+  capWords.push({ i, n, text: (run ? run.show : words[i].text) + punct[last], start: words[i].start, end: words[last].end, sent: sentenceOf[i] });
+  i += n;
 }
-const NUMW = new Set(["nol", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas", "belas", "puluh", "ratus", "ribu", "seratus", "seribu", "koma", "juta"]);
-const isNum = (w) => NUMW.has(norm(w.text));
+// Chunks: a new chunk at each sentence start, after a word ending in , . : ; ! ? when the chunk has 2 or more words,
+// and before a word that would make it 6 caption words or more than 34 characters (5 words / 34 characters are the limits).
+const capChars = (g) => g.map((w) => w.text).join(" ").length;
 const groups = [];
 {
   let cur = [];
-  const chars = (g) => g.map((w) => w.text).join(" ").length;
   for (const w of capWords) {
     if (cur.length) {
       const prev = cur[cur.length - 1];
       const sentenceBreak = sentStartIdx.has(w.i);
-      const phraseBreak = /[,.;:!?]$/.test(prev.text) && cur.length >= 2;
-      const tooBig = cur.length >= 5 || chars(cur) + 1 + w.text.length > 34;
-      const numStart = isNum(w) && !isNum(prev);
-      if (sentenceBreak || phraseBreak || numStart || tooBig) { groups.push(cur); cur = []; }
+      const phraseBreak = /[,.:;!?]$/.test(prev.text) && cur.length >= 2;
+      const tooBig = cur.length >= CAP_MAX_WORDS || capChars([...cur, w]) > CAP_MAX_CHARS;
+      if (sentenceBreak || phraseBreak || tooBig) { groups.push(cur); cur = []; }
     }
     cur.push(w);
   }
   if (cur.length) groups.push(cur);
 }
-const captionsOut = groups.map((g, k) => {
+// A one-word chunk merges into a neighbour of its own sentence: the previous chunk if the result fits, else the next one.
+const fitsMerge = (g) => g.length <= CAP_MERGE_WORDS && capChars(g) <= CAP_MERGE_CHARS;
+const chunks = [];
+for (let k = 0; k < groups.length; k++) {
+  const g = groups[k];
+  if (g.length === 1) {
+    const prev = chunks[chunks.length - 1];
+    const next = groups[k + 1];
+    if (prev && prev[0].sent === g[0].sent && fitsMerge([...prev, ...g])) { chunks[chunks.length - 1] = [...prev, ...g]; continue; }
+    if (next && next[0].sent === g[0].sent && fitsMerge([...g, ...next])) { groups[k + 1] = [...g, ...next]; continue; }
+  }
+  chunks.push(g);
+}
+chunks.forEach((g, k) => {
+  if (!fitsMerge(g)) bad(`caption chunk ${k} "${g.map((w) => w.text).join(" ")}" is over ${CAP_MERGE_WORDS} words or ${CAP_MERGE_CHARS} characters`);
+});
+for (const k of sentStartIdx) {
+  const c = chunks.find((g) => g.some((w) => w.i === k));
+  if (!c || c[0].i !== k) bad(`sentence start word ${k} does not begin a caption chunk`);
+}
+for (const n of numbers) {
+  if (!n.words) continue;
+  const [w0, w1] = n.words;
+  if (!capWords.some((c) => c.i === w0 && c.n === w1 - w0 + 1)) bad(`number "${n.spoken}" is split across caption words`);
+}
+const captionsOut = chunks.map((g, k) => {
   const start = Math.max(0, r3(g[0].start - CAP_PAD_IN));
-  const nextStart = k + 1 < groups.length ? groups[k + 1][0].start - CAP_PAD_IN : null;
+  const nextStart = k + 1 < chunks.length ? chunks[k + 1][0].start - CAP_PAD_IN : null;
   const end = r3(Math.min(g.at(-1).end + CAP_PAD_OUT, nextStart !== null ? nextStart - 0.01 : TOTAL));
   if (!(end > start)) bad(`caption ${k} has no duration`);
-  return { i: k, start, end, words: g.map((w) => ({ i: w.i, text: w.text, start: r3(w.start), end: r3(w.end) })) };
+  const text = g.map((w) => w.text).join(" ");
+  return { i: k, start, end, duration: r3(end - start), text, words: g.map((w) => ({ i: w.i, text: w.text, start: r3(w.start), end: r3(w.end) })) };
 });
 
 // ---------- output ----------
@@ -426,7 +495,7 @@ if (problems.length) {
 }
 
 const fps = cfg.fps;
-const runtime = { fps, total: TOTAL, scenes: sceneOut, captions: captionsOut, brand: { text: cfg.brand, t: BRAND_IN_S } };
+const runtime = { fps, total: TOTAL, scenes: sceneOut.map((s) => ({ index: s.index, id: s.id, start: s.vis_start, end: s.vis_end, parts: s.parts })), captions: captionsOut, brand: { text: cfg.brand, t: BRAND_IN_S } };
 
 // assets: copy the take (only after validation)
 const assetDir = P("assets/vo");
@@ -440,7 +509,7 @@ const sosCss = readFileSync(P("components/sos.css"), "utf8").replace(/url\("\.\.
 const styleRaw = `${rootVars}\n${sosCss}`;
 
 const sceneSections = sceneOut
-  .map((s) => `      <section id="scene-${s.index}-${s.id}" class="clip scene" data-index="${s.index}" data-start="${s.start}" data-duration="${r3(s.end - s.start)}" data-track-index="${s.index}"></section>`)
+  .map((s) => `      <section id="scene-${s.index}-${s.id}" class="clip scene" data-index="${s.index}" data-start="${s.vis_start}" data-duration="${r3(s.vis_end - s.vis_start)}" data-track-index="${s.index}"></section>`)
   .join("\n");
 const overlays = [`      <div id="overlay-brand" class="overlay brand clip" data-start="${BRAND_IN_S}" data-duration="${r3(TOTAL - BRAND_IN_S)}" data-track-index="4">${esc(cfg.brand)}</div>`];
 captionsOut.forEach((c) => {
@@ -471,7 +540,7 @@ const timeline = {
   total: TOTAL,
   vo_seconds: VO_SECONDS,
   gates,
-  scenes: sceneOut.map((s) => ({ id: s.id, start: s.start, end: s.end })),
+  scenes: sceneOut.map((s) => ({ id: s.id, start: s.start, end: s.end, visual_start: s.vis_start, visual_end: s.vis_end })),
   cues,
   numbers,
   checks: Object.values(checkResults),
@@ -486,10 +555,16 @@ console.log(`build: wrote index.html and build/timeline.json; total ${TOTAL} s @
 console.log("build: data checks");
 for (const c of Object.values(checkResults)) console.log(`  ${c.ok ? "true " : "FALSE"} ${c.name}  ${JSON.stringify(c.values)}`);
 console.log("build: scenes");
-for (const s of sceneOut) console.log(`  [${s.index}] ${s.id.padEnd(13)} ${String(s.start).padStart(7)} - ${String(s.end).padEnd(7)} parts: ${s.parts.map((p) => `${p.type}(${p.from}-${p.to})`).join(", ")}`);
+for (const s of sceneOut) console.log(`  [${s.index}] ${s.id.padEnd(13)} words ${String(s.start).padStart(7)} - ${String(s.end).padEnd(7)} visuals ${String(s.vis_start).padStart(7)} - ${String(s.vis_end).padEnd(7)} parts: ${s.parts.map((p) => `${p.type}(${p.from}-${p.to})`).join(", ")}`);
 console.log("build: gates");
 for (const g of gates) console.log(`  ${g.name.padEnd(6)} ${g.value} s  (limit ${g.max} s)  ${g.ok ? "ok" : "OVER"}`);
-console.log(`build: caption chunks ${captionsOut.length}`);
+console.log(`build: caption chunks ${captionsOut.length} (limits: 5 words / 34 characters; a one-word chunk merges when the result is at most 6 words / 40 characters)`);
+console.log("build: chunk list (start, end, duration, text)");
+for (const c of captionsOut) {
+  console.log(`  ${String(c.i).padStart(2)}  ${c.start.toFixed(3)}  ${c.end.toFixed(3)}  ${c.duration.toFixed(3)}  ${String(c.words.length).padStart(1)}w ${String(c.text.length).padStart(2)}ch  ${c.text}`);
+}
+const oneWord = captionsOut.filter((c) => c.words.length === 1);
+console.log(`build: one-word chunks: ${oneWord.length ? oneWord.map((c) => `${c.i} "${c.text}"`).join("; ") : "none"}`);
 console.log(`build: numbers registry (${numbers.length})`);
-for (const n of numbers) console.log(`  t=${n.t}  ${n.scene}  "${n.text}"  spoken "${n.spoken}"  derive: ${n.derive}${n.check ? `  check: ${n.check}` : ""}`);
+for (const n of numbers) console.log(`  t=${n.t}  ${n.scene}  "${n.text}"  caption "${n.caption}"  spoken "${n.spoken}"  derive: ${n.derive}${n.check ? `  check: ${n.check}` : ""}`);
 console.log(`build: citations (exempt from the number rule): ${citations.map((c) => `${c.scene} "${c.text}"`).join("; ")}`);

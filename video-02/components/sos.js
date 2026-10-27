@@ -134,7 +134,8 @@
     });
   }
 
-  // ---------- rankbars: title, subtitle at its cue, five rows at the cue with a stagger, one row highlighted ----------
+  // ---------- rankbars: title, subtitle and the five rows at the rows cue (together); the bars grow with a stagger; one row highlighted;
+  // the label (two lines) at its number cue, inside the same block ----------
   function rankbars(tl, sec, p, sc) {
     var L = layer(tl, sec, p, sc, "rank");
     var c = block(L, "rank-chart");
@@ -152,14 +153,16 @@
       r.appendChild(track);
       c.appendChild(r);
       appear(tl, r, row.t, 0.25);
-      tl.fromTo(bar, { width: "0%" }, { width: row.frac_pct + "%", duration: 0.6, ease: "power2.out" }, row.t);
+      tl.fromTo(bar, { width: "0%" }, { width: row.frac_pct + "%", duration: 0.6, ease: "power2.out" }, row.grow_t);
       if (row.highlight) {
         tl.to(bar, { backgroundColor: row.highlight.color || BAD, duration: 0.2 }, row.highlight.t);
         tl.to(name, { color: ACCENT, duration: 0.2 }, row.highlight.t);
       }
     });
-    var lb = block(L, "rank-label");
-    lb.appendChild(el("div", "rank-label-text", p.label.text));
+    var lb = el("div", "rank-label");
+    p.label.lines.forEach(function (ln) { lb.appendChild(el("div", "rank-label-line", ln)); });
+    lb.appendChild(el("div", "rank-label-num", p.label.text));
+    c.appendChild(lb);
     appear(tl, lb, p.label.t, 0.3);
   }
 

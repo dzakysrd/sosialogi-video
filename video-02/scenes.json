@@ -1,5 +1,5 @@
 {
-  "_help": "Visual plan for video-02, one entry per script scene (same ids and order as research/video-02/script_v1.json). A scene has parts: one part, or two when the layout changes mid-scene. A part has a type (claim, pair, grid, textcard, rankbars, stack, close) and optional from/to (a cue phrase from the scene's vo_text; default = scene start / scene end). An element with a cue appears at the first exact match of its phrase after the scene start (tools/lib/cue.mjs). An element without a cue is shown from the part start. Text is a string or a list of lines. A number is either a data reference {from, key, field, as, cue} (from: national = re_national.csv keyed by year, province = re_province.csv keyed by province; as: pct = fmtPct, year = the CSV year; complement = 100 minus the value) or a literal {text, spoken, cue, check}. For every number the cue must equal its spoken form. A check names a data check in tools/build.mjs. The build resolves all times and values; this file holds no timings.",
+  "_help": "Visual plan for video-02, one entry per script scene (same ids and order as research/video-02/script_v1.json). A scene has parts: one part, or two when the layout changes mid-scene. A part has a type (claim, pair, grid, textcard, rankbars, stack, close) and optional from/to (a cue phrase from the scene's vo_text; default = scene start / scene end). An element with a cue appears at the first exact match of its phrase after the scene start (tools/lib/cue.mjs). An element without a cue is shown from the part start. Text is a string or a list of lines. A number is either a data reference {from, key, field, as, cue} (from: national = re_national.csv keyed by year, province = re_province.csv keyed by province; as: pct = fmtPct, year = the CSV year; complement = 100 minus the value) or a literal {text, spoken, cue, caption, check}. For every number the cue must equal its spoken form; caption is the number's display in the captions (literal numbers only; data numbers use their on-screen value). A check names a data check in tools/build.mjs. A scene may set visual_start_cue (a cue inside that scene): its visuals start there and the previous scene's visuals stay on until then; captions and audio are not affected. The build resolves all times and values; this file holds no timings.",
   "scenes": [
     {
       "id": "s1_hook",
@@ -8,7 +8,7 @@
           "type": "claim",
           "kicker": "DULU",
           "lines": ["RUMAH TANGGA", "BELUM BERLISTRIK"],
-          "reveal": {"text": "HAMPIR 1 DARI 5", "spoken": "satu dari lima", "cue": "satu dari lima", "check": "one_in_five_2013"}
+          "reveal": {"text": "HAMPIR 1 DARI 5", "spoken": "satu dari lima", "cue": "satu dari lima", "caption": "1 dari 5", "check": "one_in_five_2013"}
         }
       ]
     },
@@ -46,27 +46,29 @@
           "unlit_from": {"from": "national", "key": "2013", "field": "ratio_pct"},
           "unlit_to": {"from": "national", "key": "2025", "field": "ratio_pct"},
           "switch": {"cue": "tinggal", "label": "SEKARANG", "fill_s": 1.2},
-          "headline": {"lines": ["KURANG DARI 2", "PER 1.000"], "spoken": "dua per seribu", "cue": "dua per seribu", "check": "under_two_per_1000_2025"},
+          "headline": {"lines": ["KURANG DARI 2", "PER 1.000"], "spoken": "dua per seribu", "cue": "dua per seribu", "caption": "2 per 1.000", "check": "under_two_per_1000_2025"},
           "subline": "rumah tangga belum berlistrik"
         }
       ]
     },
     {
       "id": "s4_provinces",
+      "visual_start_cue": "angkanya",
       "parts": [
         {
           "type": "textcard",
-          "to": "Data",
+          "from": "angkanya",
+          "to": "dua ribu dua puluh tiga",
           "lines": ["SETAHUN TERAKHIR", "TIDAK BERGERAK"],
           "check": "flat_last_year"
         },
         {
           "type": "rankbars",
-          "from": "Data",
+          "from": "dua ribu dua puluh tiga",
           "title": "BELUM BERLISTRIK",
           "subtitle": {"prefix": "akhir ", "from": "province", "key": "Papua Pegunungan", "field": "year", "as": "year", "cue": "dua ribu dua puluh tiga"},
-          "rows": {"select": "lowest", "count": 5, "field": "re_total", "cue": "terendah", "stagger_s": 0.1, "highlight": {"key": "Papua Pegunungan", "cue": "Papua Pegunungan", "color": "#ff6b35"}},
-          "label": {"prefix": "PAPUA PEGUNUNGAN: ", "from": "province", "key": "Papua Pegunungan", "field": "re_total", "as": "pct", "suffix": " BERLISTRIK", "cue": "sembilan puluh tiga koma delapan dua persen", "check": "lowest_province"}
+          "rows": {"select": "lowest", "count": 5, "field": "re_total", "cue": "dua ribu dua puluh tiga", "stagger_s": 0.08, "highlight": {"key": "Papua Pegunungan", "cue": "Papua Pegunungan", "color": "#ff6b35"}},
+          "label": {"lines": ["PAPUA PEGUNUNGAN"], "from": "province", "key": "Papua Pegunungan", "field": "re_total", "as": "pct", "suffix": " BERLISTRIK", "cue": "sembilan puluh tiga koma delapan dua persen", "check": "lowest_province"}
         }
       ]
     },
