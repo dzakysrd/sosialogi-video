@@ -72,3 +72,5 @@ Finding: the subscription counter lags. On the smoke call it still read 0 two se
 3. voice/elevenlabs_usage.csv columns become: utc_time,out_dir,voice_id,model_id,text_chars,credits_used,credits_source,subscription_before,subscription_after_read,cost_headers. subscription_after_read is the value actually read after the call (it may lag). out_dir is written relative to the repo root when it is inside the repo, otherwise absolute.
 4. The POST body omits "voice_settings" entirely when no setting was passed, so the voice's own defaults apply. raw/request.json is unchanged (it may still hold "voice_settings": {}), so existing caches stay valid.
 5. The existing smoke row is rewritten in the new columns from facts already measured: credits_used 54, credits_source "character-cost header", subscription_before 0, subscription_after_read 0, cost_headers "character-cost=54". No new call is made for this.
+
+Revision 2 (PRD-03a): loudness now uses gain + 192 kHz limiter at -2 dBFS before MP3 encoding, target -14 +/- 0.3 LUFS, true peak <= -1.5 dBTP; tts.py is unchanged.

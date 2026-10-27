@@ -13,7 +13,8 @@ Input: a .txt file (plain text) or a .json file holding a string, a list of
 strings, or {"text": "..."}.
 
 Writes to --out-dir:
-  vo.mp3          narration, loudness-normalised to -14 LUFS, true peak <= -1 dBTP
+  vo.mp3          narration, gain to -14 LUFS (+/- 0.3), 192 kHz limiter at -2 dBFS,
+                  true peak <= -1.5 dBTP
   words.json      [{"text", "start", "end"}, ...]  every word, seconds
   sentences.json  [{"text", "start", "end"}, ...]  every sentence, seconds
   raw/            the API response and the request it answers (a cache)
@@ -33,6 +34,7 @@ import base64
 import csv
 import json
 import os
+import subprocess
 import sys
 import tempfile
 import time
@@ -54,6 +56,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 USAGE_CSV = Path(__file__).resolve().parent / "elevenlabs_usage.csv"
 USAGE_HEADER = ["utc_time", "out_dir", "voice_id", "model_id", "text_chars", "credits_used",
                 "credits_source", "subscription_before", "subscription_after_read", "cost_headers"]
+LOUD_TOL = 0.3  # accepted |integrated loudness - (-14 LUFS)|, LU
+TP_MAX = -1.5  # accepted true peak, dBTP (headroom for the linear loudnorm in render_v3.sh)
+LIMIT_START = -2.0  # first limiter ceiling, dBFS
+LIMIT_STEP = 0.5  # dB the ceiling is lowered when the true peak is over TP_MAX
+MAX_ENCODES = 4  # MP3 encodes allowed in normalize_to_mp3, the first one included
 
 
 def api_key() -> str:
@@ -303,6 +310,47 @@ def check_timing(words: list[dict], raw_seconds: float) -> None:
                  f"{raw_seconds:.3f} s long")
 
 
+def limiter_chain(gain_db: float, limit_db: float) -> str:
+    """Gain, then a lookahead limiter at 192 kHz so inter-sample peaks are seen, then 48 kHz.
+    latency=1 makes alimiter compensate its lookahead, so the audio is not shifted in time."""
+    limit = 10 ** (limit_db / 20)  # alimiter takes a linear ceiling
+    return (f"volume={gain_db:.3f}dB,aresample=192000,"
+            f"alimiter=limit={limit:.6f}:attack=1:release=50:level=0:latency=1,"
+            "aresample=48000")
+
+
+def normalize_to_mp3(wav: Path, out_mp3: Path) -> dict:
+    """Level the edited wav to -14 LUFS and encode it to MP3, limiting peaks on the way.
+
+    Raw ElevenLabs audio sits about 8 to 10 dB under -14 LUFS with peaky transients, so a
+    linear loudnorm cannot reach the target without the true peak going over. Here a fixed
+    gain is applied, then a limiter. Only level and peaks change; speech is never stretched.
+    The MP3 is measured and the gain or the limiter ceiling corrected, with at most
+    MAX_ENCODES encodes in all. If that is not enough, exits non-zero with the values.
+    """
+    i0, _ = tts.measure_loudness(wav)
+    gain, limit = tts.LOUD_I - i0, LIMIT_START
+    for encodes in range(1, MAX_ENCODES + 1):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-nostats", "-i", str(wav),
+                        "-af", limiter_chain(gain, limit), "-c:a", "libmp3lame", "-b:a", "256k",
+                        str(out_mp3)], check=True, capture_output=True, text=True)
+        i_lufs, tp = tts.measure_loudness(out_mp3)
+        ok_i = abs(i_lufs - tts.LOUD_I) <= LOUD_TOL
+        ok_tp = tp <= TP_MAX
+        if ok_i and ok_tp:
+            return {"integrated_lufs": i_lufs, "true_peak_dbtp": tp, "limiter_db": limit,
+                    "gain_db": gain, "encodes": encodes}
+        if encodes == MAX_ENCODES:
+            break
+        if not ok_i:
+            gain += tts.LOUD_I - i_lufs
+        if not ok_tp:
+            limit -= LIMIT_STEP
+    sys.exit(f"loudness out of range after {MAX_ENCODES} encodes: integrated {i_lufs:.2f} LUFS "
+             f"(target {tts.LOUD_I} +/- {LOUD_TOL}), true peak {tp:.2f} dBTP (max {TP_MAX}), "
+             f"limiter {limit:.2f} dBFS, gain {gain:.2f} dB")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Indonesian TTS with word timestamps (ElevenLabs).")
     ap.add_argument("input", type=Path, help="narration .txt or .json")
@@ -367,13 +415,7 @@ def main() -> None:
 
         wav = Path(tmp) / "edited.wav"
         tts.write_wav(wav, pcm_out, sr=SR)
-        tp_used = None
-        for tp in tts.TP_TARGETS:
-            tts.loudnorm_to_mp3(wav, out / "vo.mp3", tp)
-            i_lufs, tp_db = tts.measure_loudness(out / "vo.mp3")
-            tp_used = tp
-            if tp_db <= -1.0:
-                break
+        norm = normalize_to_mp3(wav, out / "vo.mp3")
 
     (out / "words.json").write_text(json.dumps(words, ensure_ascii=False, indent=2) + "\n",
                                     encoding="utf-8")
@@ -394,9 +436,11 @@ def main() -> None:
         "pauses_shortened": len(cuts),
         "vo_seconds": round(tts.duration_of(out / "vo.mp3"), 3),
         "last_word_end": words[-1]["end"],
-        "integrated_lufs": round(i_lufs, 2),
-        "true_peak_dbtp": round(tp_db, 2),
-        "tp_target_used": tp_used,
+        "integrated_lufs": round(norm["integrated_lufs"], 2),
+        "true_peak_dbtp": round(norm["true_peak_dbtp"], 2),
+        "limiter_db": round(norm["limiter_db"], 2),
+        "gain_db": round(norm["gain_db"], 2),
+        "encodes": norm["encodes"],
         "text_chars": len(text),
         "reused_raw": reused,
         "credits_used": used,
