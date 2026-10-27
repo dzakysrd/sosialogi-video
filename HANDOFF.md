@@ -41,11 +41,12 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 ## Video #2 status
 
-- Topic: Hari Listrik Nasional (27 October). No data researched yet. No `video-02/` folder yet.
+- Topic: Hari Listrik Nasional (27 October). Data: the electrification ratio (rasio elektrifikasi), angle "progress" (user, 2026-10-28). No `video-02/` folder yet.
 - Base: option C, chosen by the user on 2026-10-28 (WIB) in PRD-06 (`docs/prd/06-video02-base.md`). `template/` is the scene engine (`scenes.json`-driven). Ported in from video-01: word-cue timing (`video-01/tools/lib/cue.mjs`), word-synced captions (the caption block of `video-01/tools/build_v3.mjs`), the two-pass loudnorm (`video-01/tools/render_v3.sh`) and the generic lint checks.
 - Safe box: the video-01 v3 Reels values (top 220, bottom 420, left 65, right 140), not the template's TikTok values.
 - Gaps in both bases: number formats are Rupiah only (no percent, kWh or GW), no line chart, no share chart, and the map has 34 provinces.
-- Next: a research PRD once the user picks the data, then the script, then a port PRD for only the components the script needs.
+- Research done (PRD-07, PRD-07b): `research/video-02/re_national.csv` (2013-2025; 2013-2022 are chart labels from LK 2023 Gambar 48, and 2019-2022 also match text in two ESDM reports) and `research/video-02/re_province.csv` (38 provinces, Triwulan IV 2023, LK 2023 Tabel 58, split into PLN, non-PLN and LTSHE). Definition, sources and open issues: `research/video-02/sources.md`. Raw PDFs are not committed; run `bash research/video-02/tools/fetch.sh`. No newer per-province table in text form was found (Ditjen LK 2024 has only a map image).
+- Next: the script, then a port PRD for only the components the script needs.
 
 ## Rules and decisions (enforced in code or docs)
 
