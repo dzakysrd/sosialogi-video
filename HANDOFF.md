@@ -61,7 +61,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 ## Next steps (ordered)
 
-1. User review of `out/v3.mp4`. The voice is an English-accent premade voice speaking Indonesian; it was measured (timing, loudness) but not judged by ear by the reviewer. The pause after "Yuk," is 0.16 s in `el_liam_cta2` (0.50 s in `el_liam_cta`, which the user had approved); waiting for the user to confirm.
+1. Done: the user reviewed `out/v3.mp4` (voice `el_liam_cta2`, CTA "Yuk, follow et Dzaky es er de.", 0.16 s pause after "Yuk,") and approved it on 2026-10-27 ("Udah ok overall"). The reviewer measured timing and loudness but did not judge the audio by ear.
 2. ElevenLabs credits: 1,384 of 10,000 used this period (resets 2026-11-26), per `voice/elevenlabs_usage.csv` and the subscription endpoint.
 3. **[session note]** The free plan is reported as non-commercial with attribution required. Not checked here; check ElevenLabs' terms before any monetised use.
 4. Optional: the HyperFrames CLI lint reports 12 structural warnings for `index_v3.html` (file size, dense tracks, nested structure). Not errors; not reviewed.

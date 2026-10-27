@@ -40,4 +40,4 @@ FINAL MESSAGE: the diff of voice/tts_elevenlabs.py, the Part 1 checks, the Part 
 - One paid call: 30 credits; 1,384 of 10,000 used in total. voice/samples/v3/el_liam_cta2: 105 words, 14 sentences, -14.2 LUFS, true peak -2.0 dBTP; the 98 words before "Yuk" keep exactly the el_liam_cta times.
 - Gates: hook 3.399 s (3.5), Jawa Barat 12.274 s (12.5), close 6.133 s (7.0), total 43.799 s (45). lint_v3 passed.
 - out/v3.mp4: 1080x1920, 30 fps, 1314 frames, 43.80 s; audio 43.82 s; -13.9 LUFS, true peak -4.4 dBTP. Caption "Yuk follow @dzakysrd".
-- Side effect: splicing at "Yuk, follow" re-voiced the pause after "Yuk,". It is now 0.16 s (0.50 s in el_liam_cta, which the user had approved). Sent to the user to confirm.
+- Side effect: splicing at "Yuk, follow" re-voiced the pause after "Yuk,". It is now 0.16 s (0.50 s in el_liam_cta, which the user had approved). The user approved the result on 2026-10-27.
