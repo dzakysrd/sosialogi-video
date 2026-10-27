@@ -1,2 +1,5 @@
 utc_time,out_dir,voice_id,model_id,text_chars,credits_used,credits_source,subscription_before,subscription_after_read,cost_headers
 2026-10-27T10:08:08Z,/tmp/claude-0/-home-user-sosialogi-video/37ce8e47-91b2-5470-94d6-bb0c712f3c74/scratchpad/prd01/smoke,hpp4J3VqNfWAUOO0d1Us,eleven_multilingual_v2,54,54,character-cost header,0,0,character-cost=54
+2026-10-27T10:24:36Z,voice/samples/elevenlabs/preview/liam,TX3LPaxmHKxFdv7VOQHJ,eleven_multilingual_v2,179,179,character-cost header,54,54,character-cost=179
+2026-10-27T10:24:49Z,voice/samples/elevenlabs/preview/daniel,onwK4e9ZLuTAKqWW03F9,eleven_multilingual_v2,179,179,character-cost header,54,54,character-cost=179
+2026-10-27T10:25:12Z,voice/samples/elevenlabs/preview/alice,Xb7hH8MSUJpSbSDYk0k2,eleven_multilingual_v2,179,179,character-cost header,54,54,character-cost=179
