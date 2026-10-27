@@ -1,285 +1,301 @@
-/* SOS components v1: reusable scene builders for the Sosialogi-style data explainer.
+/* video-02 scene builders. Plain browser script, loaded after vendor/gsap.min.js.
  *
- * Plain browser script, loaded after vendor/gsap.min.js. No network, no randomness.
- * Each builder appends DOM inside its scene <section> and adds tweens to ONE paused master
- * timeline at ABSOLUTE times (scene start + offset), so any frame can be seeked deterministically.
- *
- * Public API: window.SOS.build(cfg) -> paused GSAP timeline (cfg = scenes.json normalised by tools/build.mjs).
- * Scene types: title, map, bignumber, bars. Overlays (brand tag, DEMO badge, source line, captions)
- * are static DOM written by the build and animated here.
+ * Deterministic: no network, no randomness, no Date. window.SOS.build(cfg) returns ONE paused GSAP timeline.
+ * Every tween sits at an absolute time from cfg, which tools/build.mjs resolves from word cues of the voice take.
+ * Text appears at its cue with a short fade and rise. Numbers are never animated through other values.
+ * Each text block is a container with data-tb (one per block; captions count, the brand tag does not).
  */
 (function (global) {
   "use strict";
 
-  // ---------- helpers ----------
-  function make(tag, cls, text) {
+  var ACCENT = "#ffd23f";
+  var BAD = "#ff6b35";
+  var NEUTRAL = "#9fb2cc";
+  var CAP_BASE = "rgba(255,255,255,0.96)";
+
+  function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
     if (text !== undefined && text !== null) n.textContent = String(text);
     return n;
   }
 
-  var toneCache = {};
-  function toneColor(tone) {
-    var name = { good: "--good", bad: "--bad", neutral: "--neutral", ink: "--ink", accent: "--accent" }[tone] || "--neutral";
-    if (!toneCache[name]) {
-      toneCache[name] = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  // A text block: one container per block, named for the layout rules in sos.css.
+  function block(parent, id) {
+    var b = el("div", "blk");
+    b.setAttribute("data-tb", id);
+    parent.appendChild(b);
+    return b;
+  }
+
+  // Text that appears at time t: a short fade and rise.
+  function appear(tl, node, t, dur) {
+    tl.fromTo(node, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: dur || 0.25, ease: "power2.out" }, t);
+  }
+
+  // A part layer covers the scene. It fades in at part.from (when it is not the scene start) and out before part.to.
+  function layer(tl, sec, part, scene, name) {
+    var d = el("div", "part part-" + name);
+    sec.appendChild(d);
+    if (part.from > scene.start + 1e-9) {
+      tl.fromTo(d, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power1.out" }, part.from);
     }
-    return toneCache[name];
-  }
-
-  // Indonesian number format: "." for thousands, "," for decimals.
-  function groupThousands(digits) {
-    return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
-  function fmtFull(v) {
-    return (v < 0 ? "-" : "") + "Rp" + groupThousands(String(Math.round(Math.abs(v))));
-  }
-  function fmtShort(v) {
-    return (v < 0 ? "-" : "") + "Rp" + (Math.abs(v) / 1e6).toFixed(2).replace(".", ",") + " jt";
-  }
-  function fmt(v, format) {
-    return format === "short" ? fmtShort(v) : fmtFull(v);
-  }
-
-  // Count-up = GSAP property tween on textContent with a formatting modifier.
-  // Property tweens are re-applied on every seek. onUpdate callbacks are not guaranteed
-  // during seeks (the runtime seeks with suppressEvents), so do not use them for text.
-  function countUp(tl, node, to, format, at, dur) {
-    tl.fromTo(
-      node,
-      { textContent: 0 },
-      {
-        textContent: to,
-        duration: dur,
-        ease: "power2.out",
-        modifiers: {
-          textContent: function (v) {
-            return fmt(parseFloat(v), format);
-          },
-        },
-      },
-      at
-    );
-  }
-
-  // ---------- TitleCard ----------
-  // s: { text, kicker? }   Words wrapped in *asterisks* are drawn in the accent colour.
-  function TitleCard(tl, sec, s, t0) {
-    var wrap = make("div", "title-card");
-    if (s.kicker) wrap.appendChild(make("div", "kicker", s.kicker));
-
-    var head = make("h1", "title-text");
-    var words = String(s.text).split(/\s+/).filter(Boolean);
-    words.forEach(function (raw, i) {
-      var accent = /^\*.+\*$/.test(raw);
-      head.appendChild(make("span", "word" + (accent ? " accent" : ""), raw.replace(/\*/g, "")));
-      if (i < words.length - 1) head.appendChild(document.createTextNode(" "));
-    });
-    wrap.appendChild(head);
-    sec.appendChild(wrap);
-
-    var kicker = wrap.querySelector(".kicker");
-    if (kicker) {
-      tl.fromTo(kicker, { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, t0 + 0.05);
+    if (part.to < scene.end - 1e-9) {
+      tl.to(d, { opacity: 0, duration: 0.15, ease: "power1.in" }, part.to - 0.15);
     }
-    // Words pop in one by one from a visible start state, so frame 0 already shows the hook.
-    tl.fromTo(
-      head.querySelectorAll(".word"),
-      { opacity: 0.5, y: 40, scale: 0.85 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)", stagger: 0.12 },
-      t0
-    );
+    return d;
   }
 
-  // ---------- MapHighlight ----------
-  // s: { title?, format?, focus?: "provinces" | "all" | [ids], provinces: [{id, value, tone, pos?}] }
-  //   pos: above | below | left | right  (where the label sits relative to the province point)
-  var MAP_W = 880; // px, fits the safe box
-  var MAP_PAD = 36; // map units of breathing room around the zoom target
-  var MAP_MAX_ZOOM = 4;
-
-  function MapHighlight(tl, sec, s, t0) {
-    var tpl = document.getElementById("map-svg");
-    var svg = document.importNode(tpl.content.querySelector("svg"), true);
-    var vb = svg.getAttribute("viewBox").trim().split(/\s+/).map(Number); // [x, y, w, h]
-    var mapH = MAP_W * (vb[3] / vb[2]);
-
-    var block = make("div", "map-block");
-    if (s.title) block.appendChild(make("div", "block-title", s.title));
-    var frame = make("div", "map-frame");
-    frame.style.height = mapH + "px";
-    frame.appendChild(svg);
-    block.appendChild(frame);
-    sec.appendChild(block);
-
-    var byId = {};
-    svg.querySelectorAll("path[id]").forEach(function (p) {
-      byId[p.id] = p;
-    });
-    var group = svg.querySelector("#provinces");
-    gsapSetInstant(group, { transformOrigin: "0px 0px", scale: 1, x: 0, y: 0 });
-
-    var provinces = s.provinces || [];
-    var focusIds;
-    if (Array.isArray(s.focus)) focusIds = s.focus;
-    else if (s.focus === "all") focusIds = null;
-    else focusIds = provinces.map(function (p) { return p.id; });
-
-    // Fill highlighted provinces with their tone colour.
-    provinces.forEach(function (p, i) {
-      tl.to(byId[p.id], { fill: toneColor(p.tone), duration: 0.5, ease: "power1.out" }, t0 + 0.6 + i * 0.15);
-    });
-
-    // Zoom target: union of focus bboxes, in map units.
-    var box = { x: vb[0], y: vb[1], w: vb[2], h: vb[3] };
-    if (focusIds && focusIds.length) {
-      var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-      focusIds.forEach(function (id) {
-        var b = byId[id].getBBox();
-        minX = Math.min(minX, b.x); minY = Math.min(minY, b.y);
-        maxX = Math.max(maxX, b.x + b.width); maxY = Math.max(maxY, b.y + b.height);
-      });
-      box = { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
-    }
-    var k = Math.min(vb[2] / (box.w + 2 * MAP_PAD), vb[3] / (box.h + 2 * MAP_PAD));
-    k = Math.max(1, Math.min(MAP_MAX_ZOOM, k));
-    var cx = box.x + box.w / 2, cy = box.y + box.h / 2;
-    var tx = vb[0] + vb[2] / 2 - k * cx;
-    var ty = vb[1] + vb[3] / 2 - k * cy;
-
-    var zoomAt = t0 + 0.5, zoomDur = 1.3;
-    var labelsAt = t0 + 0.6;
-    if (k > 1.001) {
-      tl.fromTo(group, { scale: 1, x: 0, y: 0 }, { scale: k, x: tx, y: ty, duration: zoomDur, ease: "power3.inOut" }, zoomAt);
-      labelsAt = zoomAt + zoomDur + 0.05;
-    }
-
-    // Labels and dots sit in frame pixels at the zoomed position (computed once, shown after the zoom).
-    var pxPerUnit = MAP_W / vb[2];
-    provinces.forEach(function (p, i) {
-      var path = byId[p.id];
-      var b = path.getBBox();
-      var px = b.x + b.width / 2, py = b.y + b.height / 2;
-      var sx = (k * px + tx - vb[0]) * pxPerUnit;
-      var sy = (k * py + ty - vb[1]) * pxPerUnit;
-
-      var anchor = make("div", "map-anchor");
-      anchor.style.left = sx + "px";
-      anchor.style.top = sy + "px";
-      var dot = make("div", "map-dot");
-      dot.style.background = toneColor(p.tone);
-      var label = make("div", "map-label pos-" + (p.pos || "above"));
-      label.appendChild(make("div", "ml-name", path.getAttribute("data-name")));
-      label.appendChild(make("div", "ml-val tone-" + p.tone, fmt(p.value, s.format || "short")));
-      anchor.appendChild(dot);
-      anchor.appendChild(label);
-      frame.appendChild(anchor);
-
-      gsapSetInstant(dot, { xPercent: -50, yPercent: -50 });
-      var placement = { above: [-50, -100], below: [-50, 0], left: [-100, -50], right: [0, -50] }[p.pos || "above"];
-      gsapSetInstant(label, { xPercent: placement[0], yPercent: placement[1] });
-
-      var at = labelsAt + i * 0.14;
-      tl.fromTo(dot, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, at);
-      tl.fromTo(label, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, at + 0.05);
-    });
+  // ---------- claim: kicker and two lines from 0 s, the reveal at its cue ----------
+  function claim(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "claim");
+    var b = block(L, "claim");
+    b.appendChild(el("div", "kicker", p.kicker));
+    p.lines.forEach(function (ln) { b.appendChild(el("div", "claim-line", ln)); });
+    var r = el("div", "claim-reveal", p.reveal.text);
+    b.appendChild(r);
+    appear(tl, r, p.reveal.t, 0.3);
   }
 
-  // ---------- BigNumber ----------
-  // s: { label, value, format: full|short, alt?: full|short, sublabel?, tone?: ink|good|bad|accent|neutral }
-  function BigNumber(tl, sec, s, t0) {
-    var format = s.format || "full";
-    var box = make("div", "bignum");
-    box.appendChild(make("div", "bn-label", s.label || ""));
-    var val = make("div", "bn-value tone-" + (s.tone || "ink"), fmt(0, format));
-    box.appendChild(val);
-    if (s.sublabel) box.appendChild(make("div", "bn-sub", s.sublabel));
-    if (s.alt) box.appendChild(make("div", "bn-alt", fmt(s.value, s.alt)));
-    sec.appendChild(box);
-
-    tl.fromTo(box.querySelector(".bn-label"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, t0 + 0.05);
-    countUp(tl, val, s.value, format, t0 + 0.25, 1.5);
-    var sub = box.querySelector(".bn-sub");
-    if (sub) tl.fromTo(sub, { opacity: 0 }, { opacity: 1, duration: 0.4 }, t0 + 0.6);
-    var alt = box.querySelector(".bn-alt");
-    if (alt) tl.fromTo(alt, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, t0 + 1.0);
-  }
-
-  // ---------- BarCompare ----------
-  // s: { title?, format?, bars: [{label, value, tone?}] (2 to 5) }
-  var BAR_MAX_W = 480; // px for the longest bar; leaves room on the right for its value
-  function BarCompare(tl, sec, s, t0) {
-    var format = s.format || "full";
-    var dense = s.bars.length >= 4;
-    var box = make("div", "bars" + (dense ? " dense" : ""));
-    if (s.title) box.appendChild(make("div", "bars-title", s.title));
-    var max = Math.max.apply(null, s.bars.map(function (b) { return b.value; }));
-
-    s.bars.forEach(function (b, i) {
-      var row = make("div", "bar-row");
-      row.appendChild(make("div", "bar-label", b.label));
-      var track = make("div", "bar-track");
-      var fill = make("div", "bar-fill tone-" + (b.tone || "neutral"));
-      var w = (b.value / max) * BAR_MAX_W;
-      var val = make("div", "bar-value", fmt(0, format));
-      val.style.left = w + 18 + "px";
+  // ---------- pair: two rows, year and value each at their cue; the bar grows from the value cue ----------
+  function pair(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "pair");
+    var t = block(L, "pair-title");
+    t.appendChild(el("div", "pair-title-text", p.title));
+    var c = block(L, "pair-chart");
+    p.rows.forEach(function (row) {
+      var r = el("div", "pair-row");
+      var head = el("div", "pair-head");
+      var yr = el("span", "pair-year", row.year.text);
+      var val = el("span", "pair-val", row.value.text);
+      head.appendChild(yr);
+      head.appendChild(val);
+      var track = el("div", "pair-track");
+      var fill = el("div", "pair-fill");
       track.appendChild(fill);
-      track.appendChild(val);
-      row.appendChild(track);
-      box.appendChild(row);
-
-      var at = t0 + 0.3 + i * 0.22;
-      tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: 0.25 }, at - 0.1);
-      tl.fromTo(fill, { width: 0 }, { width: w, duration: 0.9, ease: "power3.out" }, at);
-      countUp(tl, val, b.value, format, at, 0.9);
+      r.appendChild(head);
+      r.appendChild(track);
+      c.appendChild(r);
+      appear(tl, yr, row.year.t, 0.25);
+      appear(tl, track, row.year.t, 0.25);
+      appear(tl, val, row.value.t, 0.25);
+      // fill width = value / 100 of the track, grown in 0.6 s from the value's cue
+      tl.fromTo(fill, { width: "0%" }, { width: row.value.value + "%", duration: 0.6, ease: "power2.out" }, row.value.t);
     });
-    sec.appendChild(box);
   }
 
-  var BUILDERS = {
-    title: TitleCard,
-    map: MapHighlight,
-    bignumber: BigNumber,
-    bars: BarCompare,
-  };
+  // ---------- grid: 1000 dots; unlit = the last dots in reading order; the label switches at its cue ----------
+  function grid(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "grid");
+    var g = block(L, "grid");
+    var labelRow = el("div", "grid-label");
+    var l0 = el("span", "gl", p.label);
+    var l1 = el("span", "gl", p.switch.label);
+    labelRow.appendChild(l0);
+    labelRow.appendChild(l1);
+    g.appendChild(labelRow);
+    var wrap = el("div", "dot-grid");
+    wrap.style.gridTemplateColumns = "repeat(" + p.cols + ", " + p.dot + "px)";
+    wrap.style.gridAutoRows = p.dot + "px";
+    wrap.style.gap = p.gap + "px";
+    var total = p.cols * p.rows;
+    var dots = [];
+    for (var i = 0; i < total; i++) {
+      var d = el("div", "dot");
+      d.style.background = i >= total - p.unlit_from ? p.unlit : p.lit;
+      wrap.appendChild(d);
+      dots.push(d);
+    }
+    g.appendChild(wrap);
 
-  // ---------- overlays (static DOM from the build; animated here) ----------
-  // data-anim="fade": fade in at data-start (persistent items).
-  // data-anim="caption": fade + rise in at data-start, fade out before data-start + data-duration.
-  function animateOverlays(tl, root) {
-    root.querySelectorAll(".overlay").forEach(function (el) {
-      var start = parseFloat(el.getAttribute("data-start"));
-      var dur = parseFloat(el.getAttribute("data-duration"));
-      if (el.getAttribute("data-anim") === "caption") {
-        tl.fromTo(el, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, start);
-        tl.to(el, { opacity: 0, duration: 0.2, ease: "power1.in" }, start + dur - 0.2);
-      } else {
-        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.3 }, start);
+    // label switch: DULU -> SEKARANG at the cue
+    tl.to(l0, { opacity: 0, duration: 0.15 }, p.switch.t);
+    tl.fromTo(l1, { opacity: 0 }, { opacity: 1, duration: 0.15 }, p.switch.t);
+
+    // unlit dots light up in reading order with a stagger over fill_s; the last unlit_to dots stay unlit
+    var lighting = dots.slice(total - p.unlit_from, total - p.unlit_to);
+    if (lighting.length > 0) {
+      var each = lighting.length > 1 ? (p.switch.fill_s - 0.15) / (lighting.length - 1) : 0;
+      tl.to(lighting, { backgroundColor: p.lit, duration: 0.15, stagger: { each: each } }, p.switch.t);
+    }
+
+    var h = block(L, "grid-headline");
+    p.headline.lines.forEach(function (ln) { h.appendChild(el("div", "grid-h", ln)); });
+    h.appendChild(el("div", "grid-sub", p.subline));
+    appear(tl, h, p.headline.t, 0.3);
+  }
+
+  // ---------- textcard: two lines until the cue, then it is replaced ----------
+  function textcard(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "textcard");
+    var b = block(L, "textcard");
+    p.lines.forEach(function (ln, i) {
+      b.appendChild(el("div", "tc-line" + (i === 1 ? " accent" : ""), ln));
+    });
+  }
+
+  // ---------- rankbars: title, subtitle at its cue, five rows at the cue with a stagger, one row highlighted ----------
+  function rankbars(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "rank");
+    var c = block(L, "rank-chart");
+    c.appendChild(el("div", "rank-title", p.title));
+    var sub = el("div", "rank-sub", p.subtitle.text);
+    c.appendChild(sub);
+    appear(tl, sub, p.subtitle.t, 0.25);
+    p.rows.forEach(function (row) {
+      var r = el("div", "rank-row");
+      var name = el("div", "rank-name", row.name);
+      var track = el("div", "rank-track");
+      var bar = el("div", "rank-bar");
+      track.appendChild(bar);
+      r.appendChild(name);
+      r.appendChild(track);
+      c.appendChild(r);
+      appear(tl, r, row.t, 0.25);
+      tl.fromTo(bar, { width: "0%" }, { width: row.frac_pct + "%", duration: 0.6, ease: "power2.out" }, row.t);
+      if (row.highlight) {
+        tl.to(bar, { backgroundColor: row.highlight.color || BAD, duration: 0.2 }, row.highlight.t);
+        tl.to(name, { color: ACCENT, duration: 0.2 }, row.highlight.t);
+      }
+    });
+    var lb = block(L, "rank-label");
+    lb.appendChild(el("div", "rank-label-text", p.label.text));
+    appear(tl, lb, p.label.t, 0.3);
+  }
+
+  // ---------- stack: one 875 px bar of four segments, a legend, and a message that is replaced as the VO goes on ----------
+  function stack(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "stack");
+    var c = block(L, "stack-chart");
+    c.appendChild(el("div", "stack-title", p.title));
+    var bar = el("div", "stack-bar");
+    var seg = {};
+    p.segments.forEach(function (s) {
+      var d = el("div", "seg");
+      d.style.width = s.pct + "%";
+      d.style.background = s.color;
+      bar.appendChild(d);
+      seg[s.id] = d;
+    });
+    c.appendChild(bar);
+    var legend = el("div", "stack-legend");
+    p.segments.forEach(function (s) {
+      var item = el("span", "lg");
+      var chip = el("span", "chip");
+      chip.style.background = s.color;
+      item.appendChild(chip);
+      item.appendChild(document.createTextNode(s.label));
+      legend.appendChild(item);
+    });
+    c.appendChild(legend);
+    // the bar grows in 0.8 s from the part start
+    tl.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: p.bar.grow_s, ease: "power2.out" }, p.from);
+
+    var m = block(L, "stack-message");
+    var prevReplace = null;
+    var prevOutline = null;
+    p.message.forEach(function (msg) {
+      var isAdd = msg.mode === "add";
+      var n = el("div", "msg " + (isAdd ? "msg-add" : "msg-main"));
+      var labelStyle = msg.num ? "msg-label" : "msg-big";
+      msg.lines.forEach(function (ln) {
+        var ln_el = el("div", (isAdd ? "msg-sub" : labelStyle), ln);
+        if (msg.color) ln_el.style.color = msg.color;
+        n.appendChild(ln_el);
+      });
+      if (msg.num) {
+        var num = el("div", "msg-num", msg.num.text);
+        num.style.color = msg.num.color;
+        n.appendChild(num);
+      }
+      m.appendChild(n);
+      appear(tl, n, msg.t, 0.25);
+      if (!isAdd && prevReplace) tl.to(prevReplace, { opacity: 0, duration: 0.15 }, msg.t);
+      if (!isAdd) prevReplace = n;
+      if (msg.outline) {
+        tl.set(seg[msg.outline], { outlineStyle: "solid" }, msg.t);
+        if (prevOutline && prevOutline !== msg.outline) tl.set(seg[prevOutline], { outlineStyle: "none" }, msg.t);
+        prevOutline = msg.outline;
       }
     });
   }
 
-  // gsap.set with no timeline, applied now (used for static initial state).
-  function gsapSetInstant(target, vars) {
-    global.gsap.set(target, vars);
+  // ---------- close: the closing line, then "SELAMAT ..."; the block fades out at the card cue, and the card appears ----------
+  function close(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "close");
+    var b = block(L, "close");
+    // the closing block cross-fades into the CTA pill over 0.2 s at the card cue (an intended overlap)
+    b.setAttribute("data-layout-allow-overlap", "");
+    p.block.forEach(function (it, i) {
+      var n = el("div", i === 0 ? "close-item" : "close-item close-add");
+      it.lines.forEach(function (ln) {
+        n.appendChild(el("div", i === 0 ? "close-line" : "close-sub", ln));
+      });
+      b.appendChild(n);
+      appear(tl, n, it.t, 0.3);
+    });
+    tl.to(b, { opacity: 0, duration: 0.2, ease: "power1.in" }, p.card.t);
+
+    var cta = block(L, "cta");
+    cta.appendChild(el("div", "cta-pill", p.card.cta));
+    appear(tl, cta, p.card.t, 0.3);
+
+    var src = block(L, "sources");
+    src.appendChild(el("div", "cite sources-line", p.card.sources));
+    appear(tl, src, p.card.t, 0.3);
+  }
+
+  var BUILDERS = {
+    claim: claim,
+    pair: pair,
+    grid: grid,
+    textcard: textcard,
+    rankbars: rankbars,
+    stack: stack,
+    close: close,
+  };
+
+  // Captions: each chunk shows and hides on its word times; each word takes the accent colour while spoken.
+  function captions(tl, cfg) {
+    cfg.captions.forEach(function (c, k) {
+      var node = document.getElementById("cap-" + k);
+      if (!node) throw new Error("SOS: missing caption " + k);
+      tl.set(node, { autoAlpha: 1 }, c.start);
+      tl.set(node, { autoAlpha: 0 }, c.end);
+      c.words.forEach(function (w) {
+        var span = document.getElementById("cw-" + w.i);
+        if (!span) throw new Error("SOS: missing caption word " + w.i);
+        tl.set(span, { color: ACCENT }, w.start);
+        tl.set(span, { color: CAP_BASE }, w.end);
+      });
+    });
+  }
+
+  function brand(tl, cfg) {
+    var node = document.getElementById("overlay-brand");
+    if (!node) throw new Error("SOS: missing brand tag");
+    tl.fromTo(node, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: "power1.out" }, cfg.brand.t);
   }
 
   // ---------- master builder ----------
   function build(cfg) {
     var tl = global.gsap.timeline({ paused: true });
-    cfg.scenes.forEach(function (s) {
-      var sec = document.querySelector('section.scene[data-index="' + s.index + '"]');
-      var builder = BUILDERS[s.type];
-      if (!sec || !builder) throw new Error("SOS: missing section or builder for scene " + s.index + " (" + s.type + ")");
-      // Scenes after the first fade in; scene 0 starts fully visible so frame 0 is not blank.
-      if (s.start > 0) tl.fromTo(sec, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power1.out" }, s.start);
-      tl.to(sec, { opacity: 0, duration: 0.25, ease: "power1.in" }, s.start + s.duration - 0.25);
-      builder(tl, sec, s, s.start, s.duration);
+    cfg.scenes.forEach(function (sc) {
+      var sec = document.querySelector('section.scene[data-index="' + sc.index + '"]');
+      if (!sec) throw new Error("SOS: missing section for scene " + sc.index);
+      // Scenes fade in over 0.2 s at their start (scene 1 is visible at 0) and out over 0.2 s before their end.
+      if (sc.start > 0) tl.fromTo(sec, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power1.out" }, sc.start);
+      tl.to(sec, { opacity: 0, duration: 0.2, ease: "power1.in" }, sc.end - 0.2);
+      sc.parts.forEach(function (p) {
+        var f = BUILDERS[p.type];
+        if (!f) throw new Error("SOS: no builder for part type " + p.type);
+        f(tl, sec, p, sc);
+      });
     });
-    animateOverlays(tl, document.getElementById("root"));
+    captions(tl, cfg);
+    brand(tl, cfg);
     return tl;
   }
 
-  global.SOS = { build: build, fmt: { full: fmtFull, short: fmtShort } };
+  global.SOS = { build: build };
 })(window);

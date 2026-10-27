@@ -1,5 +1,6 @@
-/* SOS components: design tokens, layout and component styles.
-   Canvas is 1080x1920. Keep key text inside the safe box below (TikTok UI covers the rest). */
+/* video-02 styles. Safe-box variables are written into :root by tools/build.mjs from video.config.json.
+   Canvas 1080x1920. Text stays inside the Reels safe box (x 65..940, y 220..1500); the hero band is y 420..1320;
+   the caption pill's bottom edge is at y 1440 (bottom 480px). */
 
 @font-face { font-family: "SosDisplay"; src: url("../assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
 @font-face { font-family: "SosBody"; src: url("../assets/fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
@@ -8,100 +9,101 @@
 @font-face { font-family: "SosBody"; src: url("../assets/fonts/inter-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: block; }
 
 :root {
-  /* colour tokens */
-  --ground: #0b1220;      /* near-black navy background */
-  --land: #33445c;        /* muted slate map fill */
-  --land-line: #0b1220;   /* province borders */
-  --good: #2dd4bf;        /* high / good: teal */
-  --bad: #ff6b35;         /* low / bad: orange-red */
-  --neutral: #9fb2cc;     /* neutral comparison: light slate */
-  --ink: #ffffff;         /* main text */
-  --ink-dim: #b4c2d8;     /* secondary text */
-  --accent: #ffd23f;      /* yellow tag, like the Sosialogi brand tag */
-  --demo: #ff3d8b;        /* DEMO badge: remove for a real video */
-
-  /* type */
+  --ground: #0b1220;
+  --good: #2dd4bf;
+  --bad: #ff6b35;
+  --neutral: #9fb2cc;
+  --unlit: #33445c;
+  --track: #1f2e45;
+  --ink: #ffffff;
+  --ink-dim: #b4c2d8;
+  --accent: #ffd23f;
   --font-display: "SosDisplay", sans-serif;
   --font-body: "SosBody", sans-serif;
-
-  /* TikTok safe zones, px on the 1080x1920 canvas */
-  --safe-top: 160px;
-  --safe-right: 140px;
-  --safe-bottom: 380px;
-  --safe-left: 60px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
 body { font-family: var(--font-body); color: var(--ink); }
-
 #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
 
-/* Timed elements: .clip gives the full-frame box (HyperFrames rule). */
+/* Timed elements: .clip gives the full-frame box (HyperFrames rule). Later rules override it for overlays. */
 .clip { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
-
-/* Overlays are timed too, but sit at a fixed spot instead of covering the frame. */
-.overlay { position: absolute; left: auto; top: auto; width: auto; height: auto; white-space: normal; }
-
-/* ---- Overlays: brand tag, DEMO badge, source line, caption ---- */
-.brand { top: 180px; right: var(--safe-right); background: var(--accent); color: var(--ground); font: 800 40px/1 var(--font-body); padding: 16px 24px; border-radius: 12px; white-space: nowrap; }
-.demo-badge { top: 180px; left: var(--safe-left); background: var(--demo); color: #fff; font: 800 40px/1 var(--font-body); padding: 16px 22px; border-radius: 12px; letter-spacing: 0.08em; }
-.source { left: var(--safe-left); bottom: calc(var(--safe-bottom) + 20px); width: 880px; font: 600 28px/1.35 var(--font-body); color: var(--ink-dim); }
-.caption { left: var(--safe-left); bottom: calc(var(--safe-bottom) + 90px); width: 880px; text-align: center; font: 800 46px/1.25 var(--font-body); color: var(--ink); background: rgba(11, 18, 32, 0.82); padding: 18px 26px; border-radius: 16px; }
-
-/* ---- Scene sections ---- */
 .scene { opacity: 1; }
+.part { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
 
-/* ---- TitleCard ---- */
-.title-card { position: absolute; left: var(--safe-left); width: 880px; top: 520px; text-align: center; }
-.title-card .kicker { font: 800 40px/1.2 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
-.title-text { font: 400 150px/0.98 var(--font-display); text-transform: uppercase; color: var(--ink); }
-.title-text .word { display: inline-block; }
-.title-text .word.accent { color: var(--accent); }
+/* Text blocks: one container per block (data-tb). Column = safe box. */
+.blk { position: absolute; left: var(--safe-left); width: var(--safe-w); }
+[data-tb="claim"] { top: 560px; text-align: center; }
+[data-tb="pair-title"] { top: 470px; text-align: center; }
+[data-tb="pair-chart"] { top: 640px; }
+[data-tb="grid"] { top: 420px; }
+[data-tb="grid-headline"] { top: 1050px; text-align: center; }
+[data-tb="textcard"] { top: 700px; text-align: center; }
+[data-tb="rank-chart"] { top: 460px; }
+[data-tb="rank-label"] { top: 1060px; text-align: center; }
+[data-tb="stack-chart"] { top: 460px; }
+[data-tb="stack-message"] { top: 860px; height: 420px; text-align: center; }
+[data-tb="close"] { top: 600px; text-align: center; }
+[data-tb="cta"] { top: 720px; text-align: center; }
+[data-tb="sources"] { top: 900px; text-align: center; }
 
-/* ---- MapHighlight ---- */
-.map-block { position: absolute; left: var(--safe-left); width: 880px; top: 540px; }
-.block-title { font: 800 48px/1.2 var(--font-body); text-transform: uppercase; color: var(--ink); text-align: center; margin-bottom: 36px; }
-.map-frame { position: relative; width: 880px; overflow: hidden; }
-.map-frame svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; overflow: visible; }
-.map-frame path { fill: var(--land); stroke: var(--land-line); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.map-anchor { position: absolute; width: 0; height: 0; }
-.map-dot { position: absolute; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--ink); }
-.map-label { position: absolute; left: 0; top: 0; white-space: nowrap; text-align: center; background: rgba(11, 18, 32, 0.86); border-radius: 12px; padding: 8px 16px 10px; }
-.map-label.pos-above { margin-top: -22px; }
-.map-label.pos-below { margin-top: 22px; }
-.map-label.pos-left { margin-left: -22px; }
-.map-label.pos-right { margin-left: 22px; }
-.ml-name { font: 800 32px/1.2 var(--font-body); color: var(--ink); }
-.ml-val { font: 400 52px/1.05 var(--font-display); }
+/* ---- overlays: brand tag, caption ---- */
+.overlay { position: absolute; top: auto; white-space: nowrap; }
+.brand { top: var(--safe-top); right: var(--safe-right); left: auto; width: auto; height: auto; background: var(--accent); color: var(--ground); font: 800 40px/1 var(--font-body); padding: 16px 24px; border-radius: 12px; opacity: 0; visibility: hidden; z-index: 30; }
+.cap { left: calc(var(--safe-left) + var(--safe-w) / 2); bottom: 480px; top: auto; width: max-content; max-width: var(--safe-w); height: auto; transform: translateX(-50%); white-space: normal; text-align: center; z-index: 20;
+  font: 700 44px/1.2 var(--font-body); color: rgba(255, 255, 255, 0.96); background: rgba(11, 18, 32, 0.55); padding: 12px 26px; border-radius: 999px; opacity: 0; visibility: hidden; }
 
-/* ---- BigNumber ---- */
-.bignum { position: absolute; left: var(--safe-left); width: 880px; top: 680px; text-align: center; }
-.bn-label { font: 800 44px/1.2 var(--font-body); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); }
-.bn-value { font: 400 160px/1 var(--font-display); color: var(--ink); margin: 34px 0 30px; white-space: nowrap; }
-.bn-sub { font: 500 46px/1.3 var(--font-body); color: var(--ink-dim); }
-.bn-alt { font: 700 64px/1.2 var(--font-body); color: var(--accent); margin-top: 26px; }
+/* ---- claim ---- */
+.kicker { font: 800 44px/1.2 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+.claim-line { font: 400 120px/0.95 var(--font-display); text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.claim-reveal { font: 400 140px/1 var(--font-display); text-transform: uppercase; color: var(--accent); margin-top: 30px; white-space: nowrap; }
 
-/* ---- BarCompare ---- */
-.bars { position: absolute; left: var(--safe-left); width: 880px; top: 560px; }
-.bars-title { font: 800 52px/1.2 var(--font-body); color: var(--ink); text-align: center; margin-bottom: 52px; }
-.bar-row { margin-bottom: 52px; }
-.bar-label { font: 700 40px/1.2 var(--font-body); color: var(--ink-dim); margin-bottom: 16px; }
-.bar-track { position: relative; width: 880px; height: 116px; }
-.bar-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0; border-radius: 14px; }
-.bar-fill.tone-good { background: var(--good); }
-.bar-fill.tone-bad { background: var(--bad); }
-.bar-fill.tone-neutral { background: var(--neutral); }
-.bar-fill.tone-ink { background: var(--ink); }
-.bar-fill.tone-accent { background: var(--accent); }
-.bar-value { position: absolute; top: 50%; margin-top: -32px; font: 400 64px/64px var(--font-display); color: var(--ink); white-space: nowrap; }
-.bars.dense .bar-row { margin-bottom: 34px; }
-.bars.dense .bar-track { height: 96px; }
-.bars.dense .bar-value { font-size: 56px; line-height: 56px; margin-top: -28px; }
+/* ---- pair ---- */
+.pair-title-text { font: 400 80px/1 var(--font-display); text-transform: uppercase; color: var(--ink); }
+.pair-row { margin-bottom: 96px; }
+.pair-head { display: flex; justify-content: space-between; align-items: flex-end; height: 160px; }
+.pair-year { font: 400 72px/1 var(--font-display); color: var(--ink-dim); }
+.pair-val { font: 400 160px/1 var(--font-display); color: var(--ink); white-space: nowrap; }
+.pair-track { position: relative; width: 875px; height: 28px; margin-top: 20px; background: var(--track); border-radius: 14px; }
+.pair-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--accent); border-radius: 14px; }
 
-/* ---- tone colours for text ---- */
-.tone-good { color: var(--good); }
-.tone-bad { color: var(--bad); }
-.tone-neutral { color: var(--neutral); }
-.tone-ink { color: var(--ink); }
-.tone-accent { color: var(--accent); }
+/* ---- grid ---- */
+.grid-label { position: relative; height: 53px; margin-bottom: 12px; }
+.gl { position: absolute; left: 0; top: 0; width: 100%; text-align: center; font: 800 44px/1.2 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.dot-grid { display: grid; width: 874px; margin: 0 auto; }
+.dot { width: 16px; height: 16px; border-radius: 50%; }
+.grid-h { font: 400 96px/1 var(--font-display); text-transform: uppercase; color: var(--ink); }
+.grid-sub { margin-top: 14px; font: 600 36px/1.3 var(--font-body); color: var(--ink-dim); }
+
+/* ---- textcard ---- */
+.tc-line { font: 400 110px/1 var(--font-display); text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.tc-line.accent { color: var(--accent); }
+
+/* ---- rankbars ---- */
+.rank-title { font: 800 44px/1.2 var(--font-body); text-transform: uppercase; color: var(--ink); margin-bottom: 16px; }
+.rank-sub { font: 600 40px/1.3 var(--font-body); color: var(--ink-dim); margin-bottom: 40px; }
+.rank-row { display: flex; align-items: center; height: 40px; margin-bottom: 40px; }
+.rank-name { width: 340px; margin-right: 15px; font: 700 32px/1.1 var(--font-body); color: var(--neutral); white-space: nowrap; }
+.rank-track { position: relative; width: 520px; height: 40px; background: var(--track); border-radius: 8px; }
+.rank-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--neutral); border-radius: 8px; }
+.rank-label-text { font: 800 40px/1.2 var(--font-body); text-transform: uppercase; color: var(--ink); }
+
+/* ---- stack ---- */
+.stack-title { font: 400 96px/1 var(--font-display); text-transform: uppercase; color: var(--ink); text-align: center; margin-bottom: 40px; }
+.stack-bar { position: relative; display: flex; width: 875px; height: 90px; transform-origin: 0% 50%; }
+.seg { flex: none; height: 100%; outline-width: 6px; outline-color: #ffffff; outline-offset: -6px; outline-style: none; }
+.stack-legend { display: flex; justify-content: space-between; margin-top: 16px; font: 700 32px/1.3 var(--font-body); color: var(--ink-dim); }
+.chip { display: inline-block; width: 24px; height: 24px; border-radius: 6px; vertical-align: -4px; margin-right: 10px; }
+.msg { position: absolute; left: 0; top: 0; width: 875px; text-align: center; }
+.msg-add { top: 250px; }
+.msg-label { font: 800 48px/1.2 var(--font-body); text-transform: uppercase; color: var(--ink); }
+.msg-big { font: 400 96px/1 var(--font-display); text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+.msg-sub { font: 800 44px/1.2 var(--font-body); text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.msg-num { font: 400 170px/1 var(--font-display); color: var(--good); white-space: nowrap; }
+
+/* ---- close and the final card ---- */
+.close-line { font: 400 110px/0.95 var(--font-display); text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.close-sub { margin-top: 30px; font: 800 48px/1.2 var(--font-body); text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+.cta-pill { display: inline-block; background: var(--accent); color: var(--ground); font: 800 64px/1.2 var(--font-body); padding: 20px 40px; border-radius: 999px; white-space: nowrap; }
+.cite { font: 600 30px/1.3 var(--font-body); color: var(--ink-dim); }

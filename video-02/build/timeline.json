@@ -1,0 +1,1151 @@
+{
+  "id": "video-02",
+  "fps": 30,
+  "total": 42.114,
+  "vo_seconds": 42.096,
+  "gates": [
+    {
+      "name": "hook",
+      "value": 3.344,
+      "max": 3.5,
+      "ok": true
+    },
+    {
+      "name": "close",
+      "value": 6.48,
+      "max": 7,
+      "ok": true
+    },
+    {
+      "name": "total",
+      "value": 42.114,
+      "max": 45,
+      "ok": true
+    }
+  ],
+  "scenes": [
+    {
+      "id": "s1_hook",
+      "start": 0,
+      "end": 3.504
+    },
+    {
+      "id": "s2_series",
+      "start": 3.504,
+      "end": 14.146
+    },
+    {
+      "id": "s3_grid",
+      "start": 14.146,
+      "end": 17.847
+    },
+    {
+      "id": "s4_provinces",
+      "start": 17.847,
+      "end": 27.687
+    },
+    {
+      "id": "s5_pln",
+      "start": 27.687,
+      "end": 35.634
+    },
+    {
+      "id": "s6_close",
+      "start": 35.634,
+      "end": 42.114
+    }
+  ],
+  "cues": [
+    {
+      "scene": "s1_hook",
+      "where": "s1_hook part 0 (claim).reveal",
+      "phrase": "satu dari lima",
+      "t": 1.196
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 0 year",
+      "phrase": "dua ribu tiga belas",
+      "t": 4.039
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 0 value",
+      "phrase": "delapan puluh koma lima satu persen",
+      "t": 6.686
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 1 year",
+      "phrase": "dua ribu dua puluh lima",
+      "t": 9.655
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 1 value",
+      "phrase": "sembilan puluh sembilan koma delapan tiga persen",
+      "t": 11.385
+    },
+    {
+      "scene": "s3_grid",
+      "where": "s3_grid part 0 (grid).headline",
+      "phrase": "dua per seribu",
+      "t": 16.84
+    },
+    {
+      "scene": "s3_grid",
+      "where": "s3_grid part 0 (grid).switch",
+      "phrase": "tinggal",
+      "t": 15.992
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 0 (textcard) to",
+      "phrase": "Data",
+      "t": 19.9
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars) from",
+      "phrase": "Data",
+      "t": 19.9
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).subtitle",
+      "phrase": "dua ribu dua puluh tiga",
+      "t": 21.142
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).rows",
+      "phrase": "terendah",
+      "t": 23.197
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).rows.highlight",
+      "phrase": "Papua Pegunungan",
+      "t": 23.673
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).label",
+      "phrase": "sembilan puluh tiga koma delapan dua persen",
+      "t": 24.95
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 0",
+      "phrase": "empat belas koma nol enam persen",
+      "t": 29.266
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 0.num",
+      "phrase": "empat belas koma nol enam persen",
+      "t": 29.266
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 1",
+      "phrase": "Lebih dari separuhnya",
+      "t": 31.318
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 2",
+      "phrase": "dihitung berlistrik",
+      "t": 34.476
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) block 0",
+      "phrase": "Langkah",
+      "t": 35.634
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) block 1",
+      "phrase": "Selamat",
+      "t": 37.605
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) card",
+      "phrase": "Yuk",
+      "t": 39.356
+    }
+  ],
+  "numbers": [
+    {
+      "text": "HAMPIR 1 DARI 5",
+      "spoken": "satu dari lima",
+      "t": 1.196,
+      "scene": "s1_hook",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": "one_in_five_2013"
+    },
+    {
+      "text": "2013",
+      "spoken": "dua ribu tiga belas",
+      "t": 4.039,
+      "scene": "s2_series",
+      "derive": "national[2013].year = \"2013\" (CSV year)",
+      "check": null
+    },
+    {
+      "text": "80,51%",
+      "spoken": "delapan puluh koma lima satu persen",
+      "t": 6.686,
+      "scene": "s2_series",
+      "derive": "fmtPct(national[2013].ratio_pct = \"80.51\")",
+      "check": null
+    },
+    {
+      "text": "2025",
+      "spoken": "dua ribu dua puluh lima",
+      "t": 9.655,
+      "scene": "s2_series",
+      "derive": "national[2025].year = \"2025\" (CSV year)",
+      "check": null
+    },
+    {
+      "text": "99,83%",
+      "spoken": "sembilan puluh sembilan koma delapan tiga persen",
+      "t": 11.385,
+      "scene": "s2_series",
+      "derive": "fmtPct(national[2025].ratio_pct = \"99.83\")",
+      "check": null
+    },
+    {
+      "text": "KURANG DARI 2 PER 1.000",
+      "spoken": "dua per seribu",
+      "t": 16.84,
+      "scene": "s3_grid",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": "under_two_per_1000_2025"
+    },
+    {
+      "text": "akhir 2023",
+      "spoken": "dua ribu dua puluh tiga",
+      "t": 21.142,
+      "scene": "s4_provinces",
+      "derive": "province[Papua Pegunungan].year = \"2023\" (CSV year)",
+      "check": null
+    },
+    {
+      "text": "PAPUA PEGUNUNGAN: 93,82% BERLISTRIK",
+      "spoken": "sembilan puluh tiga koma delapan dua persen",
+      "t": 24.95,
+      "scene": "s4_provinces",
+      "derive": "fmtPct(province[Papua Pegunungan].re_total = \"93.82\")",
+      "check": "lowest_province"
+    },
+    {
+      "text": "14,06%",
+      "spoken": "empat belas koma nol enam persen",
+      "t": 29.266,
+      "scene": "s5_pln",
+      "derive": "fmtPct(province[Papua Pegunungan].re_pln = \"14.06\")",
+      "check": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "one_in_five_2013",
+      "ok": true,
+      "values": {
+        "re_national[2013].ratio_pct": "80.51",
+        "100 - ratio": "19.49",
+        "rule": "18 <= 100 - re_national[2013] < 20"
+      }
+    },
+    {
+      "name": "under_two_per_1000_2025",
+      "ok": true,
+      "values": {
+        "re_national[2025].ratio_pct": "99.83",
+        "10 * (100 - ratio)": "1.70",
+        "rule": "1 <= 10 * (100 - re_national[2025]) < 2"
+      }
+    },
+    {
+      "name": "flat_last_year",
+      "ok": true,
+      "values": {
+        "re_national[2024].ratio_pct": "99.83",
+        "re_national[2025].ratio_pct": "99.83",
+        "rule": "equal as strings"
+      }
+    },
+    {
+      "name": "lowest_province",
+      "ok": true,
+      "values": {
+        "Papua Pegunungan re_total": "93.82",
+        "lowest other": "Papua Tengah 94.19",
+        "rule": "strictly lowest re_total"
+      }
+    },
+    {
+      "name": "ltshe_over_half",
+      "ok": true,
+      "values": {
+        "Papua Pegunungan re_ltshe": "56.14",
+        "rule": "re_ltshe > 50"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "scene": "s6_close",
+      "text": "Sumber: Kementerian ESDM (HEESI 2024, HEESI 2025, Laporan Kinerja 2023)"
+    }
+  ],
+  "captions": [
+    {
+      "i": 0,
+      "start": 0,
+      "end": 1.136,
+      "words": [
+        {
+          "i": 0,
+          "text": "Dulu",
+          "start": 0,
+          "end": 0.453
+        },
+        {
+          "i": 1,
+          "text": "hampir",
+          "start": 0.743,
+          "end": 1.126
+        }
+      ]
+    },
+    {
+      "i": 1,
+      "start": 1.146,
+      "end": 1.693,
+      "words": [
+        {
+          "i": 2,
+          "text": "satu",
+          "start": 1.196,
+          "end": 1.498
+        },
+        {
+          "i": 3,
+          "text": "dari",
+          "start": 1.556,
+          "end": 1.707
+        }
+      ]
+    },
+    {
+      "i": 2,
+      "start": 1.703,
+      "end": 3.444,
+      "words": [
+        {
+          "i": 4,
+          "text": "lima",
+          "start": 1.753,
+          "end": 1.962
+        },
+        {
+          "i": 5,
+          "text": "rumah",
+          "start": 2.009,
+          "end": 2.218
+        },
+        {
+          "i": 6,
+          "text": "tangga",
+          "start": 2.264,
+          "end": 2.519
+        },
+        {
+          "i": 7,
+          "text": "belum",
+          "start": 2.566,
+          "end": 2.74
+        },
+        {
+          "i": 8,
+          "text": "berlistrik",
+          "start": 2.775,
+          "end": 3.344
+        }
+      ]
+    },
+    {
+      "i": 3,
+      "start": 3.454,
+      "end": 3.979,
+      "words": [
+        {
+          "i": 9,
+          "text": "Itu",
+          "start": 3.504,
+          "end": 3.737
+        },
+        {
+          "i": 10,
+          "text": "tahun",
+          "start": 3.783,
+          "end": 3.98
+        }
+      ]
+    },
+    {
+      "i": 4,
+      "start": 3.989,
+      "end": 5.824,
+      "words": [
+        {
+          "i": 11,
+          "text": "dua",
+          "start": 4.039,
+          "end": 4.189
+        },
+        {
+          "i": 12,
+          "text": "ribu",
+          "start": 4.224,
+          "end": 4.422
+        },
+        {
+          "i": 13,
+          "text": "tiga",
+          "start": 4.456,
+          "end": 4.665
+        },
+        {
+          "i": 14,
+          "text": "belas",
+          "start": 4.712,
+          "end": 5.037
+        },
+        {
+          "i": 15,
+          "text": "rasio",
+          "start": 5.455,
+          "end": 5.826
+        }
+      ]
+    },
+    {
+      "i": 5,
+      "start": 5.834,
+      "end": 6.626,
+      "words": [
+        {
+          "i": 16,
+          "text": "elektrifikasi",
+          "start": 5.884,
+          "end": 6.616
+        }
+      ]
+    },
+    {
+      "i": 6,
+      "start": 6.636,
+      "end": 8.657,
+      "words": [
+        {
+          "i": 17,
+          "text": "delapan",
+          "start": 6.686,
+          "end": 7.115
+        },
+        {
+          "i": 18,
+          "text": "puluh",
+          "start": 7.196,
+          "end": 7.498
+        },
+        {
+          "i": 19,
+          "text": "koma",
+          "start": 7.521,
+          "end": 7.893
+        },
+        {
+          "i": 20,
+          "text": "lima",
+          "start": 8.102,
+          "end": 8.404
+        },
+        {
+          "i": 21,
+          "text": "satu",
+          "start": 8.462,
+          "end": 8.671
+        }
+      ]
+    },
+    {
+      "i": 7,
+      "start": 8.667,
+      "end": 9.259,
+      "words": [
+        {
+          "i": 22,
+          "text": "persen",
+          "start": 8.717,
+          "end": 9.159
+        }
+      ]
+    },
+    {
+      "i": 8,
+      "start": 9.269,
+      "end": 9.595,
+      "words": [
+        {
+          "i": 23,
+          "text": "Tahun",
+          "start": 9.319,
+          "end": 9.597
+        }
+      ]
+    },
+    {
+      "i": 9,
+      "start": 9.605,
+      "end": 11.21,
+      "words": [
+        {
+          "i": 24,
+          "text": "dua",
+          "start": 9.655,
+          "end": 9.83
+        },
+        {
+          "i": 25,
+          "text": "ribu",
+          "start": 9.876,
+          "end": 10.12
+        },
+        {
+          "i": 26,
+          "text": "dua",
+          "start": 10.178,
+          "end": 10.387
+        },
+        {
+          "i": 27,
+          "text": "puluh",
+          "start": 10.445,
+          "end": 10.689
+        },
+        {
+          "i": 28,
+          "text": "lima",
+          "start": 10.735,
+          "end": 11.06
+        }
+      ]
+    },
+    {
+      "i": 10,
+      "start": 11.335,
+      "end": 12.811,
+      "words": [
+        {
+          "i": 29,
+          "text": "sembilan",
+          "start": 11.385,
+          "end": 11.827
+        },
+        {
+          "i": 30,
+          "text": "puluh",
+          "start": 11.885,
+          "end": 12.105
+        },
+        {
+          "i": 31,
+          "text": "sembilan",
+          "start": 12.128,
+          "end": 12.523
+        },
+        {
+          "i": 32,
+          "text": "koma",
+          "start": 12.593,
+          "end": 12.825
+        }
+      ]
+    },
+    {
+      "i": 11,
+      "start": 12.821,
+      "end": 14.086,
+      "words": [
+        {
+          "i": 33,
+          "text": "delapan",
+          "start": 12.871,
+          "end": 13.243
+        },
+        {
+          "i": 34,
+          "text": "tiga",
+          "start": 13.289,
+          "end": 13.51
+        },
+        {
+          "i": 35,
+          "text": "persen",
+          "start": 13.556,
+          "end": 13.986
+        }
+      ]
+    },
+    {
+      "i": 12,
+      "start": 14.096,
+      "end": 15.932,
+      "words": [
+        {
+          "i": 36,
+          "text": "Artinya",
+          "start": 14.146,
+          "end": 14.657
+        },
+        {
+          "i": 37,
+          "text": "yang",
+          "start": 15.017,
+          "end": 15.203
+        },
+        {
+          "i": 38,
+          "text": "belum",
+          "start": 15.238,
+          "end": 15.412
+        },
+        {
+          "i": 39,
+          "text": "berlistrik",
+          "start": 15.447,
+          "end": 15.946
+        }
+      ]
+    },
+    {
+      "i": 13,
+      "start": 15.942,
+      "end": 16.78,
+      "words": [
+        {
+          "i": 40,
+          "text": "tinggal",
+          "start": 15.992,
+          "end": 16.259
+        },
+        {
+          "i": 41,
+          "text": "kurang",
+          "start": 16.317,
+          "end": 16.596
+        },
+        {
+          "i": 42,
+          "text": "dari",
+          "start": 16.631,
+          "end": 16.793
+        }
+      ]
+    },
+    {
+      "i": 14,
+      "start": 16.79,
+      "end": 17.233,
+      "words": [
+        {
+          "i": 43,
+          "text": "dua",
+          "start": 16.84,
+          "end": 17.072
+        },
+        {
+          "i": 44,
+          "text": "per",
+          "start": 17.13,
+          "end": 17.235
+        }
+      ]
+    },
+    {
+      "i": 15,
+      "start": 17.243,
+      "end": 17.787,
+      "words": [
+        {
+          "i": 45,
+          "text": "seribu",
+          "start": 17.293,
+          "end": 17.687
+        }
+      ]
+    },
+    {
+      "i": 16,
+      "start": 17.797,
+      "end": 19.25,
+      "words": [
+        {
+          "i": 46,
+          "text": "Setahun",
+          "start": 17.847,
+          "end": 18.137
+        },
+        {
+          "i": 47,
+          "text": "terakhir",
+          "start": 18.195,
+          "end": 18.544
+        },
+        {
+          "i": 48,
+          "text": "angkanya",
+          "start": 18.625,
+          "end": 18.985
+        },
+        {
+          "i": 49,
+          "text": "tidak",
+          "start": 19.031,
+          "end": 19.275
+        }
+      ]
+    },
+    {
+      "i": 17,
+      "start": 19.26,
+      "end": 19.84,
+      "words": [
+        {
+          "i": 50,
+          "text": "bergerak",
+          "start": 19.31,
+          "end": 19.74
+        }
+      ]
+    },
+    {
+      "i": 18,
+      "start": 19.85,
+      "end": 21.082,
+      "words": [
+        {
+          "i": 51,
+          "text": "Data",
+          "start": 19.9,
+          "end": 20.178
+        },
+        {
+          "i": 52,
+          "text": "provinsi",
+          "start": 20.225,
+          "end": 20.747
+        },
+        {
+          "i": 53,
+          "text": "akhir",
+          "start": 20.828,
+          "end": 21.084
+        }
+      ]
+    },
+    {
+      "i": 19,
+      "start": 21.092,
+      "end": 23.103,
+      "words": [
+        {
+          "i": 54,
+          "text": "dua",
+          "start": 21.142,
+          "end": 21.339
+        },
+        {
+          "i": 55,
+          "text": "ribu",
+          "start": 21.374,
+          "end": 21.757
+        },
+        {
+          "i": 56,
+          "text": "dua",
+          "start": 21.966,
+          "end": 22.256
+        },
+        {
+          "i": 57,
+          "text": "puluh",
+          "start": 22.314,
+          "end": 22.547
+        },
+        {
+          "i": 58,
+          "text": "tiga",
+          "start": 22.57,
+          "end": 22.953
+        }
+      ]
+    },
+    {
+      "i": 20,
+      "start": 23.147,
+      "end": 24.74,
+      "words": [
+        {
+          "i": 59,
+          "text": "terendah",
+          "start": 23.197,
+          "end": 23.615
+        },
+        {
+          "i": 60,
+          "text": "Papua",
+          "start": 23.673,
+          "end": 23.975
+        },
+        {
+          "i": 61,
+          "text": "Pegunungan",
+          "start": 24.021,
+          "end": 24.59
+        }
+      ]
+    },
+    {
+      "i": 21,
+      "start": 24.9,
+      "end": 26.689,
+      "words": [
+        {
+          "i": 62,
+          "text": "sembilan",
+          "start": 24.95,
+          "end": 25.345
+        },
+        {
+          "i": 63,
+          "text": "puluh",
+          "start": 25.403,
+          "end": 25.6
+        },
+        {
+          "i": 64,
+          "text": "tiga",
+          "start": 25.623,
+          "end": 25.855
+        },
+        {
+          "i": 65,
+          "text": "koma",
+          "start": 25.914,
+          "end": 26.157
+        },
+        {
+          "i": 66,
+          "text": "delapan",
+          "start": 26.204,
+          "end": 26.657
+        }
+      ]
+    },
+    {
+      "i": 22,
+      "start": 26.699,
+      "end": 27.627,
+      "words": [
+        {
+          "i": 67,
+          "text": "dua",
+          "start": 26.749,
+          "end": 27.028
+        },
+        {
+          "i": 68,
+          "text": "persen",
+          "start": 27.086,
+          "end": 27.527
+        }
+      ]
+    },
+    {
+      "i": 23,
+      "start": 27.637,
+      "end": 29.206,
+      "words": [
+        {
+          "i": 69,
+          "text": "Yang",
+          "start": 27.687,
+          "end": 27.884
+        },
+        {
+          "i": 70,
+          "text": "tersambung",
+          "start": 27.93,
+          "end": 28.418
+        },
+        {
+          "i": 71,
+          "text": "PLN",
+          "start": 28.464,
+          "end": 28.929
+        },
+        {
+          "i": 72,
+          "text": "baru",
+          "start": 28.999,
+          "end": 29.219
+        }
+      ]
+    },
+    {
+      "i": 24,
+      "start": 29.216,
+      "end": 30.634,
+      "words": [
+        {
+          "i": 73,
+          "text": "empat",
+          "start": 29.266,
+          "end": 29.509
+        },
+        {
+          "i": 74,
+          "text": "belas",
+          "start": 29.567,
+          "end": 29.823
+        },
+        {
+          "i": 75,
+          "text": "koma",
+          "start": 29.893,
+          "end": 30.125
+        },
+        {
+          "i": 76,
+          "text": "nol",
+          "start": 30.194,
+          "end": 30.345
+        },
+        {
+          "i": 77,
+          "text": "enam",
+          "start": 30.403,
+          "end": 30.647
+        }
+      ]
+    },
+    {
+      "i": 25,
+      "start": 30.644,
+      "end": 31.258,
+      "words": [
+        {
+          "i": 78,
+          "text": "persen",
+          "start": 30.694,
+          "end": 31.158
+        }
+      ]
+    },
+    {
+      "i": 26,
+      "start": 31.268,
+      "end": 32.964,
+      "words": [
+        {
+          "i": 79,
+          "text": "Lebih",
+          "start": 31.318,
+          "end": 31.573
+        },
+        {
+          "i": 80,
+          "text": "dari",
+          "start": 31.596,
+          "end": 31.747
+        },
+        {
+          "i": 81,
+          "text": "separuhnya",
+          "start": 31.794,
+          "end": 32.27
+        },
+        {
+          "i": 82,
+          "text": "lampu",
+          "start": 32.328,
+          "end": 32.618
+        },
+        {
+          "i": 83,
+          "text": "tenaga",
+          "start": 32.664,
+          "end": 32.966
+        }
+      ]
+    },
+    {
+      "i": 27,
+      "start": 32.974,
+      "end": 34.822,
+      "words": [
+        {
+          "i": 84,
+          "text": "surya",
+          "start": 33.024,
+          "end": 33.489
+        },
+        {
+          "i": 85,
+          "text": "dan",
+          "start": 33.779,
+          "end": 33.918
+        },
+        {
+          "i": 86,
+          "text": "itu",
+          "start": 33.988,
+          "end": 34.174
+        },
+        {
+          "i": 87,
+          "text": "ikut",
+          "start": 34.232,
+          "end": 34.429
+        },
+        {
+          "i": 88,
+          "text": "dihitung",
+          "start": 34.476,
+          "end": 34.847
+        }
+      ]
+    },
+    {
+      "i": 28,
+      "start": 34.832,
+      "end": 35.574,
+      "words": [
+        {
+          "i": 89,
+          "text": "berlistrik",
+          "start": 34.882,
+          "end": 35.474
+        }
+      ]
+    },
+    {
+      "i": 29,
+      "start": 35.584,
+      "end": 37.013,
+      "words": [
+        {
+          "i": 90,
+          "text": "Langkah",
+          "start": 35.634,
+          "end": 35.982
+        },
+        {
+          "i": 91,
+          "text": "terakhir",
+          "start": 36.04,
+          "end": 36.4
+        },
+        {
+          "i": 92,
+          "text": "memang",
+          "start": 36.458,
+          "end": 36.702
+        },
+        {
+          "i": 93,
+          "text": "paling",
+          "start": 36.76,
+          "end": 37.038
+        }
+      ]
+    },
+    {
+      "i": 30,
+      "start": 37.023,
+      "end": 37.545,
+      "words": [
+        {
+          "i": 94,
+          "text": "sulit",
+          "start": 37.073,
+          "end": 37.445
+        }
+      ]
+    },
+    {
+      "i": 31,
+      "start": 37.555,
+      "end": 39.296,
+      "words": [
+        {
+          "i": 95,
+          "text": "Selamat",
+          "start": 37.605,
+          "end": 38.012
+        },
+        {
+          "i": 96,
+          "text": "Hari",
+          "start": 38.058,
+          "end": 38.221
+        },
+        {
+          "i": 97,
+          "text": "Listrik",
+          "start": 38.267,
+          "end": 38.569
+        },
+        {
+          "i": 98,
+          "text": "Nasional",
+          "start": 38.615,
+          "end": 39.196
+        }
+      ]
+    },
+    {
+      "i": 32,
+      "start": 39.306,
+      "end": 42.014,
+      "words": [
+        {
+          "i": 99,
+          "text": "Yuk",
+          "start": 39.356,
+          "end": 39.635
+        },
+        {
+          "i": 100,
+          "text": "follow",
+          "start": 39.937,
+          "end": 40.308
+        },
+        {
+          "i": 101,
+          "text": "@dzakysrd",
+          "start": 40.424,
+          "end": 41.864
+        }
+      ]
+    }
+  ]
+}

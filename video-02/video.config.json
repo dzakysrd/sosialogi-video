@@ -1,0 +1,6 @@
+{"platform": "Instagram Reels (also fine for TikTok)", "width": 1080, "height": 1920, "fps": 30, "brand": "@dzakysrd",
+ "safe": {"top": 220, "bottom": 420, "left": 65, "right": 140}, "hero_band": {"top": 420, "bottom": 1320},
+ "hook_max_s": 3.5, "close_max_s": 7.0, "total_max_s": 45, "tail_s": 0.25,
+ "loudness": {"I": -14, "TP": -1.5, "LRA": 11},
+ "voice": {"dir": "../voice/samples/video-02", "variant": "el_liam"},
+ "inputs": {"script": "../research/video-02/script_v1.json", "national": "../research/video-02/re_national.csv", "province": "../research/video-02/re_province.csv", "scenes": "scenes.json"}}
