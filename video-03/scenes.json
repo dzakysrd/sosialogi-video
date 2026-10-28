@@ -1,114 +1,80 @@
 {
-  "_help": "Visual plan for video-02, one entry per script scene (same ids and order as research/video-02/script_v1.json). A scene has parts: one part, or two when the layout changes mid-scene. A part has a type (claim, pair, grid, textcard, rankbars, stack, close) and optional from/to (a cue phrase from the scene's vo_text; default = scene start / scene end). An element with a cue appears at the first exact match of its phrase after the scene start (tools/lib/cue.mjs). An element without a cue is shown from the part start. Text is a string or a list of lines. A number is either a data reference {from, key, field, as, cue} (from: national = re_national.csv keyed by year, province = re_province.csv keyed by province; as: pct = fmtPct, year = the CSV year; complement = 100 minus the value) or a literal {text, spoken, cue, caption, check}. For every number the cue must equal its spoken form; caption is the number's display in the captions (literal numbers only; data numbers use their on-screen value). A check names a data check in tools/build.mjs. A repeat {prefix, from, key, field, as, repeat_of} shows an earlier number again: repeat_of is the spoken form of that earlier entry, and the build copies its cue and checks the same value shows (build.mjs repeatEl); it has no cue of its own and shows from the part start. The stack title may carry a subtitle (a number, or a repeat). A scene may set visual_start_cue (a cue inside that scene): its visuals start there and the previous scene's visuals stay on until then; captions and audio are not affected. The build resolves all times and values; this file holds no timings.",
+  "_help": "Visual plan for video-03, one entry per script scene (same ids and order as research/video-03/script_v2.json). A scene has parts: one part, or two when the layout changes mid-scene. A part has a type (claim, pair, grid, textcard, rankbars, stack, close) and optional from/to (a cue phrase from the scene's vo_text; default = scene start / scene end). An element with a cue appears at the first exact match of its phrase after the scene start (tools/lib/cue.mjs). An element without a cue is shown from the part start. Text is a string or a list of lines. A number is either a data reference {from, key, field, as, cue} (from: a table name from video.config.json inputs.tables, keyed by that table's key column; as: pct = fmtPct, year = the CSV value; complement = 100 minus the value) or a literal {text, spoken, cue, caption, check}. For every number the cue must equal its spoken form; caption is the number's display in the captions (literal numbers only; data numbers use their on-screen value). A check names a data check in tools/build.mjs. pair: optional subtitle (text, no digits) and title_num (a number, shown at its cue) in the title block; each row has either year (a number) or label {lines, cue?, check?} (text, shown at its cue or at the part start), and a value (a number). close: a block item may carry num (a number, shown at its cue) after its lines. A repeat {prefix, from, key, field, as, repeat_of} shows an earlier number again: repeat_of is the spoken form of that earlier entry, and the build copies its cue and checks the same value shows (build.mjs repeatEl); it has no cue of its own and shows from the part start. A scene may set visual_start_cue (a cue inside that scene): its visuals start there and the previous scene's visuals stay on until then; captions and audio are not affected. The build resolves all times and values; this file holds no timings.",
   "scenes": [
     {
       "id": "s1_hook",
       "parts": [
         {
           "type": "claim",
-          "kicker": "DULU",
-          "lines": ["RUMAH TANGGA", "BELUM BERLISTRIK"],
-          "reveal": {"text": "HAMPIR 1 DARI 5", "spoken": "satu dari lima", "cue": "satu dari lima", "caption": "1 dari 5", "check": "one_in_five_2013"}
+          "kicker": "ANAK MUDA",
+          "lines": ["TIDAK SEKOLAH,", "TIDAK KERJA"],
+          "reveal": {"text": "HAMPIR 1 DARI 5", "spoken": "satu dari lima", "cue": "satu dari lima", "caption": "1 dari 5", "check": "neet_one_in_five"}
         }
       ]
     },
     {
-      "id": "s2_series",
+      "id": "s2_neet",
       "parts": [
         {
           "type": "pair",
-          "title": "RASIO ELEKTRIFIKASI",
+          "title": "NEET",
+          "subtitle": "tidak sekolah, kerja, atau pelatihan",
+          "title_num": {"text": "USIA 15-24", "spoken": "lima belas sampai dua puluh empat", "cue": "lima belas sampai dua puluh empat", "caption": "15-24"},
           "rows": [
             {
-              "year": {"from": "national", "key": "2013", "field": "year", "as": "year", "cue": "dua ribu tiga belas"},
-              "value": {"from": "national", "key": "2013", "field": "ratio_pct", "as": "pct", "cue": "delapan puluh koma lima satu persen"}
-            },
-            {
-              "year": {"from": "national", "key": "2025", "field": "year", "as": "year", "cue": "dua ribu dua puluh lima"},
-              "value": {"from": "national", "key": "2025", "field": "ratio_pct", "as": "pct", "cue": "sembilan puluh sembilan koma delapan tiga persen"}
+              "year": {"from": "neet", "key": "INDONESIA", "field": "year", "as": "year", "cue": "dua ribu dua puluh lima"},
+              "value": {"from": "neet", "key": "INDONESIA", "field": "neet_pct", "as": "pct", "cue": "sembilan belas koma empat empat persen"}
             }
           ]
         }
       ]
     },
     {
-      "id": "s3_grid",
-      "parts": [
-        {
-          "type": "grid",
-          "cols": 40,
-          "rows": 25,
-          "dot": 16,
-          "gap": 6,
-          "lit": "#ffd23f",
-          "unlit": "#33445c",
-          "label": "DULU",
-          "unlit_from": {"from": "national", "key": "2013", "field": "ratio_pct"},
-          "unlit_to": {"from": "national", "key": "2025", "field": "ratio_pct"},
-          "switch": {"cue": "tinggal", "label": "SEKARANG", "fill_s": 1.2},
-          "headline": {"lines": ["KURANG DARI 2", "PER 1.000"], "spoken": "dua per seribu", "cue": "dua per seribu", "caption": "2 per 1.000", "check": "under_two_per_1000_2025"},
-          "subline": "rumah tangga belum berlistrik"
-        }
-      ]
-    },
-    {
-      "id": "s4_provinces",
-      "visual_start_cue": "angkanya",
+      "id": "s3_caveat",
       "parts": [
         {
           "type": "textcard",
-          "from": "angkanya",
-          "to": "dua ribu dua puluh tiga",
-          "lines": ["SETAHUN TERAKHIR", "TIDAK BERGERAK"],
-          "check": "flat_last_year"
+          "to": "cari kerja",
+          "lines": ["BUKAN UKURAN", "MALAS"]
         },
         {
-          "type": "rankbars",
-          "from": "dua ribu dua puluh tiga",
-          "title": "BELUM BERLISTRIK",
-          "subtitle": {"prefix": "akhir ", "from": "province", "key": "Papua Pegunungan", "field": "year", "as": "year", "cue": "dua ribu dua puluh tiga"},
-          "rows": {"select": "lowest", "count": 5, "field": "re_total", "cue": "dua ribu dua puluh tiga", "stagger_s": 0.08, "highlight": {"key": "Papua Pegunungan", "cue": "Papua Pegunungan", "color": "#ff6b35"}},
-          "label": {"lines": ["PAPUA PEGUNUNGAN"], "from": "province", "key": "Papua Pegunungan", "field": "re_total", "as": "pct", "suffix": " BERLISTRIK", "cue": "sembilan puluh tiga koma delapan dua persen", "check": "lowest_province"}
+          "type": "textcard",
+          "from": "cari kerja",
+          "lines": ["YANG CARI KERJA &", "MENGURUS KELUARGA", "IKUT TERHITUNG"]
         }
       ]
     },
     {
-      "id": "s5_pln",
+      "id": "s4_tpt",
       "parts": [
         {
-          "type": "stack",
-          "title": "PAPUA PEGUNUNGAN",
-          "subtitle": {"prefix": "akhir ", "from": "province", "key": "Papua Pegunungan", "field": "year", "as": "year", "repeat_of": "dua ribu dua puluh tiga"},
-          "bar": {
-            "height": 90,
-            "grow_s": 0.8,
-            "segments": [
-              {"id": "pln", "label": "PLN", "color": "#2dd4bf", "from": "province", "key": "Papua Pegunungan", "field": "re_pln"},
-              {"id": "nonpln", "label": "non-PLN", "color": "#9fb2cc", "from": "province", "key": "Papua Pegunungan", "field": "re_non_pln"},
-              {"id": "ltshe", "label": "lampu surya", "color": "#ffd23f", "from": "province", "key": "Papua Pegunungan", "field": "re_ltshe"},
-              {"id": "belum", "label": "belum", "color": "#ff6b35", "from": "province", "key": "Papua Pegunungan", "field": "re_total", "complement": true}
-            ]
-          },
-          "message": [
+          "type": "pair",
+          "title": "PENGANGGURAN TERBUKA",
+          "subtitle": "dari angkatan kerja",
+          "rows": [
             {
-              "mode": "replace",
-              "cue": "empat belas koma nol enam persen",
-              "outline": "pln",
-              "lines": ["TERSAMBUNG PLN"],
-              "num": {"from": "province", "key": "Papua Pegunungan", "field": "re_pln", "as": "pct", "cue": "empat belas koma nol enam persen", "color": "#2dd4bf"}
+              "year": {"text": "USIA 15-19", "spoken": "lima belas sampai sembilan belas", "cue": "lima belas sampai sembilan belas", "caption": "15-19", "check": "tpt_1519_highest"},
+              "value": {"from": "tpt_age", "key": "15-19", "field": "tpt_pct", "as": "pct", "cue": "dua puluh tiga koma tiga empat persen"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s5_provinces",
+      "parts": [
+        {
+          "type": "pair",
+          "title": "NEET PER PROVINSI",
+          "subtitle": "tertinggi dan terendah",
+          "rows": [
+            {
+              "label": {"lines": ["SULAWESI UTARA"], "cue": "Sulawesi Utara", "check": "neet_highest_sulut"},
+              "value": {"from": "neet", "key": "SULAWESI UTARA", "field": "neet_pct", "as": "pct", "cue": "dua puluh sembilan koma lima dua persen"}
             },
             {
-              "mode": "replace",
-              "cue": "Lebih dari separuhnya",
-              "outline": "ltshe",
-              "lines": ["LEBIH DARI SEPARUH:", "LAMPU TENAGA SURYA"],
-              "color": "#ffd23f",
-              "check": "ltshe_over_half"
-            },
-            {
-              "mode": "add",
-              "cue": "dihitung berlistrik",
-              "lines": ["IKUT DIHITUNG BERLISTRIK"]
+              "label": {"lines": ["BALI"], "cue": "Bali", "check": "neet_lowest_bali"},
+              "value": {"from": "neet", "key": "BALI", "field": "neet_pct", "as": "pct", "cue": "lima koma tiga tiga persen"}
             }
           ]
         }
@@ -120,8 +86,8 @@
         {
           "type": "close",
           "block": [
-            {"cue": "Sisanya", "lines": ["PALING SULIT DIJANGKAU", "JARINGAN LISTRIK"]},
-            {"cue": "Selamat", "lines": ["SELAMAT HARI LISTRIK NASIONAL"]}
+            {"cue": "Itu PR", "lines": ["ITU PR PEMUDA", "HARI INI"]},
+            {"cue": "Selamat", "lines": ["SELAMAT HARI", "SUMPAH PEMUDA"], "num": {"text": "KE-98", "spoken": "ke sembilan puluh delapan", "cue": "ke sembilan puluh delapan", "caption": "ke-98", "check": "years_since_1928"}}
           ],
           "card": {"cue": "Yuk", "cta": {"script": "cta"}, "sources": {"script": "sources_line"}}
         }

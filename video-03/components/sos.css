@@ -1,4 +1,4 @@
-/* video-02 styles. Safe-box variables are written into :root by tools/build.mjs from video.config.json.
+/* video-03 styles. Safe-box variables are written into :root by tools/build.mjs from video.config.json.
    Canvas 1080x1920. Text stays inside the Reels safe box (x 65..940, y 220..1500); the hero band is y 420..1320;
    the caption pill's bottom edge is at y 1440 (bottom 480px). */
 
@@ -35,8 +35,8 @@ body { font-family: var(--font-body); color: var(--ink); }
 /* Text blocks: one container per block (data-tb). Column = safe box. */
 .blk { position: absolute; left: var(--safe-left); width: var(--safe-w); }
 [data-tb="claim"] { top: 560px; text-align: center; }
-[data-tb="pair-title"] { top: 470px; text-align: center; }
-[data-tb="pair-chart"] { top: 640px; }
+[data-tb="pair-title"] { top: 420px; text-align: center; }
+[data-tb="pair-chart"] { top: 780px; }
 [data-tb="grid"] { top: 420px; }
 [data-tb="grid-headline"] { top: 1050px; text-align: center; }
 [data-tb="textcard"] { top: 700px; text-align: center; }
@@ -68,6 +68,10 @@ body { font-family: var(--font-body); color: var(--ink); }
 .pair-val { font: 400 160px/1 var(--font-display); color: var(--ink); white-space: nowrap; }
 .pair-track { position: relative; width: 875px; height: 28px; margin-top: 20px; background: var(--track); border-radius: 14px; }
 .pair-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--accent); border-radius: 14px; }
+.pair-sub { margin-top: 12px; font: 600 44px/1.25 var(--font-body); color: var(--ink-dim); }
+.pair-title-num { margin-top: 24px; font: 400 96px/1 var(--font-display); text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+/* PRD-23: 50 px (was 56) keeps >= 40 px between the longest label (SULAWESI UTARA, 307.7 px) and the 160 px value (523.1 px) in a 875 px row: gap 44.2 px */
+.pair-label { font-size: 50px; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
 
 /* ---- grid ---- */
 .grid-label { position: relative; height: 53px; margin-bottom: 12px; }
@@ -109,5 +113,6 @@ body { font-family: var(--font-body); color: var(--ink); }
 /* ---- close and the final card ---- */
 .close-line { font: 400 96px/0.95 var(--font-display); text-transform: uppercase; color: var(--ink); white-space: nowrap; }
 .close-sub { margin-top: 30px; font: 800 48px/1.2 var(--font-body); text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+.close-num { margin-top: 30px; font: 400 170px/1 var(--font-display); text-transform: uppercase; color: var(--accent); white-space: nowrap; }
 .cta-pill { display: inline-block; background: var(--accent); color: var(--ground); font: 800 64px/1.2 var(--font-body); padding: 20px 40px; border-radius: 999px; white-space: nowrap; }
 .cite { font: 600 30px/1.3 var(--font-body); color: var(--ink-dim); }

@@ -1,4 +1,4 @@
-/* video-02 scene builders. Plain browser script, loaded after vendor/gsap.min.js.
+/* video-03 scene builders. Plain browser script, loaded after vendor/gsap.min.js.
  *
  * Deterministic: no network, no randomness, no Date. window.SOS.build(cfg) returns ONE paused GSAP timeline.
  * Every tween sits at an absolute time from cfg, which tools/build.mjs resolves from word cues of the voice take.
@@ -62,13 +62,21 @@
     var L = layer(tl, sec, p, sc, "pair");
     var t = block(L, "pair-title");
     t.appendChild(el("div", "pair-title-text", p.title));
+    if (p.subtitle) t.appendChild(el("div", "pair-sub", p.subtitle));
+    if (p.title_num) {
+      var tn = el("div", "pair-title-num", p.title_num.text);
+      t.appendChild(tn);
+      appear(tl, tn, p.title_num.t, 0.3);
+    }
     var c = block(L, "pair-chart");
     p.rows.forEach(function (row) {
       var r = el("div", "pair-row");
       var head = el("div", "pair-head");
-      var yr = el("span", "pair-year", row.year.text);
+      // the row's year, or its label (text) in the same slot
+      var slot = row.label ? el("span", "pair-year pair-label", row.label.text) : el("span", "pair-year", row.year.text);
+      var slotT = row.label ? row.label.t : row.year.t;
       var val = el("span", "pair-val", row.value.text);
-      head.appendChild(yr);
+      head.appendChild(slot);
       head.appendChild(val);
       var track = el("div", "pair-track");
       var fill = el("div", "pair-fill");
@@ -76,8 +84,8 @@
       r.appendChild(head);
       r.appendChild(track);
       c.appendChild(r);
-      appear(tl, yr, row.year.t, 0.25);
-      appear(tl, track, row.year.t, 0.25);
+      appear(tl, slot, slotT, 0.25);
+      appear(tl, track, slotT, 0.25);
       appear(tl, val, row.value.t, 0.25);
       // fill width = value / 100 of the track, grown in 0.6 s from the value's cue
       tl.fromTo(fill, { width: "0%" }, { width: row.value.value + "%", duration: 0.6, ease: "power2.out" }, row.value.t);
@@ -246,6 +254,12 @@
       it.lines.forEach(function (ln) {
         n.appendChild(el("div", i === 0 ? "close-line" : "close-sub", ln));
       });
+      if (it.num) {
+        // the number sits under the lines, in the same block, and appears at its own cue (PRD-22)
+        var nn = el("div", "close-num", it.num.text);
+        n.appendChild(nn);
+        appear(tl, nn, it.num.t, 0.3);
+      }
       b.appendChild(n);
       appear(tl, n, it.t, 0.3);
     });

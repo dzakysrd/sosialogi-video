@@ -1,0 +1,1073 @@
+{
+  "id": "video-03",
+  "fps": 30,
+  "total": 43.084,
+  "vo_seconds": 43.08,
+  "gates": [
+    {
+      "name": "hook",
+      "value": 3.402,
+      "max": 3.5,
+      "ok": true
+    },
+    {
+      "name": "close",
+      "value": 7.408,
+      "max": 7.5,
+      "ok": true
+    },
+    {
+      "name": "total",
+      "value": 43.084,
+      "max": 45,
+      "ok": true
+    }
+  ],
+  "scenes": [
+    {
+      "id": "s1_hook",
+      "start": 0,
+      "end": 3.562,
+      "visual_start": 0,
+      "visual_end": 3.562
+    },
+    {
+      "id": "s2_neet",
+      "start": 3.562,
+      "end": 12.833,
+      "visual_start": 3.562,
+      "visual_end": 12.833
+    },
+    {
+      "id": "s3_caveat",
+      "start": 12.833,
+      "end": 17.553,
+      "visual_start": 12.833,
+      "visual_end": 17.553
+    },
+    {
+      "id": "s4_tpt",
+      "start": 17.553,
+      "end": 25.779,
+      "visual_start": 17.553,
+      "visual_end": 25.779
+    },
+    {
+      "id": "s5_provinces",
+      "start": 25.779,
+      "end": 35.676,
+      "visual_start": 25.779,
+      "visual_end": 35.676
+    },
+    {
+      "id": "s6_close",
+      "start": 35.676,
+      "end": 43.084,
+      "visual_start": 35.676,
+      "visual_end": 43.084
+    }
+  ],
+  "cues": [
+    {
+      "scene": "s1_hook",
+      "where": "s1_hook part 0 (claim).reveal",
+      "phrase": "satu dari lima",
+      "t": 0.557
+    },
+    {
+      "scene": "s2_neet",
+      "where": "s2_neet part 0 (pair).title_num",
+      "phrase": "lima belas sampai dua puluh empat",
+      "t": 10.827
+    },
+    {
+      "scene": "s2_neet",
+      "where": "s2_neet part 0 (pair) row 0 value",
+      "phrase": "sembilan belas koma empat empat persen",
+      "t": 7.867
+    },
+    {
+      "scene": "s2_neet",
+      "where": "s2_neet part 0 (pair) row 0 year",
+      "phrase": "dua ribu dua puluh lima",
+      "t": 5.916
+    },
+    {
+      "scene": "s3_caveat",
+      "where": "s3_caveat part 0 (textcard) to",
+      "phrase": "cari kerja",
+      "t": 14.793
+    },
+    {
+      "scene": "s3_caveat",
+      "where": "s3_caveat part 1 (textcard) from",
+      "phrase": "cari kerja",
+      "t": 14.793
+    },
+    {
+      "scene": "s4_tpt",
+      "where": "s4_tpt part 0 (pair) row 0 value",
+      "phrase": "dua puluh tiga koma tiga empat persen",
+      "t": 22.926
+    },
+    {
+      "scene": "s4_tpt",
+      "where": "s4_tpt part 0 (pair) row 0 year",
+      "phrase": "lima belas sampai sembilan belas",
+      "t": 19.19
+    },
+    {
+      "scene": "s5_provinces",
+      "where": "s5_provinces part 0 (pair) row 0 value",
+      "phrase": "dua puluh sembilan koma lima dua persen",
+      "t": 30.039
+    },
+    {
+      "scene": "s5_provinces",
+      "where": "s5_provinces part 0 (pair) row 0 label",
+      "phrase": "Sulawesi Utara",
+      "t": 28.681
+    },
+    {
+      "scene": "s5_provinces",
+      "where": "s5_provinces part 0 (pair) row 1 value",
+      "phrase": "lima koma tiga tiga persen",
+      "t": 33.891
+    },
+    {
+      "scene": "s5_provinces",
+      "where": "s5_provinces part 0 (pair) row 1 label",
+      "phrase": "Bali",
+      "t": 33.229
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) block 0",
+      "phrase": "Itu PR",
+      "t": 35.676
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) block 1 num",
+      "phrase": "ke sembilan puluh delapan",
+      "t": 39.11
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) block 1",
+      "phrase": "Selamat",
+      "t": 37.403
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) card",
+      "phrase": "Yuk",
+      "t": 40.57
+    }
+  ],
+  "numbers": [
+    {
+      "text": "HAMPIR 1 DARI 5",
+      "caption": "1 dari 5",
+      "spoken": "satu dari lima",
+      "t": 0.557,
+      "scene": "s1_hook",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": "neet_one_in_five",
+      "words": [
+        1,
+        3
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "USIA 15-24",
+      "caption": "15-24",
+      "spoken": "lima belas sampai dua puluh empat",
+      "t": 10.827,
+      "scene": "s2_neet",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": null,
+      "words": [
+        28,
+        33
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "19,44%",
+      "caption": "19,44%",
+      "spoken": "sembilan belas koma empat empat persen",
+      "t": 7.867,
+      "scene": "s2_neet",
+      "derive": "fmtPct(neet[INDONESIA].neet_pct = \"19.44\")",
+      "check": null,
+      "words": [
+        21,
+        26
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "2025",
+      "caption": "2025",
+      "spoken": "dua ribu dua puluh lima",
+      "t": 5.916,
+      "scene": "s2_neet",
+      "derive": "neet[INDONESIA].year = \"2025\" (CSV year)",
+      "check": null,
+      "words": [
+        16,
+        20
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "23,34%",
+      "caption": "23,34%",
+      "spoken": "dua puluh tiga koma tiga empat persen",
+      "t": 22.926,
+      "scene": "s4_tpt",
+      "derive": "fmtPct(tpt_age[15-19].tpt_pct = \"23.34\")",
+      "check": null,
+      "words": [
+        60,
+        66
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "USIA 15-19",
+      "caption": "15-19",
+      "spoken": "lima belas sampai sembilan belas",
+      "t": 19.19,
+      "scene": "s4_tpt",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": "tpt_1519_highest",
+      "words": [
+        51,
+        55
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "29,52%",
+      "caption": "29,52%",
+      "spoken": "dua puluh sembilan koma lima dua persen",
+      "t": 30.039,
+      "scene": "s5_provinces",
+      "derive": "fmtPct(neet[SULAWESI UTARA].neet_pct = \"29.52\")",
+      "check": null,
+      "words": [
+        76,
+        82
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "5,33%",
+      "caption": "5,33%",
+      "spoken": "lima koma tiga tiga persen",
+      "t": 33.891,
+      "scene": "s5_provinces",
+      "derive": "fmtPct(neet[BALI].neet_pct = \"5.33\")",
+      "check": null,
+      "words": [
+        85,
+        89
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "KE-98",
+      "caption": "ke-98",
+      "spoken": "ke sembilan puluh delapan",
+      "t": 39.11,
+      "scene": "s6_close",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": "years_since_1928",
+      "words": [
+        99,
+        102
+      ],
+      "repeat_of": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "neet_one_in_five",
+      "ok": true,
+      "values": {
+        "neet[INDONESIA].neet_pct": "19.44",
+        "rule": "18 <= neet_pct < 20"
+      }
+    },
+    {
+      "name": "neet_highest_sulut",
+      "ok": true,
+      "values": {
+        "neet[SULAWESI UTARA].neet_pct": 29.52,
+        "highest other": 28.49,
+        "provinces": 38,
+        "rule": "strictly highest of the 38 provinces"
+      }
+    },
+    {
+      "name": "neet_lowest_bali",
+      "ok": true,
+      "values": {
+        "neet[BALI].neet_pct": 5.33,
+        "lowest other": 11.25,
+        "provinces": 38,
+        "rule": "strictly lowest of the 38 provinces"
+      }
+    },
+    {
+      "name": "tpt_1519_highest",
+      "ok": true,
+      "values": {
+        "tpt_age[15-19].tpt_pct": 23.34,
+        "highest other age group": 14.35,
+        "rule": "strictly highest age group, Rata-Rata excluded"
+      }
+    },
+    {
+      "name": "years_since_1928",
+      "ok": true,
+      "values": {
+        "2026 - 1928": 98,
+        "rule": "= 98 (Sumpah Pemuda, 28 Oktober 1928)"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "scene": "s6_close",
+      "text": "Sumber: BPS (NEET 15-24 menurut provinsi 2025; TPT menurut kelompok umur 2025)"
+    }
+  ],
+  "caption_limits": {
+    "max_words": 5,
+    "max_chars": 33,
+    "merge_words": 6,
+    "merge_chars": 33
+  },
+  "captions": [
+    {
+      "i": 0,
+      "start": 0,
+      "end": 2.136,
+      "duration": 2.136,
+      "text": "Hampir 1 dari 5 anak muda tidak",
+      "merged": false,
+      "words": [
+        {
+          "i": 0,
+          "n": 1,
+          "text": "Hampir",
+          "start": 0,
+          "end": 0.488,
+          "num": false
+        },
+        {
+          "i": 1,
+          "n": 3,
+          "text": "1 dari 5",
+          "start": 0.557,
+          "end": 1.347,
+          "num": true
+        },
+        {
+          "i": 4,
+          "n": 1,
+          "text": "anak",
+          "start": 1.393,
+          "end": 1.579,
+          "num": false
+        },
+        {
+          "i": 5,
+          "n": 1,
+          "text": "muda",
+          "start": 1.625,
+          "end": 1.846,
+          "num": false
+        },
+        {
+          "i": 6,
+          "n": 1,
+          "text": "tidak",
+          "start": 1.892,
+          "end": 2.136,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 1,
+      "start": 2.146,
+      "end": 3.502,
+      "duration": 1.356,
+      "text": "sekolah, tidak kerja.",
+      "merged": false,
+      "words": [
+        {
+          "i": 7,
+          "n": 1,
+          "text": "sekolah,",
+          "start": 2.171,
+          "end": 2.589,
+          "num": false
+        },
+        {
+          "i": 8,
+          "n": 1,
+          "text": "tidak",
+          "start": 2.659,
+          "end": 2.961,
+          "num": false
+        },
+        {
+          "i": 9,
+          "n": 1,
+          "text": "kerja.",
+          "start": 2.984,
+          "end": 3.402,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 2,
+      "start": 3.512,
+      "end": 4.986,
+      "duration": 1.474,
+      "text": "Tidak ikut pelatihan juga.",
+      "merged": false,
+      "words": [
+        {
+          "i": 10,
+          "n": 1,
+          "text": "Tidak",
+          "start": 3.562,
+          "end": 3.829,
+          "num": false
+        },
+        {
+          "i": 11,
+          "n": 1,
+          "text": "ikut",
+          "start": 3.852,
+          "end": 4.05,
+          "num": false
+        },
+        {
+          "i": 12,
+          "n": 1,
+          "text": "pelatihan",
+          "start": 4.096,
+          "end": 4.479,
+          "num": false
+        },
+        {
+          "i": 13,
+          "n": 1,
+          "text": "juga.",
+          "start": 4.537,
+          "end": 4.886,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 3,
+      "start": 4.996,
+      "end": 7.506,
+      "duration": 2.51,
+      "text": "Data BPS 2025:",
+      "merged": false,
+      "words": [
+        {
+          "i": 14,
+          "n": 1,
+          "text": "Data",
+          "start": 5.046,
+          "end": 5.347,
+          "num": false
+        },
+        {
+          "i": 15,
+          "n": 1,
+          "text": "BPS",
+          "start": 5.405,
+          "end": 5.835,
+          "num": false
+        },
+        {
+          "i": 16,
+          "n": 5,
+          "text": "2025:",
+          "start": 5.916,
+          "end": 7.356,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 4,
+      "start": 7.817,
+      "end": 12.773,
+      "duration": 4.956,
+      "text": "19,44%, usia 15-24.",
+      "merged": false,
+      "words": [
+        {
+          "i": 21,
+          "n": 6,
+          "text": "19,44%,",
+          "start": 7.867,
+          "end": 10.108,
+          "num": true
+        },
+        {
+          "i": 27,
+          "n": 1,
+          "text": "usia",
+          "start": 10.444,
+          "end": 10.758,
+          "num": false
+        },
+        {
+          "i": 28,
+          "n": 6,
+          "text": "15-24.",
+          "start": 10.827,
+          "end": 12.673,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 5,
+      "start": 12.783,
+      "end": 14.245,
+      "duration": 1.462,
+      "text": "Ini bukan ukuran malas.",
+      "merged": false,
+      "words": [
+        {
+          "i": 34,
+          "n": 1,
+          "text": "Ini",
+          "start": 12.833,
+          "end": 13.03,
+          "num": false
+        },
+        {
+          "i": 35,
+          "n": 1,
+          "text": "bukan",
+          "start": 13.077,
+          "end": 13.332,
+          "num": false
+        },
+        {
+          "i": 36,
+          "n": 1,
+          "text": "ukuran",
+          "start": 13.379,
+          "end": 13.669,
+          "num": false
+        },
+        {
+          "i": 37,
+          "n": 1,
+          "text": "malas.",
+          "start": 13.704,
+          "end": 14.145,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 6,
+      "start": 14.255,
+      "end": 15.652,
+      "duration": 1.397,
+      "text": "Yang sedang cari kerja atau",
+      "merged": false,
+      "words": [
+        {
+          "i": 38,
+          "n": 1,
+          "text": "Yang",
+          "start": 14.305,
+          "end": 14.479,
+          "num": false
+        },
+        {
+          "i": 39,
+          "n": 1,
+          "text": "sedang",
+          "start": 14.514,
+          "end": 14.758,
+          "num": false
+        },
+        {
+          "i": 40,
+          "n": 1,
+          "text": "cari",
+          "start": 14.793,
+          "end": 14.978,
+          "num": false
+        },
+        {
+          "i": 41,
+          "n": 1,
+          "text": "kerja",
+          "start": 15.025,
+          "end": 15.396,
+          "num": false
+        },
+        {
+          "i": 42,
+          "n": 1,
+          "text": "atau",
+          "start": 15.454,
+          "end": 15.652,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 7,
+      "start": 15.662,
+      "end": 17.493,
+      "duration": 1.831,
+      "text": "mengurus keluarga ikut terhitung.",
+      "merged": false,
+      "words": [
+        {
+          "i": 43,
+          "n": 1,
+          "text": "mengurus",
+          "start": 15.698,
+          "end": 16.047,
+          "num": false
+        },
+        {
+          "i": 44,
+          "n": 1,
+          "text": "keluarga",
+          "start": 16.105,
+          "end": 16.569,
+          "num": false
+        },
+        {
+          "i": 45,
+          "n": 1,
+          "text": "ikut",
+          "start": 16.627,
+          "end": 16.859,
+          "num": false
+        },
+        {
+          "i": 46,
+          "n": 1,
+          "text": "terhitung.",
+          "start": 16.882,
+          "end": 17.393,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 8,
+      "start": 17.503,
+      "end": 18.574,
+      "duration": 1.071,
+      "text": "Yang paling berat,",
+      "merged": false,
+      "words": [
+        {
+          "i": 47,
+          "n": 1,
+          "text": "Yang",
+          "start": 17.553,
+          "end": 17.751,
+          "num": false
+        },
+        {
+          "i": 48,
+          "n": 1,
+          "text": "paling",
+          "start": 17.809,
+          "end": 18.076,
+          "num": false
+        },
+        {
+          "i": 49,
+          "n": 1,
+          "text": "berat,",
+          "start": 18.122,
+          "end": 18.424,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 9,
+      "start": 18.711,
+      "end": 21.426,
+      "duration": 2.715,
+      "text": "remaja 15-19 tahun.",
+      "merged": false,
+      "words": [
+        {
+          "i": 50,
+          "n": 1,
+          "text": "remaja",
+          "start": 18.761,
+          "end": 19.155,
+          "num": false
+        },
+        {
+          "i": 51,
+          "n": 5,
+          "text": "15-19",
+          "start": 19.19,
+          "end": 20.955,
+          "num": true
+        },
+        {
+          "i": 56,
+          "n": 1,
+          "text": "tahun.",
+          "start": 21.013,
+          "end": 21.326,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 10,
+      "start": 21.436,
+      "end": 22.751,
+      "duration": 1.315,
+      "text": "Di angkatan kerjanya,",
+      "merged": false,
+      "words": [
+        {
+          "i": 57,
+          "n": 1,
+          "text": "Di",
+          "start": 21.486,
+          "end": 21.626,
+          "num": false
+        },
+        {
+          "i": 58,
+          "n": 1,
+          "text": "angkatan",
+          "start": 21.695,
+          "end": 22.02,
+          "num": false
+        },
+        {
+          "i": 59,
+          "n": 1,
+          "text": "kerjanya,",
+          "start": 22.078,
+          "end": 22.601,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 11,
+      "start": 22.876,
+      "end": 25.719,
+      "duration": 2.843,
+      "text": "23,34% menganggur.",
+      "merged": false,
+      "words": [
+        {
+          "i": 60,
+          "n": 7,
+          "text": "23,34%",
+          "start": 22.926,
+          "end": 25.039,
+          "num": true
+        },
+        {
+          "i": 67,
+          "n": 1,
+          "text": "menganggur.",
+          "start": 25.097,
+          "end": 25.619,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 12,
+      "start": 25.729,
+      "end": 27.844,
+      "duration": 2.115,
+      "text": "Anak muda NEET per provinsi:",
+      "merged": false,
+      "words": [
+        {
+          "i": 68,
+          "n": 1,
+          "text": "Anak",
+          "start": 25.779,
+          "end": 26.011,
+          "num": false
+        },
+        {
+          "i": 69,
+          "n": 1,
+          "text": "muda",
+          "start": 26.046,
+          "end": 26.301,
+          "num": false
+        },
+        {
+          "i": 70,
+          "n": 1,
+          "text": "NEET",
+          "start": 26.417,
+          "end": 26.731,
+          "num": false
+        },
+        {
+          "i": 71,
+          "n": 1,
+          "text": "per",
+          "start": 26.847,
+          "end": 26.986,
+          "num": false
+        },
+        {
+          "i": 72,
+          "n": 1,
+          "text": "provinsi:",
+          "start": 27.056,
+          "end": 27.694,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 13,
+      "start": 28.12,
+      "end": 32.693,
+      "duration": 4.573,
+      "text": "tertinggi Sulawesi Utara, 29,52%.",
+      "merged": true,
+      "words": [
+        {
+          "i": 73,
+          "n": 1,
+          "text": "tertinggi",
+          "start": 28.17,
+          "end": 28.611,
+          "num": false
+        },
+        {
+          "i": 74,
+          "n": 1,
+          "text": "Sulawesi",
+          "start": 28.681,
+          "end": 29.145,
+          "num": false
+        },
+        {
+          "i": 75,
+          "n": 1,
+          "text": "Utara,",
+          "start": 29.215,
+          "end": 29.656,
+          "num": false
+        },
+        {
+          "i": 76,
+          "n": 7,
+          "text": "29,52%.",
+          "start": 30.039,
+          "end": 32.593,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 14,
+      "start": 32.703,
+      "end": 35.616,
+      "duration": 2.913,
+      "text": "Terendah Bali, 5,33%.",
+      "merged": true,
+      "words": [
+        {
+          "i": 83,
+          "n": 1,
+          "text": "Terendah",
+          "start": 32.753,
+          "end": 33.171,
+          "num": false
+        },
+        {
+          "i": 84,
+          "n": 1,
+          "text": "Bali,",
+          "start": 33.229,
+          "end": 33.635,
+          "num": false
+        },
+        {
+          "i": 85,
+          "n": 5,
+          "text": "5,33%.",
+          "start": 33.891,
+          "end": 35.516,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 15,
+      "start": 35.626,
+      "end": 37.343,
+      "duration": 1.717,
+      "text": "Itu PR pemuda hari ini.",
+      "merged": false,
+      "words": [
+        {
+          "i": 90,
+          "n": 1,
+          "text": "Itu",
+          "start": 35.676,
+          "end": 35.92,
+          "num": false
+        },
+        {
+          "i": 91,
+          "n": 1,
+          "text": "PR",
+          "start": 36.013,
+          "end": 36.257,
+          "num": false
+        },
+        {
+          "i": 92,
+          "n": 1,
+          "text": "pemuda",
+          "start": 36.338,
+          "end": 36.675,
+          "num": false
+        },
+        {
+          "i": 93,
+          "n": 1,
+          "text": "hari",
+          "start": 36.721,
+          "end": 36.907,
+          "num": false
+        },
+        {
+          "i": 94,
+          "n": 1,
+          "text": "ini.",
+          "start": 36.965,
+          "end": 37.243,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 16,
+      "start": 37.353,
+      "end": 40.51,
+      "duration": 3.157,
+      "text": "Selamat Hari Sumpah Pemuda ke-98.",
+      "merged": false,
+      "words": [
+        {
+          "i": 95,
+          "n": 1,
+          "text": "Selamat",
+          "start": 37.403,
+          "end": 37.81,
+          "num": false
+        },
+        {
+          "i": 96,
+          "n": 1,
+          "text": "Hari",
+          "start": 37.879,
+          "end": 38.158,
+          "num": false
+        },
+        {
+          "i": 97,
+          "n": 1,
+          "text": "Sumpah",
+          "start": 38.239,
+          "end": 38.634,
+          "num": false
+        },
+        {
+          "i": 98,
+          "n": 1,
+          "text": "Pemuda",
+          "start": 38.669,
+          "end": 39.052,
+          "num": false
+        },
+        {
+          "i": 99,
+          "n": 4,
+          "text": "ke-98.",
+          "start": 39.11,
+          "end": 40.41,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 17,
+      "start": 40.52,
+      "end": 42.984,
+      "duration": 2.464,
+      "text": "Yuk, follow @dzakysrd.",
+      "merged": false,
+      "words": [
+        {
+          "i": 103,
+          "n": 1,
+          "text": "Yuk,",
+          "start": 40.57,
+          "end": 40.837,
+          "num": false
+        },
+        {
+          "i": 104,
+          "n": 1,
+          "text": "follow",
+          "start": 41.197,
+          "end": 41.499,
+          "num": false
+        },
+        {
+          "i": 105,
+          "n": 5,
+          "text": "@dzakysrd.",
+          "start": 41.569,
+          "end": 42.834,
+          "num": false
+        }
+      ]
+    }
+  ]
+}

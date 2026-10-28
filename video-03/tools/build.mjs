@@ -1,8 +1,8 @@
-// Builds video-02 from video.config.json: index.html, build/timeline.json, assets/vo/{vo.mp3,words.json,sentences.json}.
-// Inputs: the script (research/video-02/script_v1.json), the visual plan (scenes.json), the two data CSVs and the VO take.
-// Every element time is a word cue of the take. Every number on screen is formatted from the CSV and must be spoken
+// Builds video-03 from video.config.json: index.html, build/timeline.json, assets/vo/{vo.mp3,words.json,sentences.json}.
+// Inputs: the script (research/video-03/script_v2.json), the visual plan (scenes.json), the data tables (cfg.inputs.tables) and the VO take.
+// Every element time is a word cue of the take. Every number on screen is formatted from a table and must be spoken
 // at its cue. Validates everything first, prints every problem, and writes only when there are none.
-// Run from video-02/: node tools/build.mjs   (or npm run build)
+// Run from video-03/: node tools/build.mjs   (or npm run build)
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
 import { dirname, resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -35,8 +35,6 @@ const bad = (msg) => problems.push(msg);
 const cfg = JSON.parse(readFileSync(P("video.config.json"), "utf8"));
 const script = JSON.parse(readFileSync(P(cfg.inputs.script), "utf8"));
 const plan = JSON.parse(readFileSync(P(cfg.inputs.scenes), "utf8"));
-const national = parseCsv(readFileSync(P(cfg.inputs.national), "utf8"));
-const province = parseCsv(readFileSync(P(cfg.inputs.province), "utf8"));
 const voiceDir = join(P(cfg.voice.dir), cfg.voice.variant);
 const words = JSON.parse(readFileSync(join(voiceDir, "words.json"), "utf8"));
 const sentences = JSON.parse(readFileSync(join(voiceDir, "sentences.json"), "utf8"));
@@ -109,44 +107,49 @@ visStart.forEach((t, si) => {
 
 // ---------- data (every number comes from here) ----------
 const numVal = (raw) => (raw === "" || raw === undefined ? 0 : Number(raw)); // empty cell = 0
-function natRow(year) {
-  const r = national.find((x) => x.year === String(year));
-  if (!r) throw new Error(`no re_national row for ${year}`);
+// Every table of cfg.inputs.tables: { rows, key } (key = the column a reference names).
+const TABLES = {};
+for (const [name, t] of Object.entries(cfg.inputs.tables)) {
+  TABLES[name] = { rows: parseCsv(readFileSync(P(t.path), "utf8")), key: t.key };
+}
+function rowOf(name, key) {
+  const tab = TABLES[name];
+  if (!tab) throw new Error(`unknown table "${name}"`);
+  const r = tab.rows.find((x) => x[tab.key] === String(key));
+  if (!r) throw new Error(`no ${name} row for ${key}`);
   return r;
 }
-function provRow(name) {
-  const r = province.find((x) => x.province === name);
-  if (!r) throw new Error(`no re_province row for ${name}`);
-  return r;
-}
+// Province rankings: the table's rows without the national row (is_national "1").
+const provinces = () => TABLES.neet.rows.filter((r) => r.is_national !== "1");
 
 // Named data checks. Each returns { ok, values }. The build fails if one is false.
 const CHECKS = {
-  one_in_five_2013: () => {
-    const raw = natRow(2013).ratio_pct;
-    const v = 100 - Number(raw);
-    return { ok: v >= 18 && v < 20, values: { "re_national[2013].ratio_pct": raw, "100 - ratio": v.toFixed(2), rule: "18 <= 100 - re_national[2013] < 20" } };
+  neet_one_in_five: () => {
+    const raw = rowOf("neet", "INDONESIA").neet_pct;
+    const v = Number(raw);
+    return { ok: v >= 18 && v < 20, values: { "neet[INDONESIA].neet_pct": raw, rule: "18 <= neet_pct < 20" } };
   },
-  under_two_per_1000_2025: () => {
-    const raw = natRow(2025).ratio_pct;
-    const v = 10 * (100 - Number(raw));
-    return { ok: v >= 1 && v < 2, values: { "re_national[2025].ratio_pct": raw, "10 * (100 - ratio)": v.toFixed(2), rule: "1 <= 10 * (100 - re_national[2025]) < 2" } };
+  neet_highest_sulut: () => {
+    const rows = provinces();
+    const me = Number(rowOf("neet", "SULAWESI UTARA").neet_pct);
+    const best = Math.max(...rows.filter((r) => r.province !== "SULAWESI UTARA").map((r) => Number(r.neet_pct)));
+    return { ok: rows.length === 38 && me > best, values: { "neet[SULAWESI UTARA].neet_pct": me, "highest other": best, provinces: rows.length, rule: "strictly highest of the 38 provinces" } };
   },
-  flat_last_year: () => {
-    const a = natRow(2024).ratio_pct;
-    const b = natRow(2025).ratio_pct;
-    return { ok: a === b, values: { "re_national[2024].ratio_pct": a, "re_national[2025].ratio_pct": b, rule: "equal as strings" } };
+  neet_lowest_bali: () => {
+    const rows = provinces();
+    const me = Number(rowOf("neet", "BALI").neet_pct);
+    const least = Math.min(...rows.filter((r) => r.province !== "BALI").map((r) => Number(r.neet_pct)));
+    return { ok: rows.length === 38 && me < least, values: { "neet[BALI].neet_pct": me, "lowest other": least, provinces: rows.length, rule: "strictly lowest of the 38 provinces" } };
   },
-  lowest_province: () => {
-    const pp = provRow("Papua Pegunungan");
-    const ppv = numVal(pp.re_total);
-    const others = province.filter((r) => r.province !== "Papua Pegunungan").map((r) => ({ name: r.province, v: numVal(r.re_total) }));
-    const minOther = others.reduce((a, b) => (b.v < a.v ? b : a));
-    return { ok: ppv < minOther.v, values: { "Papua Pegunungan re_total": pp.re_total, "lowest other": `${minOther.name} ${minOther.v}`, rule: "strictly lowest re_total" } };
+  tpt_1519_highest: () => {
+    const rows = TABLES.tpt_age.rows.filter((r) => r.age_group !== "Rata-Rata" && r.age_group !== "15-19");
+    const me = Number(rowOf("tpt_age", "15-19").tpt_pct);
+    const best = Math.max(...rows.map((r) => Number(r.tpt_pct)));
+    return { ok: me > best, values: { "tpt_age[15-19].tpt_pct": me, "highest other age group": best, rule: "strictly highest age group, Rata-Rata excluded" } };
   },
-  ltshe_over_half: () => {
-    const raw = provRow("Papua Pegunungan").re_ltshe;
-    return { ok: numVal(raw) > 50, values: { "Papua Pegunungan re_ltshe": raw, rule: "re_ltshe > 50" } };
+  years_since_1928: () => {
+    const n = 2026 - 1928;
+    return { ok: n === 98, values: { "2026 - 1928": n, rule: "= 98 (Sumpah Pemuda, 28 Oktober 1928)" } };
   },
 };
 const checkResults = {};
@@ -160,17 +163,18 @@ for (const [name, fn] of Object.entries(CHECKS)) {
     bad(`data check ${name}: ${e.message}`);
   }
 }
+// A named check on an element: it must exist, and it must hold (the build fails otherwise).
 function checkRef(name, where) {
   if (!name) return;
-  if (!checkResults[name]) bad(`${where}: unknown data check "${name}"`);
+  if (!checkResults[name]) { bad(`${where}: unknown data check "${name}"`); return; }
+  if (!checkResults[name].ok) bad(`${where}: data check ${name} failed`);
 }
 
 // Resolve a data reference to its value and its on-screen / spoken forms.
 function refValue(ref, where) {
-  const table = ref.from === "national" ? national : ref.from === "province" ? province : null;
-  if (!table) throw new Error(`${where}: unknown table "${ref.from}"`);
-  const keyCol = ref.from === "national" ? "year" : "province";
-  const row = table.find((r) => r[keyCol] === String(ref.key));
+  const tab = TABLES[ref.from];
+  if (!tab) throw new Error(`${where}: unknown table "${ref.from}"`);
+  const row = tab.rows.find((r) => r[tab.key] === String(ref.key));
   if (!row) throw new Error(`${where}: no ${ref.from} row for ${ref.key}`);
   const raw = row[ref.field];
   if (raw === undefined) throw new Error(`${where}: no column ${ref.field}`);
@@ -243,7 +247,6 @@ function numEl(e, si, where) {
   if (e.cue !== spoken) bad(`${where}: cue "${e.cue}" must be the spoken form "${spoken}"`);
   if (!containsPhrase(S[si].vo_text, spoken)) bad(`${where}: spoken "${spoken}" is not in the vo_text of ${sid}`);
   checkRef(e.check, where);
-  if (e.check && checkResults[e.check] && !checkResults[e.check].ok) bad(`${where}: data check ${e.check} failed`);
   const t = cueIn(si, spoken, where);
   // the number's words: one caption run, from its first to its last spoken word
   let wi = -1;
@@ -277,13 +280,27 @@ const RESOLVE = {
       reveal: numEl(p.reveal, si, `${where}.reveal`),
     };
   },
-  pair(p, si, where) {
+  // A row has a year (a number element) or a label (text, at its cue or at the part start), and a value (a number element).
+  pair(p, si, where, from) {
+    const tn = p.title_num ? numEl(p.title_num, si, `${where}.title_num`) : null;
     return {
       title: textOf([p.title], `${where}.title`)[0],
-      rows: p.rows.map((r, k) => ({
-        year: numEl(r.year, si, `${where} row ${k} year`),
-        value: numEl(r.value, si, `${where} row ${k} value`),
-      })),
+      subtitle: p.subtitle ? textOf([p.subtitle], `${where}.subtitle`)[0] : null,
+      title_num: tn ? { text: tn.text, t: tn.t } : null,
+      rows: p.rows.map((r, k) => {
+        const w = `${where} row ${k}`;
+        const value = numEl(r.value, si, `${w} value`);
+        let slot;
+        if (r.label) {
+          const lt = r.label.cue !== undefined ? cueIn(si, r.label.cue, `${w} label`) : from;
+          checkRef(r.label.check, `${w} label`);
+          slot = { label: { text: textOf(r.label.lines, `${w} label`).join(" "), t: r3(lt), check: r.label.check ?? null } };
+        } else {
+          const yr = numEl(r.year, si, `${w} year`);
+          slot = { year: yr ? { text: yr.text, t: yr.t } : null };
+        }
+        return { ...slot, value: value ? { text: value.text, value: value.value, t: value.t } : null };
+      }),
     };
   },
   grid(p, si, where) {
@@ -300,7 +317,7 @@ const RESOLVE = {
       cols: p.cols, rows: p.rows, dot: p.dot, gap: p.gap, lit: p.lit, unlit: p.unlit,
       label: textOf([p.label], `${where}.label`)[0],
       unlit_from: from, unlit_to: to,
-      derive: `unlit = round(10 * (100 - re_national[2013].ratio_pct)) = ${from}; after the switch unlit = round(10 * (100 - re_national[2025].ratio_pct)) = ${to}`,
+      derive: `unlit = round(10 * (100 - unlit_from value)) = ${from}; after the switch unlit = round(10 * (100 - unlit_to value)) = ${to}`,
       switch: { t: r3(sw), label: textOf([p.switch.label], `${where}.switch.label`)[0], fill_s: p.switch.fill_s },
       headline: { lines: headline ? headline.lines : null, text: headline ? headline.text : null, t: headline ? headline.t : NaN, check: p.headline.check },
       subline: textOf([p.subline], `${where}.subline`)[0],
@@ -311,22 +328,27 @@ const RESOLVE = {
     return { lines: textOf(p.lines, `${where}.lines`), check: p.check ?? null };
   },
   rankbars(p, si, where) {
+    const tab = TABLES[p.rows.from];
+    if (!tab) throw new Error(`${where}: rows.from "${p.rows.from}" is not a table`);
+    const field = p.rows.field;
+    const name = (r) => r[tab.key];
+    const pool = tab.rows.filter((r) => r.is_national !== "1");
     const sub = numEl(p.subtitle, si, `${where}.subtitle`);
     const n = p.rows.count;
-    const lowest = [...province].sort((a, b) => numVal(a.re_total) - numVal(b.re_total)).slice(0, n);
-    const ordered = [...lowest].sort((a, b) => (100 - numVal(b.re_total)) - (100 - numVal(a.re_total)));
-    const max = Math.max(...ordered.map((r) => 100 - numVal(r.re_total)));
+    const lowest = [...pool].sort((a, b) => numVal(a[field]) - numVal(b[field])).slice(0, n);
+    const ordered = [...lowest].sort((a, b) => (100 - numVal(b[field])) - (100 - numVal(a[field])));
+    const max = Math.max(...ordered.map((r) => 100 - numVal(r[field])));
     const tRows = cueIn(si, p.rows.cue, `${where}.rows`);
     const hl = p.rows.highlight;
     const hlT = cueIn(si, hl.cue, `${where}.rows.highlight`);
-    if (!ordered.some((r) => r.province === hl.key)) bad(`${where}: highlight "${hl.key}" is not one of the ${n} rows`);
+    if (!ordered.some((r) => name(r) === hl.key)) bad(`${where}: highlight "${hl.key}" is not one of the ${n} rows`);
     const rows = ordered.map((r, k) => {
-      const isHl = r.province === hl.key;
+      const isHl = name(r) === hl.key;
       return {
-        name: r.province,
+        name: name(r),
         t: r3(tRows), // all five rows appear together at the rows cue
         grow_t: r3(tRows + k * p.rows.stagger_s), // each bar grows in its own step
-        frac_pct: r3((100 * (100 - numVal(r.re_total))) / max),
+        frac_pct: r3((100 * (100 - numVal(r[field]))) / max),
         highlight: isHl ? { t: r3(hlT), color: hl.color } : null,
       };
     });
@@ -370,11 +392,17 @@ const RESOLVE = {
       message,
     };
   },
+  // A block item: lines at its cue, and an optional number (num) at the number's own cue, in the same block.
   close(p, si, where) {
-    const block = p.block.map((it, k) => ({
-      t: r3(cueIn(si, it.cue, `${where} block ${k}`)),
-      lines: textOf(it.lines, `${where} block ${k}`),
-    }));
+    const block = p.block.map((it, k) => {
+      const w = `${where} block ${k}`;
+      const num = it.num ? numEl(it.num, si, `${w} num`) : null;
+      return {
+        t: r3(cueIn(si, it.cue, w)),
+        lines: textOf(it.lines, w),
+        num: num ? { text: num.text, t: num.t } : null,
+      };
+    });
     const cta = p.card.cta?.script ? script[p.card.cta.script] : p.card.cta;
     const sources = p.card.sources?.script ? script[p.card.sources.script] : p.card.sources;
     if (typeof cta !== "string") bad(`${where}: card cta is not text`);
@@ -405,7 +433,7 @@ S.forEach((s, si) => {
     if (!fn) { bad(`${where}: unknown part type "${p.type}"`); return; }
     let body;
     try {
-      body = fn(p, si, where);
+      body = fn(p, si, where, from);
     } catch (e) {
       bad(`${where}: ${e.message}`);
       return;
@@ -560,7 +588,7 @@ writeFileSync(P("index.html"), html, "utf8");
 
 // build/timeline.json
 const timeline = {
-  id: "video-02",
+  id: "video-03",
   fps,
   total: TOTAL,
   vo_seconds: VO_SECONDS,

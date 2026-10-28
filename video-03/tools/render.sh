@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# video-02: build, lint, render 1080x1920 @ 30 fps from index.html, then set the MP4 audio to the loudness in video.config.json
+# video-03: build, lint, render 1080x1920 @ 30 fps from index.html, then set the MP4 audio to the loudness in video.config.json
 # (two-pass linear loudnorm; video stream copied; AAC 192k, 48 kHz).
 set -euo pipefail
 cd "$(dirname "$0")/.."

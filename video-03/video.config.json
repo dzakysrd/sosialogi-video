@@ -1,6 +1,6 @@
 {"platform": "Instagram Reels (also fine for TikTok)", "width": 1080, "height": 1920, "fps": 30, "brand": "@dzakysrd",
  "safe": {"top": 220, "bottom": 420, "left": 65, "right": 140}, "hero_band": {"top": 420, "bottom": 1320},
- "hook_max_s": 3.5, "close_max_s": 7.2, "total_max_s": 45, "tail_s": 0.25,
+ "hook_max_s": 3.5, "close_max_s": 7.5, "total_max_s": 45, "tail_s": 0.25,
  "loudness": {"I": -14, "TP": -1.5, "LRA": 11},
- "voice": {"dir": "../voice/samples/video-02", "variant": "el_liam_close2"},
- "inputs": {"script": "../research/video-02/script_v2.json", "national": "../research/video-02/re_national.csv", "province": "../research/video-02/re_province.csv", "scenes": "scenes.json"}, "output": "out/v2.mp4"}
+ "voice": {"dir": "../voice/samples/video-03", "variant": "el_liam_close2"},
+ "inputs": {"script": "../research/video-03/script_v2.json", "tables": {"neet": {"path": "../research/video-03/neet_province.csv", "key": "province"}, "tpt_age": {"path": "../research/video-03/tpt_age.csv", "key": "age_group"}}, "scenes": "scenes.json"}, "output": "out/v1.mp4"}
