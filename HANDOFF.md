@@ -81,6 +81,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 2. ElevenLabs credits: 2,258 of 10,000 used this period (resets 2026-11-26), per `voice/elevenlabs_usage.csv` and the subscription endpoint (checked 2026-10-28).
 3. ElevenLabs free plan: a web search on 2026-10-28 returned ElevenLabs' help page "Can I publish the content I generate on the platform?" saying free-plan output has no commercial licence and must be attributed with "elevenlabs.io" or "11.ai" in the title. The page could not be opened from the container (elevenlabs.io is not an allowed domain). The video-02 caption credits "Suara: elevenlabs.io"; the video-01 caption says "Suara: ElevenLabs". The video-02 caption also carries an ElevenLabs affiliate link and a Claude referral line. Check the terms before monetised use.
 4. Optional: the HyperFrames CLI lint reports 12 structural warnings for `index_v3.html` (file size, dense tracks, nested structure). Not errors; not reviewed.
+5. Next video: video-03, topic Hari Sumpah Pemuda (28 October), requested by the user on 2026-10-28, to be made in a new session after PR #2 (branch `ccr-053df98e-czdh2y`) is merged into `main`. Start from the video-02 engine (copy `video-02/` to `video-03/`). Youth data will likely come from BPS; the user downloads BPS files by hand.
 
 ## Session notes (not in the repo, not re-verified)
 
