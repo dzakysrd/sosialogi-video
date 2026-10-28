@@ -43,6 +43,21 @@ body { font-family: var(--font-body); color: var(--ink); }
 /* variant b: number first, then headline */
 body.v-b .num { order: 1; }
 body.v-b .head { order: 2; }
+
+/* minimal variants c and d: no kicker, no footer, no brand pill */
+.var-c, .var-d { display: none; flex-direction: column; align-items: center; width: 1080px; }
+body.v-c .var-c, body.v-d .var-d { display: flex; }
+body.v-c .stack > :not(.var-c), body.v-d .stack > :not(.var-d) { display: none; }
+.var-c { gap: 70px; }
+.var-d { gap: 70px; }
+.fit { width: fit-content; white-space: nowrap; text-transform: uppercase; color: var(--accent); font: 400 100px/1 var(--font-display); }
+.c-head { display: flex; flex-direction: column; align-items: center; font: 400 88px/1.05 var(--font-display); text-transform: uppercase; color: var(--ink); }
+.c-head .line { display: block; width: fit-content; white-space: nowrap; }
+.ppl { display: flex; gap: 40px; width: fit-content; }
+.ppl svg { display: block; fill: var(--person-off); }
+.ppl svg.on { fill: var(--accent); }
+body.v-c .ppl svg { width: 124px; height: 220px; }
+body.v-d .ppl svg { width: 147px; height: 260px; }
 </style>
 </head>
 <body>
@@ -59,17 +74,46 @@ body.v-b .head { order: 2; }
   </div>
   <div class="foot">Data BPS 2025 · NEET usia 15–24</div>
   <div class="brand">@dzakysrd</div>
+  <div class="var-c">
+    <div class="fit c-top">HAMPIR 1 DARI 5</div>
+    <div class="ppl c-icons" aria-hidden="true">
+      <svg class="on" viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+    </div>
+    <div class="c-head"><span class="line">ANAK MUDA NGGAK SEKOLAH,</span><span class="line">NGGAK KERJA</span></div>
+  </div>
+  <div class="var-d">
+    <div class="fit d-top">1 DARI 5</div>
+    <div class="ppl d-icons" aria-hidden="true">
+      <svg class="on" viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+      <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+    </div>
+  </div>
 </div>
 <script>
 (function () {
   var v = new URLSearchParams(location.search).get('v');
   if (v === 'b') document.body.classList.add('v-b');
+  if (v === 'c') document.body.classList.add('v-c');
+  if (v === 'd') document.body.classList.add('v-d');
   var num = document.querySelector('.num');
-  // Fit the number line to x 65..1015 (950 px wide), as large as possible.
+  // Fit a line to x 65..1015 (950 px wide), as large as possible.
+  // Only elements that are displayed are measured (hidden ones have zero width).
+  function fitEl(el) {
+    el.style.fontSize = '100px';
+    var w = el.getBoundingClientRect().width;
+    if (!w) return;
+    el.style.fontSize = Math.floor(100 * 950 / w) + 'px';
+  }
   function fit() {
-    num.style.fontSize = '100px';
-    var w = num.getBoundingClientRect().width;
-    num.style.fontSize = Math.floor(100 * 950 / w) + 'px';
+    fitEl(num);
+    document.querySelectorAll('.fit').forEach(fitEl);
   }
   Promise.all([
     document.fonts.load('400 100px SosDisplay'),

@@ -11,19 +11,24 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const htmlPath = path.join(here, 'cover.html');
 const outDir = path.resolve(here, '..', 'out');
 
+const SAFE_AB = { x0: 65, x1: 1015, y0: 300, y1: 1500 };
+const SAFE_CD = { x0: 65, x1: 1015, y0: 300, y1: 1620 };
+const SELECTORS_AB = ['.kicker', '.head .line', '.num', '.foot', '.brand', '.icons'];
+const SELECTORS_C = ['.c-top', '.c-icons', '.c-head .line'];
+const SELECTORS_D = ['.d-top', '.d-icons'];
 const VARIANTS = [
-  { v: 'a', file: 'cover_a.png' },
-  { v: 'b', file: 'cover_b.png' },
+  { v: 'a', file: 'cover_a.png', safe: SAFE_AB, selectors: SELECTORS_AB, fitSel: '.num' },
+  { v: 'b', file: 'cover_b.png', safe: SAFE_AB, selectors: SELECTORS_AB, fitSel: '.num' },
+  { v: 'c', file: 'cover_c.png', safe: SAFE_CD, selectors: SELECTORS_C, fitSel: '.c-top' },
+  { v: 'd', file: 'cover_d.png', safe: SAFE_CD, selectors: SELECTORS_D, fitSel: '.d-top' },
 ];
-const SAFE = { x0: 65, x1: 1015, y0: 300, y1: 1500 };
-const SELECTORS = ['.kicker', '.head .line', '.num', '.foot', '.brand', '.icons'];
 
 let failCount = 0;
 const fail = (msg) => { failCount++; console.log('FAIL: ' + msg); };
 
 const browser = await chromium.launch();
 try {
-  for (const { v, file } of VARIANTS) {
+  for (const { v, file, safe: SAFE, selectors: SELECTORS, fitSel } of VARIANTS) {
     console.log(`== variant ${v} ==`);
     const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
     const url = pathToFileURL(htmlPath).href + '?v=' + v;
@@ -71,8 +76,8 @@ try {
       }
     }
 
-    const fontSize = await page.evaluate(() => getComputedStyle(document.querySelector('.num')).fontSize);
-    console.log(`number font-size: ${fontSize}`);
+    const fontSize = await page.evaluate((s) => getComputedStyle(document.querySelector(s)).fontSize, fitSel);
+    console.log(`${fitSel} font-size: ${fontSize}`);
 
     await page.screenshot({ path: path.join(outDir, file), type: 'png' });
     console.log(`wrote ${path.join(outDir, file)}`);
