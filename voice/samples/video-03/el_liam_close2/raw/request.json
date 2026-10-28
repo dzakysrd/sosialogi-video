@@ -1,0 +1,10 @@
+{
+  "text": "Terendah Bali, lima koma tiga tiga persen. Itu PR pemuda hari ini. Selamat Hari Sumpah Pemuda ke sembilan puluh delapan. Yuk, follow et Dzaky es er de.",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "model_id": "eleven_multilingual_v2",
+  "output_format": "mp3_44100_128",
+  "voice_settings": {},
+  "previous_text": "Hampir satu dari lima anak muda tidak sekolah, tidak kerja. Tidak ikut pelatihan juga. Data BPS dua ribu dua puluh lima: sembilan belas koma empat empat persen, usia lima belas sampai dua puluh empat. Ini bukan ukuran malas. Yang sedang cari kerja atau mengurus keluarga ikut terhitung. Yang paling berat, remaja lima belas sampai sembilan belas tahun. Di angkatan kerjanya, dua puluh tiga koma tiga empat persen menganggur. Anak muda NEET per provinsi: tertinggi Sulawesi Utara, dua puluh sembilan koma lima dua persen. ",
+  "splice_base": "voice/samples/video-03/el_liam",
+  "splice_at": "Terendah Bali"
+}

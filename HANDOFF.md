@@ -1,6 +1,6 @@
 # HANDOFF
 
-Snapshot of the repo as of 2026-10-27. Facts here were checked against the files. Items marked **[session note]** came from the previous session and are not in the repo.
+Snapshot of the repo as of 2026-10-28. Facts here were checked against the files. Items marked **[session note]** came from the previous session and are not in the repo.
 
 ## Goal
 
@@ -23,6 +23,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
   - `components/`, `vendor/` (GSAP and licenses).
   - `out/`: `draft.mp4` (v1), `v2.mp4`, `v3.mp4`, `v3_caption.txt`, contact sheets (`sheet.jpg`, `v2_sheet.jpg`, `v3_sheet.jpg`), and cue stills.
   - `build/`: `timeline.json` (v1), `v2/` and `v3/` timelines and contact sheets, `geometry.json` (province geometry cache), `v1/index_v1_snapshot.html`, render logs.
+- `video-03/`: video #3 (Hari Sumpah Pemuda), the video-02 engine with data tables from `video.config.json` (`inputs.tables`), pair subtitle / title number / row labels and a close number. Research in `research/video-03/`, voice in `voice/samples/video-03/`, PRDs 18-24.
 - `thirdparty/REVIEW.md`: review of the third-party `hyperframe-pro` skill pack, with upstream URL and commit 9a135673. The clone itself is not in the repo.
 - `spike/`: early HyperFrames test (`hf-test/`) and `test.mp4`.
 
@@ -54,6 +55,18 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 - Open before posting: the Claude referral terms ("Terms apply") were not read; ElevenLabs terms (see Next steps). Instagram caption links are not clickable.
 - Cover tip: frame 1 has no number on purpose (numbers appear when spoken); pick a cover near 2 s or 12 s.
 
+## Video #3 status
+
+- Topic: Hari Sumpah Pemuda (28 October). Angle A, "Pemuda dan kerja" (chosen by the main agent; the user left the choice open, 2026-10-28). Branch `claude/video03-research`; PR not opened.
+- Data (PRD-18): three BPS XLSX files downloaded by the user, stored unchanged in `research/video-03/raw/` (sha256 in `sources.md`): NEET 15-24 by province 2025, TPT by five-year age group 2025, TPT by province Februari 2026. `tools/extract.py` writes `neet_province.csv`, `tpt_age.csv`, `tpt_province.csv`. BPS gives no month for the 2025 tables; download URLs are not confirmed. TPT-by-age has no 15-24 group; it must not be averaged from 15-19 and 20-24.
+- Script: `research/video-03/script_v2.json` (110 words). Drafted by the main agent, reviewed by a copywriter sub-agent, approved by the user; close line "Itu PR pemuda hari ini." chosen by the user (option B).
+- Voice: ElevenLabs Liam, take `voice/samples/video-03/el_liam_close2` (splice of `el_liam` from "Terendah Bali"). Credits for video-03: 653 + 151.
+- Gates: hook 3.5 s, close 7.5 s (raised from 7.2 by the user on 2026-10-28 for the close-B line), total 45 s. Measured: hook 3.40, close 7.41, total 43.08.
+- Build (PRD-22, PRD-23): `video-03/tools/build.mjs` reads its tables from `video.config.json` `inputs.tables`; data checks `neet_one_in_five`, `neet_highest_sulut`, `neet_lowest_bali`, `tpt_1519_highest`, `years_since_1928`. Lint PASS.
+- Output: `video-03/out/v1.mp4` (43.1 s, 1080x1920, 30 fps, -14.0 LUFS, true peak -4.2 dBFS). Approved by the user on 2026-10-28. Caption: `video-03/out/v1_caption.txt`.
+- Open before posting: the Claude referral line ("Kuota 3 orang") is copied from video-02 and not re-checked; ElevenLabs free-plan terms (Next steps 3).
+- Cosmetic, not fixed: `video-03/tools/lint.mjs` prints "lint video-02 (PRD-14)" in its header.
+
 ## Rules and decisions (enforced in code or docs)
 
 - Every number on screen must be spoken at its cue. `lint_v3.mjs` checks this, and also checks that the VO has no digits.
@@ -78,10 +91,10 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 ## Next steps (ordered)
 
 1. Done: the user reviewed `out/v3.mp4` (voice `el_liam_cta2`, CTA "Yuk, follow et Dzaky es er de.", 0.16 s pause after "Yuk,") and approved it on 2026-10-27 ("Udah ok overall"). The reviewer measured timing and loudness but did not judge the audio by ear.
-2. ElevenLabs credits: 2,258 of 10,000 used this period (resets 2026-11-26), per `voice/elevenlabs_usage.csv` and the subscription endpoint (checked 2026-10-28).
+2. ElevenLabs credits: 3,062 of 10,000 used this period (resets 2026-11-26), from the character-cost header of the last call on 2026-10-28 (the subscription endpoint lagged at 2,911).
 3. ElevenLabs free plan: a web search on 2026-10-28 returned ElevenLabs' help page "Can I publish the content I generate on the platform?" saying free-plan output has no commercial licence and must be attributed with "elevenlabs.io" or "11.ai" in the title. The page could not be opened from the container (elevenlabs.io is not an allowed domain). The video-02 caption credits "Suara: elevenlabs.io"; the video-01 caption says "Suara: ElevenLabs". The video-02 caption also carries an ElevenLabs affiliate link and a Claude referral line. Check the terms before monetised use.
 4. Optional: the HyperFrames CLI lint reports 12 structural warnings for `index_v3.html` (file size, dense tracks, nested structure). Not errors; not reviewed.
-5. Next video: video-03, topic Hari Sumpah Pemuda (28 October), requested by the user on 2026-10-28, to be made in a new session after PR #2 (branch `ccr-053df98e-czdh2y`) is merged into `main`. Start from the video-02 engine (copy `video-02/` to `video-03/`). Youth data will likely come from BPS; the user downloads BPS files by hand.
+5. Done: video-03 (Hari Sumpah Pemuda) is on branch `claude/video03-research`; see Video #3 status. Next video: start from the video-03 engine (`video-03/`), which reads its data tables from `video.config.json`.
 
 ## Session notes (not in the repo, not re-verified)
 
