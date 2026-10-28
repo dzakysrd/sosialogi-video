@@ -1,0 +1,78 @@
+{
+  "version": "v2",
+  "status": "v2 (2026-10-28 WIB): close line changed by the user to 'Sisanya paling sulit dijangkau jaringan listrik.'; everything else as v1.",
+  "word_count_target": [95, 120],
+  "max_seconds": 45,
+  "cta": "Follow @dzakysrd",
+  "sources_line": "Sumber: Kementerian ESDM (HEESI 2024, HEESI 2025, Laporan Kinerja 2023)",
+  "scenes": [
+    {
+      "id": "s1_hook",
+      "vo_text": "Dulu, hampir satu dari lima rumah tangga belum berlistrik.",
+      "on_screen_text": "frame 1: RUMAH TANGGA BELUM BERLISTRIK (no digits) -> at 'satu dari lima': HAMPIR 1 DARI 5",
+      "visual": "claim headline; the number appears at its cue",
+      "cue_words": ["satu dari lima"],
+      "numbers": [
+        {"show": "1 DARI 5", "spoken": "satu dari lima", "derive": "100 - re_national[2013] = 19.49 percent, under 20, so 'hampir 1 dari 5'"}
+      ],
+      "vo_max_seconds": 3.5
+    },
+    {
+      "id": "s2_series",
+      "vo_text": "Itu tahun dua ribu tiga belas, rasio elektrifikasi delapan puluh koma lima satu persen. Tahun dua ribu dua puluh lima, sembilan puluh sembilan koma delapan tiga persen.",
+      "on_screen_text": "RASIO ELEKTRIFIKASI / 2013: 80,51% -> 2025: 99,83%",
+      "visual": "two big numbers (or two bars), each shown at its spoken cue",
+      "cue_words": ["dua ribu tiga belas", "delapan puluh koma lima satu persen", "dua ribu dua puluh lima", "sembilan puluh sembilan koma delapan tiga persen"],
+      "numbers": [
+        {"show": "2013", "spoken": "dua ribu tiga belas", "derive": "re_national year 2013"},
+        {"show": "80,51%", "spoken": "delapan puluh koma lima satu persen", "derive": "re_national[2013]"},
+        {"show": "2025", "spoken": "dua ribu dua puluh lima", "derive": "re_national year 2025"},
+        {"show": "99,83%", "spoken": "sembilan puluh sembilan koma delapan tiga persen", "derive": "re_national[2025]"}
+      ]
+    },
+    {
+      "id": "s3_grid",
+      "vo_text": "Artinya, yang belum berlistrik tinggal kurang dari dua per seribu.",
+      "on_screen_text": "at 'dua per seribu': KURANG DARI 2 PER 1.000 / rumah tangga belum berlistrik",
+      "visual": "grid of 1,000 dots; unlit dots = round(10 * (100 - re_national[year])): DULU (2013) 195 unlit, then SEKARANG (2025) 2 unlit; no digits on the grid",
+      "cue_words": ["Artinya", "dua per seribu"],
+      "numbers": [
+        {"show": "2 PER 1.000", "spoken": "dua per seribu", "derive": "100 - re_national[2025] = 0.17 percent = 1.7 per 1,000, under 2"}
+      ]
+    },
+    {
+      "id": "s4_provinces",
+      "vo_text": "Setahun terakhir angkanya tidak bergerak. Data provinsi akhir dua ribu dua puluh tiga, terendah Papua Pegunungan: sembilan puluh tiga koma delapan dua persen.",
+      "on_screen_text": "SETAHUN TERAKHIR: TIDAK BERGERAK -> AKHIR 2023 / TERENDAH: PAPUA PEGUNUNGAN 93,82%",
+      "visual": "short text card first (re_national[2024] = re_national[2025]); then the province view: a 38-province map if PRD-08b finds a usable one, else bars of the five lowest re_total provinces without value labels, only Papua Pegunungan labelled",
+      "cue_words": ["Setahun", "dua ribu dua puluh tiga", "Papua Pegunungan", "sembilan puluh tiga koma delapan dua persen"],
+      "numbers": [
+        {"show": "2023", "spoken": "dua ribu dua puluh tiga", "derive": "re_province year"},
+        {"show": "93,82%", "spoken": "sembilan puluh tiga koma delapan dua persen", "derive": "re_province[Papua Pegunungan].re_total, the lowest re_total"}
+      ],
+      "claims": ["'Setahun terakhir angkanya tidak bergerak': re_national[2024] = re_national[2025] = 99.83"]
+    },
+    {
+      "id": "s5_pln",
+      "vo_text": "Yang tersambung PLN baru empat belas koma nol enam persen. Lebih dari separuhnya lampu tenaga surya, dan itu ikut dihitung berlistrik.",
+      "on_screen_text": "PAPUA PEGUNUNGAN / TERSAMBUNG PLN 14,06% / LEBIH DARI SEPARUH: LAMPU TENAGA SURYA",
+      "visual": "Papua Pegunungan: PLN share as a big number; optional stacked bar PLN / non-PLN / LTSHE without value labels",
+      "cue_words": ["PLN", "empat belas koma nol enam persen", "Lebih dari separuhnya", "dihitung berlistrik"],
+      "numbers": [
+        {"show": "14,06%", "spoken": "empat belas koma nol enam persen", "derive": "re_province[Papua Pegunungan].re_pln"}
+      ],
+      "claims": ["'Lebih dari separuhnya lampu tenaga surya': re_province[Papua Pegunungan].re_ltshe = 56.14 > 50", "'ikut dihitung berlistrik': definition in research/video-02/sources.md section 3a (LK 2023, printed pages 155-156)"]
+    },
+    {
+      "id": "s6_close",
+      "vo_text": "Sisanya paling sulit dijangkau jaringan listrik. Selamat Hari Listrik Nasional. Yuk, follow et Dzaky es er de.",
+      "on_screen_text": "PALING SULIT DIJANGKAU / JARINGAN LISTRIK -> at 'Selamat': + SELAMAT HARI LISTRIK NASIONAL -> final card at 'Yuk': CTA pill Follow @dzakysrd + sources line; caption shows @dzakysrd while 'et Dzaky es er de' is spoken",
+      "visual": "closing line; then the final card",
+      "cue_words": ["Sisanya", "Selamat", "Yuk", "follow"],
+      "caption_display": [
+        {"spoken": "et Dzaky es er de", "show": "@dzakysrd"}
+      ],
+      "claims": ["'paling sulit dijangkau jaringan listrik': LK 2023 printed page 158 (kondisi geografis, sebaran penduduk, kondisi jaringan listrik eksisting)"]
+    }
+  ]
+}
