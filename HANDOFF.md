@@ -41,12 +41,18 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 
 ## Video #2 status
 
-- Topic: Hari Listrik Nasional (27 October). Data: the electrification ratio (rasio elektrifikasi), angle "progress" (user, 2026-10-28). No `video-02/` folder yet.
+- Topic: Hari Listrik Nasional (27 October). Data: the electrification ratio (rasio elektrifikasi), angle "progress" (user, 2026-10-28). Project folder: `video-02/`.
 - Base: option C, chosen by the user on 2026-10-28 (WIB) in PRD-06 (`docs/prd/06-video02-base.md`). `template/` is the scene engine (`scenes.json`-driven). Ported in from video-01: word-cue timing (`video-01/tools/lib/cue.mjs`), word-synced captions (the caption block of `video-01/tools/build_v3.mjs`), the two-pass loudnorm (`video-01/tools/render_v3.sh`) and the generic lint checks.
 - Safe box: the video-01 v3 Reels values (top 220, bottom 420, left 65, right 140), not the template's TikTok values.
 - Gaps in both bases: number formats are Rupiah only (no percent, kWh or GW), no line chart, no share chart, and the map has 34 provinces.
 - Research done (PRD-07, PRD-07b): `research/video-02/re_national.csv` (2013-2025; 2013-2022 are chart labels from LK 2023 Gambar 48, and 2019-2022 also match text in two ESDM reports) and `research/video-02/re_province.csv` (38 provinces, Triwulan IV 2023, LK 2023 Tabel 58, split into PLN, non-PLN and LTSHE). Definition, sources and open issues: `research/video-02/sources.md`. Raw PDFs are not committed; run `bash research/video-02/tools/fetch.sh`. No newer per-province table in text form was found (Ditjen LK 2024 has only a map image).
-- Next: the script, then a port PRD for only the components the script needs.
+- Script v2: `research/video-02/script_v2.json` (107 words). The user replaced the v1 close line with "Sisanya paling sulit dijangkau jaringan listrik." Voice: ElevenLabs Liam, take `voice/samples/video-02/el_liam_close2` (a splice of `el_liam` from "Lebih dari separuhnya").
+- Build (PRD-11 to PRD-16): `video-02/tools/build.mjs` (cue-timed scenes, numbers registry, word-synced captions with digits for numbers, data checks, gates), `video-02/tools/lint.mjs` (static and browser checks; fails if a number shows before it is spoken), `video-02/tools/render.sh` (render plus two-pass loudnorm read from `video.config.json`). Gates: hook 3.5 s, close 7.2 s (raised from 7.0 by the user on 2026-10-28), total 45 s.
+- Output: `video-02/out/v2.mp4` (43.07 s, 1080x1920, 30 fps, -14.0 LUFS, true peak -4.2 dBFS; lint PASS). `video-02/out/v1.mp4` has the earlier close line. Caption: `video-02/out/v2_caption.txt`.
+- The user has not said in words that the v2 audio is approved; the splice seam is at about 34.6 s.
+- No map in video-02: no usable 38-province map was found (PRD-08, PRD-08b).
+- Open before posting: the Claude referral terms ("Terms apply") were not read; ElevenLabs terms (see Next steps). Instagram caption links are not clickable.
+- Cover tip: frame 1 has no number on purpose (numbers appear when spoken); pick a cover near 2 s or 12 s.
 
 ## Rules and decisions (enforced in code or docs)
 
@@ -72,8 +78,8 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 ## Next steps (ordered)
 
 1. Done: the user reviewed `out/v3.mp4` (voice `el_liam_cta2`, CTA "Yuk, follow et Dzaky es er de.", 0.16 s pause after "Yuk,") and approved it on 2026-10-27 ("Udah ok overall"). The reviewer measured timing and loudness but did not judge the audio by ear.
-2. ElevenLabs credits: 1,384 of 10,000 used this period (resets 2026-11-26), per `voice/elevenlabs_usage.csv` and the subscription endpoint.
-3. **[session note]** The free plan is reported as non-commercial with attribution required. Not checked here; check ElevenLabs' terms before any monetised use.
+2. ElevenLabs credits: 2,258 of 10,000 used this period (resets 2026-11-26), per `voice/elevenlabs_usage.csv` and the subscription endpoint (checked 2026-10-28).
+3. ElevenLabs free plan: a web search on 2026-10-28 returned ElevenLabs' help page "Can I publish the content I generate on the platform?" saying free-plan output has no commercial licence and must be attributed with "elevenlabs.io" or "11.ai" in the title. The page could not be opened from the container (elevenlabs.io is not an allowed domain). The video-02 caption credits "Suara: elevenlabs.io"; the video-01 caption says "Suara: ElevenLabs". The video-02 caption also carries an ElevenLabs affiliate link and a Claude referral line. Check the terms before monetised use.
 4. Optional: the HyperFrames CLI lint reports 12 structural warnings for `index_v3.html` (file size, dense tracks, nested structure). Not errors; not reviewed.
 
 ## Session notes (not in the repo, not re-verified)
