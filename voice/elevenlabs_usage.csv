@@ -6,3 +6,5 @@ utc_time,out_dir,voice_id,model_id,text_chars,credits_used,credits_source,subscr
 2026-10-27T10:35:54Z,voice/samples/v3/el_liam,TX3LPaxmHKxFdv7VOQHJ,eleven_multilingual_v2,667,667,character-cost header,591,591,character-cost=667
 2026-10-27T13:57:24Z,voice/samples/v3/el_liam_cta,TX3LPaxmHKxFdv7VOQHJ,eleven_multilingual_v2,96,96,character-cost header,1258,1258,character-cost=96
 2026-10-27T14:15:54Z,voice/samples/v3/el_liam_cta2,TX3LPaxmHKxFdv7VOQHJ,eleven_multilingual_v2,30,30,character-cost header,1354,1354,character-cost=30
+2026-10-27T23:01:14Z,voice/samples/video-02/el_liam,TX3LPaxmHKxFdv7VOQHJ,eleven_multilingual_v2,688,688,character-cost header,1384,1384,character-cost=688
+2026-10-28T01:24:35Z,voice/samples/video-02/el_liam_close2,TX3LPaxmHKxFdv7VOQHJ,eleven_multilingual_v2,186,186,character-cost header,2072,2072,character-cost=186

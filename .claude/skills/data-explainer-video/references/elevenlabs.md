@@ -30,7 +30,7 @@ Voice facts, lessons and exact commands. Run commands from the repo root.
 - The user found the edge-tts voice Ardi (`voice/tts.py`) too stiff.
 - Free plan: Voice Library voices are refused through the API with HTTP 402 `paid_plan_required`, even when the library lists `free_users_allowed` true. Premade voices work.
 - The 402 message offers upgrading to Creator or adding $5 of credits.
-- Unverified: the free plan is reported as non-commercial with attribution required. This was not checked against ElevenLabs' terms.
+- Free plan, from a 2026-10-28 web search of ElevenLabs' help page "Can I publish the content I generate on the platform?" (the page itself was not opened): no commercial licence; published output must be attributed with "elevenlabs.io" or "11.ai" in the title. Paid plans include a commercial licence. Verify before monetised use.
 
 ## Commands
 

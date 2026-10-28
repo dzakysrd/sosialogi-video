@@ -1,0 +1,1131 @@
+{
+  "id": "video-02",
+  "fps": 30,
+  "total": 43.042,
+  "vo_seconds": 43.032,
+  "gates": [
+    {
+      "name": "hook",
+      "value": 3.344,
+      "max": 3.5,
+      "ok": true
+    },
+    {
+      "name": "close",
+      "value": 7.164,
+      "max": 7.2,
+      "ok": true
+    },
+    {
+      "name": "total",
+      "value": 43.042,
+      "max": 45,
+      "ok": true
+    }
+  ],
+  "scenes": [
+    {
+      "id": "s1_hook",
+      "start": 0,
+      "end": 3.504,
+      "visual_start": 0,
+      "visual_end": 3.504
+    },
+    {
+      "id": "s2_series",
+      "start": 3.504,
+      "end": 14.146,
+      "visual_start": 3.504,
+      "visual_end": 14.146
+    },
+    {
+      "id": "s3_grid",
+      "start": 14.146,
+      "end": 17.847,
+      "visual_start": 14.146,
+      "visual_end": 18.625
+    },
+    {
+      "id": "s4_provinces",
+      "start": 17.847,
+      "end": 27.687,
+      "visual_start": 18.625,
+      "visual_end": 27.687
+    },
+    {
+      "id": "s5_pln",
+      "start": 27.687,
+      "end": 35.878,
+      "visual_start": 27.687,
+      "visual_end": 35.878
+    },
+    {
+      "id": "s6_close",
+      "start": 35.878,
+      "end": 43.042,
+      "visual_start": 35.878,
+      "visual_end": 43.042
+    }
+  ],
+  "cues": [
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces visual_start_cue",
+      "phrase": "angkanya",
+      "t": 18.625
+    },
+    {
+      "scene": "s1_hook",
+      "where": "s1_hook part 0 (claim).reveal",
+      "phrase": "satu dari lima",
+      "t": 1.196
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 0 year",
+      "phrase": "dua ribu tiga belas",
+      "t": 4.039
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 0 value",
+      "phrase": "delapan puluh koma lima satu persen",
+      "t": 6.686
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 1 year",
+      "phrase": "dua ribu dua puluh lima",
+      "t": 9.655
+    },
+    {
+      "scene": "s2_series",
+      "where": "s2_series part 0 (pair) row 1 value",
+      "phrase": "sembilan puluh sembilan koma delapan tiga persen",
+      "t": 11.385
+    },
+    {
+      "scene": "s3_grid",
+      "where": "s3_grid part 0 (grid).headline",
+      "phrase": "dua per seribu",
+      "t": 16.84
+    },
+    {
+      "scene": "s3_grid",
+      "where": "s3_grid part 0 (grid).switch",
+      "phrase": "tinggal",
+      "t": 15.992
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 0 (textcard) from",
+      "phrase": "angkanya",
+      "t": 18.625
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 0 (textcard) to",
+      "phrase": "dua ribu dua puluh tiga",
+      "t": 21.142
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars) from",
+      "phrase": "dua ribu dua puluh tiga",
+      "t": 21.142
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).subtitle",
+      "phrase": "dua ribu dua puluh tiga",
+      "t": 21.142
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).rows",
+      "phrase": "dua ribu dua puluh tiga",
+      "t": 21.142
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).rows.highlight",
+      "phrase": "Papua Pegunungan",
+      "t": 23.673
+    },
+    {
+      "scene": "s4_provinces",
+      "where": "s4_provinces part 1 (rankbars).label",
+      "phrase": "sembilan puluh tiga koma delapan dua persen",
+      "t": 24.95
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 0",
+      "phrase": "empat belas koma nol enam persen",
+      "t": 29.266
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 0.num",
+      "phrase": "empat belas koma nol enam persen",
+      "t": 29.266
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 1",
+      "phrase": "Lebih dari separuhnya",
+      "t": 31.318
+    },
+    {
+      "scene": "s5_pln",
+      "where": "s5_pln part 0 (stack) message 2",
+      "phrase": "dihitung berlistrik",
+      "t": 34.766
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) block 0",
+      "phrase": "Sisanya",
+      "t": 35.878
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) block 1",
+      "phrase": "Selamat",
+      "t": 38.569
+    },
+    {
+      "scene": "s6_close",
+      "where": "s6_close part 0 (close) card",
+      "phrase": "Yuk",
+      "t": 40.424
+    }
+  ],
+  "numbers": [
+    {
+      "text": "HAMPIR 1 DARI 5",
+      "caption": "1 dari 5",
+      "spoken": "satu dari lima",
+      "t": 1.196,
+      "scene": "s1_hook",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": "one_in_five_2013",
+      "words": [
+        2,
+        4
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "2013",
+      "caption": "2013",
+      "spoken": "dua ribu tiga belas",
+      "t": 4.039,
+      "scene": "s2_series",
+      "derive": "national[2013].year = \"2013\" (CSV year)",
+      "check": null,
+      "words": [
+        11,
+        14
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "80,51%",
+      "caption": "80,51%",
+      "spoken": "delapan puluh koma lima satu persen",
+      "t": 6.686,
+      "scene": "s2_series",
+      "derive": "fmtPct(national[2013].ratio_pct = \"80.51\")",
+      "check": null,
+      "words": [
+        17,
+        22
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "2025",
+      "caption": "2025",
+      "spoken": "dua ribu dua puluh lima",
+      "t": 9.655,
+      "scene": "s2_series",
+      "derive": "national[2025].year = \"2025\" (CSV year)",
+      "check": null,
+      "words": [
+        24,
+        28
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "99,83%",
+      "caption": "99,83%",
+      "spoken": "sembilan puluh sembilan koma delapan tiga persen",
+      "t": 11.385,
+      "scene": "s2_series",
+      "derive": "fmtPct(national[2025].ratio_pct = \"99.83\")",
+      "check": null,
+      "words": [
+        29,
+        35
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "KURANG DARI 2 PER 1.000",
+      "caption": "2 per 1.000",
+      "spoken": "dua per seribu",
+      "t": 16.84,
+      "scene": "s3_grid",
+      "derive": "literal number; the spoken form is written in scenes.json and tied to its data check",
+      "check": "under_two_per_1000_2025",
+      "words": [
+        43,
+        45
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "akhir 2023",
+      "caption": "2023",
+      "spoken": "dua ribu dua puluh tiga",
+      "t": 21.142,
+      "scene": "s4_provinces",
+      "derive": "province[Papua Pegunungan].year = \"2023\" (CSV year)",
+      "check": null,
+      "words": [
+        54,
+        58
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "93,82% BERLISTRIK",
+      "caption": "93,82%",
+      "spoken": "sembilan puluh tiga koma delapan dua persen",
+      "t": 24.95,
+      "scene": "s4_provinces",
+      "derive": "fmtPct(province[Papua Pegunungan].re_total = \"93.82\")",
+      "check": "lowest_province",
+      "words": [
+        62,
+        68
+      ],
+      "repeat_of": null
+    },
+    {
+      "text": "akhir 2023",
+      "caption": null,
+      "spoken": "dua ribu dua puluh tiga",
+      "t": 21.142,
+      "scene": "s5_pln",
+      "derive": "repeat of registry entry 6 (\"akhir 2023\", s4_provinces), same cue",
+      "check": null,
+      "words": null,
+      "repeat_of": 6
+    },
+    {
+      "text": "14,06%",
+      "caption": "14,06%",
+      "spoken": "empat belas koma nol enam persen",
+      "t": 29.266,
+      "scene": "s5_pln",
+      "derive": "fmtPct(province[Papua Pegunungan].re_pln = \"14.06\")",
+      "check": null,
+      "words": [
+        73,
+        78
+      ],
+      "repeat_of": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "one_in_five_2013",
+      "ok": true,
+      "values": {
+        "re_national[2013].ratio_pct": "80.51",
+        "100 - ratio": "19.49",
+        "rule": "18 <= 100 - re_national[2013] < 20"
+      }
+    },
+    {
+      "name": "under_two_per_1000_2025",
+      "ok": true,
+      "values": {
+        "re_national[2025].ratio_pct": "99.83",
+        "10 * (100 - ratio)": "1.70",
+        "rule": "1 <= 10 * (100 - re_national[2025]) < 2"
+      }
+    },
+    {
+      "name": "flat_last_year",
+      "ok": true,
+      "values": {
+        "re_national[2024].ratio_pct": "99.83",
+        "re_national[2025].ratio_pct": "99.83",
+        "rule": "equal as strings"
+      }
+    },
+    {
+      "name": "lowest_province",
+      "ok": true,
+      "values": {
+        "Papua Pegunungan re_total": "93.82",
+        "lowest other": "Papua Tengah 94.19",
+        "rule": "strictly lowest re_total"
+      }
+    },
+    {
+      "name": "ltshe_over_half",
+      "ok": true,
+      "values": {
+        "Papua Pegunungan re_ltshe": "56.14",
+        "rule": "re_ltshe > 50"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "scene": "s6_close",
+      "text": "Sumber: Kementerian ESDM (HEESI 2024, HEESI 2025, Laporan Kinerja 2023)"
+    }
+  ],
+  "caption_limits": {
+    "max_words": 5,
+    "max_chars": 33,
+    "merge_words": 6,
+    "merge_chars": 33
+  },
+  "captions": [
+    {
+      "i": 0,
+      "start": 0,
+      "end": 2.218,
+      "duration": 2.218,
+      "text": "Dulu, hampir 1 dari 5 rumah",
+      "merged": false,
+      "words": [
+        {
+          "i": 0,
+          "n": 1,
+          "text": "Dulu,",
+          "start": 0,
+          "end": 0.453,
+          "num": false
+        },
+        {
+          "i": 1,
+          "n": 1,
+          "text": "hampir",
+          "start": 0.743,
+          "end": 1.126,
+          "num": false
+        },
+        {
+          "i": 2,
+          "n": 3,
+          "text": "1 dari 5",
+          "start": 1.196,
+          "end": 1.962,
+          "num": true
+        },
+        {
+          "i": 5,
+          "n": 1,
+          "text": "rumah",
+          "start": 2.009,
+          "end": 2.218,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 1,
+      "start": 2.228,
+      "end": 3.444,
+      "duration": 1.216,
+      "text": "tangga belum berlistrik.",
+      "merged": false,
+      "words": [
+        {
+          "i": 6,
+          "n": 1,
+          "text": "tangga",
+          "start": 2.264,
+          "end": 2.519,
+          "num": false
+        },
+        {
+          "i": 7,
+          "n": 1,
+          "text": "belum",
+          "start": 2.566,
+          "end": 2.74,
+          "num": false
+        },
+        {
+          "i": 8,
+          "n": 1,
+          "text": "berlistrik.",
+          "start": 2.775,
+          "end": 3.344,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 2,
+      "start": 3.454,
+      "end": 5.187,
+      "duration": 1.733,
+      "text": "Itu tahun 2013,",
+      "merged": false,
+      "words": [
+        {
+          "i": 9,
+          "n": 1,
+          "text": "Itu",
+          "start": 3.504,
+          "end": 3.737,
+          "num": false
+        },
+        {
+          "i": 10,
+          "n": 1,
+          "text": "tahun",
+          "start": 3.783,
+          "end": 3.98,
+          "num": false
+        },
+        {
+          "i": 11,
+          "n": 4,
+          "text": "2013,",
+          "start": 4.039,
+          "end": 5.037,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 3,
+      "start": 5.405,
+      "end": 9.259,
+      "duration": 3.854,
+      "text": "rasio elektrifikasi 80,51%.",
+      "merged": false,
+      "words": [
+        {
+          "i": 15,
+          "n": 1,
+          "text": "rasio",
+          "start": 5.455,
+          "end": 5.826,
+          "num": false
+        },
+        {
+          "i": 16,
+          "n": 1,
+          "text": "elektrifikasi",
+          "start": 5.884,
+          "end": 6.616,
+          "num": false
+        },
+        {
+          "i": 17,
+          "n": 6,
+          "text": "80,51%.",
+          "start": 6.686,
+          "end": 9.159,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 4,
+      "start": 9.269,
+      "end": 14.086,
+      "duration": 4.817,
+      "text": "Tahun 2025, 99,83%.",
+      "merged": true,
+      "words": [
+        {
+          "i": 23,
+          "n": 1,
+          "text": "Tahun",
+          "start": 9.319,
+          "end": 9.597,
+          "num": false
+        },
+        {
+          "i": 24,
+          "n": 5,
+          "text": "2025,",
+          "start": 9.655,
+          "end": 11.06,
+          "num": true
+        },
+        {
+          "i": 29,
+          "n": 7,
+          "text": "99,83%.",
+          "start": 11.385,
+          "end": 13.986,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 5,
+      "start": 14.096,
+      "end": 15.946,
+      "duration": 1.85,
+      "text": "Artinya, yang belum berlistrik",
+      "merged": false,
+      "words": [
+        {
+          "i": 36,
+          "n": 1,
+          "text": "Artinya,",
+          "start": 14.146,
+          "end": 14.657,
+          "num": false
+        },
+        {
+          "i": 37,
+          "n": 1,
+          "text": "yang",
+          "start": 15.017,
+          "end": 15.203,
+          "num": false
+        },
+        {
+          "i": 38,
+          "n": 1,
+          "text": "belum",
+          "start": 15.238,
+          "end": 15.412,
+          "num": false
+        },
+        {
+          "i": 39,
+          "n": 1,
+          "text": "berlistrik",
+          "start": 15.447,
+          "end": 15.946,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 6,
+      "start": 15.956,
+      "end": 17.787,
+      "duration": 1.831,
+      "text": "tinggal kurang dari 2 per 1.000.",
+      "merged": false,
+      "words": [
+        {
+          "i": 40,
+          "n": 1,
+          "text": "tinggal",
+          "start": 15.992,
+          "end": 16.259,
+          "num": false
+        },
+        {
+          "i": 41,
+          "n": 1,
+          "text": "kurang",
+          "start": 16.317,
+          "end": 16.596,
+          "num": false
+        },
+        {
+          "i": 42,
+          "n": 1,
+          "text": "dari",
+          "start": 16.631,
+          "end": 16.793,
+          "num": false
+        },
+        {
+          "i": 43,
+          "n": 3,
+          "text": "2 per 1.000.",
+          "start": 16.84,
+          "end": 17.687,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 7,
+      "start": 17.797,
+      "end": 19.275,
+      "duration": 1.478,
+      "text": "Setahun terakhir angkanya tidak",
+      "merged": false,
+      "words": [
+        {
+          "i": 46,
+          "n": 1,
+          "text": "Setahun",
+          "start": 17.847,
+          "end": 18.137,
+          "num": false
+        },
+        {
+          "i": 47,
+          "n": 1,
+          "text": "terakhir",
+          "start": 18.195,
+          "end": 18.544,
+          "num": false
+        },
+        {
+          "i": 48,
+          "n": 1,
+          "text": "angkanya",
+          "start": 18.625,
+          "end": 18.985,
+          "num": false
+        },
+        {
+          "i": 49,
+          "n": 1,
+          "text": "tidak",
+          "start": 19.031,
+          "end": 19.275,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 8,
+      "start": 19.285,
+      "end": 19.84,
+      "duration": 0.555,
+      "text": "bergerak.",
+      "merged": false,
+      "words": [
+        {
+          "i": 50,
+          "n": 1,
+          "text": "bergerak.",
+          "start": 19.31,
+          "end": 19.74,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 9,
+      "start": 19.85,
+      "end": 23.103,
+      "duration": 3.253,
+      "text": "Data provinsi akhir 2023,",
+      "merged": false,
+      "words": [
+        {
+          "i": 51,
+          "n": 1,
+          "text": "Data",
+          "start": 19.9,
+          "end": 20.178,
+          "num": false
+        },
+        {
+          "i": 52,
+          "n": 1,
+          "text": "provinsi",
+          "start": 20.225,
+          "end": 20.747,
+          "num": false
+        },
+        {
+          "i": 53,
+          "n": 1,
+          "text": "akhir",
+          "start": 20.828,
+          "end": 21.084,
+          "num": false
+        },
+        {
+          "i": 54,
+          "n": 5,
+          "text": "2023,",
+          "start": 21.142,
+          "end": 22.953,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 10,
+      "start": 23.147,
+      "end": 24.74,
+      "duration": 1.593,
+      "text": "terendah Papua Pegunungan:",
+      "merged": false,
+      "words": [
+        {
+          "i": 59,
+          "n": 1,
+          "text": "terendah",
+          "start": 23.197,
+          "end": 23.615,
+          "num": false
+        },
+        {
+          "i": 60,
+          "n": 1,
+          "text": "Papua",
+          "start": 23.673,
+          "end": 23.975,
+          "num": false
+        },
+        {
+          "i": 61,
+          "n": 1,
+          "text": "Pegunungan:",
+          "start": 24.021,
+          "end": 24.59,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 11,
+      "start": 24.9,
+      "end": 27.627,
+      "duration": 2.727,
+      "text": "93,82%.",
+      "merged": false,
+      "words": [
+        {
+          "i": 62,
+          "n": 7,
+          "text": "93,82%.",
+          "start": 24.95,
+          "end": 27.527,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 12,
+      "start": 27.637,
+      "end": 31.258,
+      "duration": 3.621,
+      "text": "Yang tersambung PLN baru 14,06%.",
+      "merged": false,
+      "words": [
+        {
+          "i": 69,
+          "n": 1,
+          "text": "Yang",
+          "start": 27.687,
+          "end": 27.884,
+          "num": false
+        },
+        {
+          "i": 70,
+          "n": 1,
+          "text": "tersambung",
+          "start": 27.93,
+          "end": 28.418,
+          "num": false
+        },
+        {
+          "i": 71,
+          "n": 1,
+          "text": "PLN",
+          "start": 28.464,
+          "end": 28.929,
+          "num": false
+        },
+        {
+          "i": 72,
+          "n": 1,
+          "text": "baru",
+          "start": 28.999,
+          "end": 29.219,
+          "num": false
+        },
+        {
+          "i": 73,
+          "n": 6,
+          "text": "14,06%.",
+          "start": 29.266,
+          "end": 31.158,
+          "num": true
+        }
+      ]
+    },
+    {
+      "i": 13,
+      "start": 31.268,
+      "end": 32.862,
+      "duration": 1.594,
+      "text": "Lebih dari separuhnya lampu",
+      "merged": false,
+      "words": [
+        {
+          "i": 79,
+          "n": 1,
+          "text": "Lebih",
+          "start": 31.318,
+          "end": 31.562,
+          "num": false
+        },
+        {
+          "i": 80,
+          "n": 1,
+          "text": "dari",
+          "start": 31.585,
+          "end": 31.748,
+          "num": false
+        },
+        {
+          "i": 81,
+          "n": 1,
+          "text": "separuhnya",
+          "start": 31.806,
+          "end": 32.363,
+          "num": false
+        },
+        {
+          "i": 82,
+          "n": 1,
+          "text": "lampu",
+          "start": 32.572,
+          "end": 32.862,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 14,
+      "start": 32.872,
+      "end": 33.778,
+      "duration": 0.906,
+      "text": "tenaga surya,",
+      "merged": false,
+      "words": [
+        {
+          "i": 83,
+          "n": 1,
+          "text": "tenaga",
+          "start": 32.909,
+          "end": 33.187,
+          "num": false
+        },
+        {
+          "i": 84,
+          "n": 1,
+          "text": "surya,",
+          "start": 33.234,
+          "end": 33.628,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 15,
+      "start": 34.008,
+      "end": 35.818,
+      "duration": 1.81,
+      "text": "dan itu ikut dihitung berlistrik.",
+      "merged": false,
+      "words": [
+        {
+          "i": 85,
+          "n": 1,
+          "text": "dan",
+          "start": 34.058,
+          "end": 34.197,
+          "num": false
+        },
+        {
+          "i": 86,
+          "n": 1,
+          "text": "itu",
+          "start": 34.255,
+          "end": 34.441,
+          "num": false
+        },
+        {
+          "i": 87,
+          "n": 1,
+          "text": "ikut",
+          "start": 34.511,
+          "end": 34.72,
+          "num": false
+        },
+        {
+          "i": 88,
+          "n": 1,
+          "text": "dihitung",
+          "start": 34.766,
+          "end": 35.114,
+          "num": false
+        },
+        {
+          "i": 89,
+          "n": 1,
+          "text": "berlistrik.",
+          "start": 35.149,
+          "end": 35.718,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 16,
+      "start": 35.828,
+      "end": 37.583,
+      "duration": 1.755,
+      "text": "Sisanya paling sulit dijangkau",
+      "merged": false,
+      "words": [
+        {
+          "i": 90,
+          "n": 1,
+          "text": "Sisanya",
+          "start": 35.878,
+          "end": 36.366,
+          "num": false
+        },
+        {
+          "i": 91,
+          "n": 1,
+          "text": "paling",
+          "start": 36.424,
+          "end": 36.679,
+          "num": false
+        },
+        {
+          "i": 92,
+          "n": 1,
+          "text": "sulit",
+          "start": 36.726,
+          "end": 37.004,
+          "num": false
+        },
+        {
+          "i": 93,
+          "n": 1,
+          "text": "dijangkau",
+          "start": 37.063,
+          "end": 37.573,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 17,
+      "start": 37.593,
+      "end": 38.509,
+      "duration": 0.916,
+      "text": "jaringan listrik.",
+      "merged": false,
+      "words": [
+        {
+          "i": 94,
+          "n": 1,
+          "text": "jaringan",
+          "start": 37.643,
+          "end": 37.956,
+          "num": false
+        },
+        {
+          "i": 95,
+          "n": 1,
+          "text": "listrik.",
+          "start": 38.003,
+          "end": 38.409,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 18,
+      "start": 38.519,
+      "end": 40.364,
+      "duration": 1.845,
+      "text": "Selamat Hari Listrik Nasional.",
+      "merged": false,
+      "words": [
+        {
+          "i": 96,
+          "n": 1,
+          "text": "Selamat",
+          "start": 38.569,
+          "end": 38.975,
+          "num": false
+        },
+        {
+          "i": 97,
+          "n": 1,
+          "text": "Hari",
+          "start": 39.033,
+          "end": 39.231,
+          "num": false
+        },
+        {
+          "i": 98,
+          "n": 1,
+          "text": "Listrik",
+          "start": 39.289,
+          "end": 39.649,
+          "num": false
+        },
+        {
+          "i": 99,
+          "n": 1,
+          "text": "Nasional.",
+          "start": 39.718,
+          "end": 40.264,
+          "num": false
+        }
+      ]
+    },
+    {
+      "i": 19,
+      "start": 40.374,
+      "end": 42.942,
+      "duration": 2.568,
+      "text": "Yuk, follow @dzakysrd.",
+      "merged": false,
+      "words": [
+        {
+          "i": 100,
+          "n": 1,
+          "text": "Yuk,",
+          "start": 40.424,
+          "end": 40.725,
+          "num": false
+        },
+        {
+          "i": 101,
+          "n": 1,
+          "text": "follow",
+          "start": 40.946,
+          "end": 41.306,
+          "num": false
+        },
+        {
+          "i": 102,
+          "n": 5,
+          "text": "@dzakysrd.",
+          "start": 41.422,
+          "end": 42.792,
+          "num": false
+        }
+      ]
+    }
+  ]
+}
