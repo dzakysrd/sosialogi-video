@@ -48,6 +48,14 @@ The user did not give the download URLs. The links below are the ones the main a
 
 Download date: 2026-10-28 (upload time 03:14 UTC).
 
+## Page details given by the user (2026-10-28)
+The user copied these from the bps.go.id pages (not seen from the container):
+- File 2: "Persentase Usia Muda (15-24 Tahun) Yang Sedang Tidak Sekolah, Bekerja Atau Mengikuti Pelatihan (Persen), 2025". Terakhir Diperbarui: 24 Februari 2026.
+- File 3: "Tingkat Pengangguran Terbuka Menurut Provinsi (Persen), 2026". Terakhir Diperbarui: 6 Mei 2026.
+- File 1: "Tingkat Pengangguran Terbuka Berdasarkan Kelompok Umur (Tidak Ada Satuan), 2025". Terakhir Diperbarui: 30 Januari 2026.
+
+The page titles do not state a month either, so the period of files 1 and 2 stays not stated.
+
 ## Definitions
 - NEET (file 2): "Persentase usia muda 15-24 tahun yang sedang tidak sekolah, bekerja, atau mengikuti pelatihan" (as in the title: "Persentase Usia Muda (15-24 Tahun) Yang Sedang Tidak Sekolah, Bekerja Atau Mengikuti Pelatihan").
 - Age bands:
