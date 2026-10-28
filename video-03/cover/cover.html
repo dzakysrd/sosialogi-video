@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>video-03 cover</title>
+<style>
+@font-face { font-family: "SosDisplay"; src: url("../assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "SosBody"; src: url("../assets/fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "SosBody"; src: url("../assets/fonts/inter-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+@font-face { font-family: "SosBody"; src: url("../assets/fonts/inter-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+@font-face { font-family: "SosBody"; src: url("../assets/fonts/inter-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: block; }
+
+:root {
+  --ground: #0b1220;
+  --ink: #ffffff;
+  --ink-dim: #b4c2d8;
+  --accent: #ffd23f;
+  --person-off: #33445c;
+  --font-display: "SosDisplay", sans-serif;
+  --font-body: "SosBody", sans-serif;
+}
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+body { font-family: var(--font-body); color: var(--ink); }
+
+.stack { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 44px; }
+
+.kicker { order: 0; width: fit-content; font: 800 44px/1.2 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+
+.head { order: 1; margin: 0; font: 400 140px/0.95 var(--font-display); text-transform: uppercase; color: var(--ink); }
+.head .line { display: block; width: fit-content; white-space: nowrap; }
+
+.num { order: 2; width: fit-content; font: 400 100px/1 var(--font-display); text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+
+.icons { order: 3; display: flex; gap: 30px; width: fit-content; height: 110px; }
+.icons svg { width: 62px; height: 110px; display: block; fill: var(--person-off); }
+.icons svg.on { fill: var(--accent); }
+
+.foot { order: 4; width: fit-content; font: 600 44px/1.25 var(--font-body); color: var(--ink-dim); white-space: nowrap; }
+
+.brand { order: 5; width: fit-content; background: var(--accent); color: var(--ground); font: 800 40px/1 var(--font-body); padding: 16px 24px; border-radius: 12px; }
+
+/* variant b: number first, then headline */
+body.v-b .num { order: 1; }
+body.v-b .head { order: 2; }
+</style>
+</head>
+<body>
+<div class="stack">
+  <div class="kicker">HARI SUMPAH PEMUDA</div>
+  <h1 class="head"><span class="line">ANAK MUDA</span><span class="line">TIDAK SEKOLAH,</span><span class="line">TIDAK KERJA</span></h1>
+  <div class="num">HAMPIR 1 DARI 5</div>
+  <div class="icons" aria-hidden="true">
+    <svg class="on" viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+    <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+    <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+    <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+    <svg viewBox="0 0 62 110"><circle cx="31" cy="22" r="22"/><path d="M0 110 V84 Q0 52 31 52 Q62 52 62 84 V110 Z"/></svg>
+  </div>
+  <div class="foot">Data BPS 2025 · NEET usia 15–24</div>
+  <div class="brand">@dzakysrd</div>
+</div>
+<script>
+(function () {
+  var v = new URLSearchParams(location.search).get('v');
+  if (v === 'b') document.body.classList.add('v-b');
+  var num = document.querySelector('.num');
+  // Fit the number line to x 65..1015 (950 px wide), as large as possible.
+  function fit() {
+    num.style.fontSize = '100px';
+    var w = num.getBoundingClientRect().width;
+    num.style.fontSize = Math.floor(100 * 950 / w) + 'px';
+  }
+  Promise.all([
+    document.fonts.load('400 100px SosDisplay'),
+    document.fonts.load('600 44px SosBody'),
+    document.fonts.load('800 44px SosBody')
+  ]).then(function () {
+    fit();
+    window.__coverReady = true;
+  }, function (e) {
+    window.__coverError = String(e);
+    window.__coverReady = true;
+  });
+})();
+</script>
+</body>
+</html>
