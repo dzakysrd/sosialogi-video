@@ -49,7 +49,7 @@ Video #1: "UMP vs gaji asli". Compares the 2026 provincial minimum wage (UMP) wi
 - Script v2: `research/video-02/script_v2.json` (107 words). The user replaced the v1 close line with "Sisanya paling sulit dijangkau jaringan listrik." Voice: ElevenLabs Liam, take `voice/samples/video-02/el_liam_close2` (a splice of `el_liam` from "Lebih dari separuhnya").
 - Build (PRD-11 to PRD-16): `video-02/tools/build.mjs` (cue-timed scenes, numbers registry, word-synced captions with digits for numbers, data checks, gates), `video-02/tools/lint.mjs` (static and browser checks; fails if a number shows before it is spoken), `video-02/tools/render.sh` (render plus two-pass loudnorm read from `video.config.json`). Gates: hook 3.5 s, close 7.2 s (raised from 7.0 by the user on 2026-10-28), total 45 s.
 - Output: `video-02/out/v2.mp4` (43.07 s, 1080x1920, 30 fps, -14.0 LUFS, true peak -4.2 dBFS; lint PASS). `video-02/out/v1.mp4` has the earlier close line. Caption: `video-02/out/v2_caption.txt`.
-- The user has not said in words that the v2 audio is approved; the splice seam is at about 34.6 s.
+- The user approved the v2 audio on 2026-10-28 (WIB) ("Audio udah ok"), including the splice seam at about 34.6 s.
 - No map in video-02: no usable 38-province map was found (PRD-08, PRD-08b).
 - Open before posting: the Claude referral terms ("Terms apply") were not read; ElevenLabs terms (see Next steps). Instagram caption links are not clickable.
 - Cover tip: frame 1 has no number on purpose (numbers appear when spoken); pick a cover near 2 s or 12 s.
