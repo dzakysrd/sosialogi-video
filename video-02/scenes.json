@@ -120,7 +120,7 @@
         {
           "type": "close",
           "block": [
-            {"cue": "Langkah", "lines": ["LANGKAH TERAKHIR", "PALING SULIT"]},
+            {"cue": "Sisanya", "lines": ["PALING SULIT DIJANGKAU", "JARINGAN LISTRIK"]},
             {"cue": "Selamat", "lines": ["SELAMAT HARI LISTRIK NASIONAL"]}
           ],
           "card": {"cue": "Yuk", "cta": {"script": "cta"}, "sources": {"script": "sources_line"}}

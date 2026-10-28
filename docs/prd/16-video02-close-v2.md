@@ -50,3 +50,13 @@ Paste verbatim: the script diff, the narration checks, the splice output and usa
 - One paid splice call from "Lebih dari separuhnya": 186 credits; account 2258 of 10000 used. Take `voice/samples/video-02/el_liam_close2`: 43.032 s, -14.1 LUFS, true peak -2.0 dBFS; word check equal; word times before "Lebih" identical to `el_liam`; splice cut 34.586 s, gain 0.3 dB.
 - Gates: hook 3.344 s PASS, total 43.042 s PASS, close 7.164 s FAIL (limit 7.0). Re-computed by the main agent.
 - Stopped at step 5 as the PRD requires. Steps 6-12 (config, build, lint, render v2) not run. Decision pending with the user: raise the close limit, shorten the close line (another paid splice), or keep v1.
+
+## Decision (2026-10-28 WIB, user)
+- `close_max_s` raised from 7.0 to 7.2 s for video-02 (close 7.164 s with take `el_liam_close2`). Steps 6-12 continue.
+
+## Outcome (2026-10-28 WIB, measured)
+- Config: `close_max_s` 7.2 (user), voice `el_liam_close2`, script v2, output `out/v2.mp4`; `render.sh` reads the output path from the config. s6 close text "PALING SULIT DIJANGKAU / JARINGAN LISTRIK"; the first lint failed check h (close text out to x 1061), so `.close-line` went from 110 px to 96 px as step 6 allows; then lint PASS, 0 problems.
+- Gates: hook 3.344 s, close 7.164 s (7.2), total 43.042 s.
+- `video-02/out/v2.mp4`: 1080x1920, 30/1, 1292 frames, video 43.067 s, audio 43.072 s, -14.0 LUFS, true peak -4.2 dBFS, 4038179 bytes.
+- Re-measured by the main agent: ffprobe and ebur128 on the MP4, the config and CSS diff, and the 11-frame contact sheet of the close (new text inside the safe box; card transition clean).
+- Not verified: the splice seam and the new line by ear (the user listens). The current config and CSS rebuild v2; v1 stays in `out/v1.mp4` and in commit 928d3b3.

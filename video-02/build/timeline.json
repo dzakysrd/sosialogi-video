@@ -1,8 +1,8 @@
 {
   "id": "video-02",
   "fps": 30,
-  "total": 42.114,
-  "vo_seconds": 42.096,
+  "total": 43.042,
+  "vo_seconds": 43.032,
   "gates": [
     {
       "name": "hook",
@@ -12,13 +12,13 @@
     },
     {
       "name": "close",
-      "value": 6.48,
-      "max": 7,
+      "value": 7.164,
+      "max": 7.2,
       "ok": true
     },
     {
       "name": "total",
-      "value": 42.114,
+      "value": 43.042,
       "max": 45,
       "ok": true
     }
@@ -55,16 +55,16 @@
     {
       "id": "s5_pln",
       "start": 27.687,
-      "end": 35.634,
+      "end": 35.878,
       "visual_start": 27.687,
-      "visual_end": 35.634
+      "visual_end": 35.878
     },
     {
       "id": "s6_close",
-      "start": 35.634,
-      "end": 42.114,
-      "visual_start": 35.634,
-      "visual_end": 42.114
+      "start": 35.878,
+      "end": 43.042,
+      "visual_start": 35.878,
+      "visual_end": 43.042
     }
   ],
   "cues": [
@@ -180,25 +180,25 @@
       "scene": "s5_pln",
       "where": "s5_pln part 0 (stack) message 2",
       "phrase": "dihitung berlistrik",
-      "t": 34.476
+      "t": 34.766
     },
     {
       "scene": "s6_close",
       "where": "s6_close part 0 (close) block 0",
-      "phrase": "Langkah",
-      "t": 35.634
+      "phrase": "Sisanya",
+      "t": 35.878
     },
     {
       "scene": "s6_close",
       "where": "s6_close part 0 (close) block 1",
       "phrase": "Selamat",
-      "t": 37.605
+      "t": 38.569
     },
     {
       "scene": "s6_close",
       "where": "s6_close part 0 (close) card",
       "phrase": "Yuk",
-      "t": 39.356
+      "t": 40.424
     }
   ],
   "numbers": [
@@ -868,8 +868,8 @@
     {
       "i": 13,
       "start": 31.268,
-      "end": 32.618,
-      "duration": 1.35,
+      "end": 32.862,
+      "duration": 1.594,
       "text": "Lebih dari separuhnya lampu",
       "merged": false,
       "words": [
@@ -878,40 +878,40 @@
           "n": 1,
           "text": "Lebih",
           "start": 31.318,
-          "end": 31.573,
+          "end": 31.562,
           "num": false
         },
         {
           "i": 80,
           "n": 1,
           "text": "dari",
-          "start": 31.596,
-          "end": 31.747,
+          "start": 31.585,
+          "end": 31.748,
           "num": false
         },
         {
           "i": 81,
           "n": 1,
           "text": "separuhnya",
-          "start": 31.794,
-          "end": 32.27,
+          "start": 31.806,
+          "end": 32.363,
           "num": false
         },
         {
           "i": 82,
           "n": 1,
           "text": "lampu",
-          "start": 32.328,
-          "end": 32.618,
+          "start": 32.572,
+          "end": 32.862,
           "num": false
         }
       ]
     },
     {
       "i": 14,
-      "start": 32.628,
-      "end": 33.639,
-      "duration": 1.011,
+      "start": 32.872,
+      "end": 33.778,
+      "duration": 0.906,
       "text": "tenaga surya,",
       "merged": false,
       "words": [
@@ -919,25 +919,25 @@
           "i": 83,
           "n": 1,
           "text": "tenaga",
-          "start": 32.664,
-          "end": 32.966,
+          "start": 32.909,
+          "end": 33.187,
           "num": false
         },
         {
           "i": 84,
           "n": 1,
           "text": "surya,",
-          "start": 33.024,
-          "end": 33.489,
+          "start": 33.234,
+          "end": 33.628,
           "num": false
         }
       ]
     },
     {
       "i": 15,
-      "start": 33.729,
-      "end": 35.574,
-      "duration": 1.845,
+      "start": 34.008,
+      "end": 35.818,
+      "duration": 1.81,
       "text": "dan itu ikut dihitung berlistrik.",
       "merged": false,
       "words": [
@@ -945,176 +945,184 @@
           "i": 85,
           "n": 1,
           "text": "dan",
-          "start": 33.779,
-          "end": 33.918,
+          "start": 34.058,
+          "end": 34.197,
           "num": false
         },
         {
           "i": 86,
           "n": 1,
           "text": "itu",
-          "start": 33.988,
-          "end": 34.174,
+          "start": 34.255,
+          "end": 34.441,
           "num": false
         },
         {
           "i": 87,
           "n": 1,
           "text": "ikut",
-          "start": 34.232,
-          "end": 34.429,
+          "start": 34.511,
+          "end": 34.72,
           "num": false
         },
         {
           "i": 88,
           "n": 1,
           "text": "dihitung",
-          "start": 34.476,
-          "end": 34.847,
+          "start": 34.766,
+          "end": 35.114,
           "num": false
         },
         {
           "i": 89,
           "n": 1,
           "text": "berlistrik.",
-          "start": 34.882,
-          "end": 35.474,
+          "start": 35.149,
+          "end": 35.718,
           "num": false
         }
       ]
     },
     {
       "i": 16,
-      "start": 35.584,
-      "end": 37.038,
-      "duration": 1.454,
-      "text": "Langkah terakhir memang paling",
+      "start": 35.828,
+      "end": 37.583,
+      "duration": 1.755,
+      "text": "Sisanya paling sulit dijangkau",
       "merged": false,
       "words": [
         {
           "i": 90,
           "n": 1,
-          "text": "Langkah",
-          "start": 35.634,
-          "end": 35.982,
+          "text": "Sisanya",
+          "start": 35.878,
+          "end": 36.366,
           "num": false
         },
         {
           "i": 91,
           "n": 1,
-          "text": "terakhir",
-          "start": 36.04,
-          "end": 36.4,
+          "text": "paling",
+          "start": 36.424,
+          "end": 36.679,
           "num": false
         },
         {
           "i": 92,
           "n": 1,
-          "text": "memang",
-          "start": 36.458,
-          "end": 36.702,
+          "text": "sulit",
+          "start": 36.726,
+          "end": 37.004,
           "num": false
         },
         {
           "i": 93,
           "n": 1,
-          "text": "paling",
-          "start": 36.76,
-          "end": 37.038,
+          "text": "dijangkau",
+          "start": 37.063,
+          "end": 37.573,
           "num": false
         }
       ]
     },
     {
       "i": 17,
-      "start": 37.048,
-      "end": 37.545,
-      "duration": 0.497,
-      "text": "sulit.",
+      "start": 37.593,
+      "end": 38.509,
+      "duration": 0.916,
+      "text": "jaringan listrik.",
       "merged": false,
       "words": [
         {
           "i": 94,
           "n": 1,
-          "text": "sulit.",
-          "start": 37.073,
-          "end": 37.445,
+          "text": "jaringan",
+          "start": 37.643,
+          "end": 37.956,
+          "num": false
+        },
+        {
+          "i": 95,
+          "n": 1,
+          "text": "listrik.",
+          "start": 38.003,
+          "end": 38.409,
           "num": false
         }
       ]
     },
     {
       "i": 18,
-      "start": 37.555,
-      "end": 39.296,
-      "duration": 1.741,
+      "start": 38.519,
+      "end": 40.364,
+      "duration": 1.845,
       "text": "Selamat Hari Listrik Nasional.",
       "merged": false,
       "words": [
         {
-          "i": 95,
-          "n": 1,
-          "text": "Selamat",
-          "start": 37.605,
-          "end": 38.012,
-          "num": false
-        },
-        {
           "i": 96,
           "n": 1,
-          "text": "Hari",
-          "start": 38.058,
-          "end": 38.221,
+          "text": "Selamat",
+          "start": 38.569,
+          "end": 38.975,
           "num": false
         },
         {
           "i": 97,
           "n": 1,
-          "text": "Listrik",
-          "start": 38.267,
-          "end": 38.569,
+          "text": "Hari",
+          "start": 39.033,
+          "end": 39.231,
           "num": false
         },
         {
           "i": 98,
           "n": 1,
+          "text": "Listrik",
+          "start": 39.289,
+          "end": 39.649,
+          "num": false
+        },
+        {
+          "i": 99,
+          "n": 1,
           "text": "Nasional.",
-          "start": 38.615,
-          "end": 39.196,
+          "start": 39.718,
+          "end": 40.264,
           "num": false
         }
       ]
     },
     {
       "i": 19,
-      "start": 39.306,
-      "end": 42.014,
-      "duration": 2.708,
+      "start": 40.374,
+      "end": 42.942,
+      "duration": 2.568,
       "text": "Yuk, follow @dzakysrd.",
       "merged": false,
       "words": [
         {
-          "i": 99,
-          "n": 1,
-          "text": "Yuk,",
-          "start": 39.356,
-          "end": 39.635,
-          "num": false
-        },
-        {
           "i": 100,
           "n": 1,
-          "text": "follow",
-          "start": 39.937,
-          "end": 40.308,
+          "text": "Yuk,",
+          "start": 40.424,
+          "end": 40.725,
           "num": false
         },
         {
           "i": 101,
+          "n": 1,
+          "text": "follow",
+          "start": 40.946,
+          "end": 41.306,
+          "num": false
+        },
+        {
+          "i": 102,
           "n": 5,
           "text": "@dzakysrd.",
-          "start": 40.424,
-          "end": 41.864,
+          "start": 41.422,
+          "end": 42.792,
           "num": false
         }
       ]

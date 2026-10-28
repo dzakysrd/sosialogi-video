@@ -397,136 +397,141 @@
   {
     "text": "Lebih",
     "start": 31.318,
-    "end": 31.573
+    "end": 31.562
   },
   {
     "text": "dari",
-    "start": 31.596,
-    "end": 31.747
+    "start": 31.585,
+    "end": 31.748
   },
   {
     "text": "separuhnya",
-    "start": 31.794,
-    "end": 32.27
+    "start": 31.806,
+    "end": 32.363
   },
   {
     "text": "lampu",
-    "start": 32.328,
-    "end": 32.618
+    "start": 32.572,
+    "end": 32.862
   },
   {
     "text": "tenaga",
-    "start": 32.664,
-    "end": 32.966
+    "start": 32.909,
+    "end": 33.187
   },
   {
     "text": "surya",
-    "start": 33.024,
-    "end": 33.489
+    "start": 33.234,
+    "end": 33.628
   },
   {
     "text": "dan",
-    "start": 33.779,
-    "end": 33.918
+    "start": 34.058,
+    "end": 34.197
   },
   {
     "text": "itu",
-    "start": 33.988,
-    "end": 34.174
+    "start": 34.255,
+    "end": 34.441
   },
   {
     "text": "ikut",
-    "start": 34.232,
-    "end": 34.429
+    "start": 34.511,
+    "end": 34.72
   },
   {
     "text": "dihitung",
-    "start": 34.476,
-    "end": 34.847
+    "start": 34.766,
+    "end": 35.114
   },
   {
     "text": "berlistrik",
-    "start": 34.882,
-    "end": 35.474
+    "start": 35.149,
+    "end": 35.718
   },
   {
-    "text": "Langkah",
-    "start": 35.634,
-    "end": 35.982
-  },
-  {
-    "text": "terakhir",
-    "start": 36.04,
-    "end": 36.4
-  },
-  {
-    "text": "memang",
-    "start": 36.458,
-    "end": 36.702
+    "text": "Sisanya",
+    "start": 35.878,
+    "end": 36.366
   },
   {
     "text": "paling",
-    "start": 36.76,
-    "end": 37.038
+    "start": 36.424,
+    "end": 36.679
   },
   {
     "text": "sulit",
-    "start": 37.073,
-    "end": 37.445
+    "start": 36.726,
+    "end": 37.004
+  },
+  {
+    "text": "dijangkau",
+    "start": 37.063,
+    "end": 37.573
+  },
+  {
+    "text": "jaringan",
+    "start": 37.643,
+    "end": 37.956
+  },
+  {
+    "text": "listrik",
+    "start": 38.003,
+    "end": 38.409
   },
   {
     "text": "Selamat",
-    "start": 37.605,
-    "end": 38.012
+    "start": 38.569,
+    "end": 38.975
   },
   {
     "text": "Hari",
-    "start": 38.058,
-    "end": 38.221
+    "start": 39.033,
+    "end": 39.231
   },
   {
     "text": "Listrik",
-    "start": 38.267,
-    "end": 38.569
+    "start": 39.289,
+    "end": 39.649
   },
   {
     "text": "Nasional",
-    "start": 38.615,
-    "end": 39.196
+    "start": 39.718,
+    "end": 40.264
   },
   {
     "text": "Yuk",
-    "start": 39.356,
-    "end": 39.635
+    "start": 40.424,
+    "end": 40.725
   },
   {
     "text": "follow",
-    "start": 39.937,
-    "end": 40.308
+    "start": 40.946,
+    "end": 41.306
   },
   {
     "text": "et",
-    "start": 40.424,
-    "end": 40.587
+    "start": 41.422,
+    "end": 41.561
   },
   {
     "text": "Dzaky",
-    "start": 40.668,
-    "end": 41.063
+    "start": 41.654,
+    "end": 42.084
   },
   {
     "text": "es",
-    "start": 41.144,
-    "end": 41.307
+    "start": 42.142,
+    "end": 42.27
   },
   {
     "text": "er",
-    "start": 41.4,
-    "end": 41.551
+    "start": 42.351,
+    "end": 42.467
   },
   {
     "text": "de",
-    "start": 41.632,
-    "end": 41.864
+    "start": 42.548,
+    "end": 42.792
   }
 ]
