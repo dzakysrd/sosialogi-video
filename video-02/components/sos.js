@@ -224,11 +224,22 @@
     });
   }
 
-  // ---------- close: the closing line, then "SELAMAT ..."; the block fades out at the card cue, and the card appears ----------
-  function close(tl, sec, p, sc) {
+  // End of the last spoken word that ends at or before t. The caption words cover every word of the VO.
+  function lastWordEndBefore(cfg, t) {
+    var last = null;
+    cfg.captions.forEach(function (c) {
+      c.words.forEach(function (w) {
+        if (w.end <= t + 1e-9 && (last === null || w.end > last)) last = w.end;
+      });
+    });
+    return last;
+  }
+
+  // ---------- close: the closing line, then "SELAMAT ..."; the block fades out before the card cue, and the card appears ----------
+  function close(tl, sec, p, sc, cfg) {
     var L = layer(tl, sec, p, sc, "close");
     var b = block(L, "close");
-    // the closing block cross-fades into the CTA pill over 0.2 s at the card cue (an intended overlap)
+    // allowed to overlap only while it fades out (lint j exempts it while its opacity is below 1)
     b.setAttribute("data-layout-allow-overlap", "");
     p.block.forEach(function (it, i) {
       var n = el("div", i === 0 ? "close-item" : "close-item close-add");
@@ -238,7 +249,11 @@
       b.appendChild(n);
       appear(tl, n, it.t, 0.3);
     });
-    tl.to(b, { opacity: 0, duration: 0.2, ease: "power1.in" }, p.card.t);
+    // fade from the end of the last spoken word before the card cue to the cue (PRD-15);
+    // a gap under 0.1 s fades over the 0.1 s that end at the cue
+    var last = lastWordEndBefore(cfg, p.card.t);
+    var fadeFrom = last !== null && p.card.t - last >= 0.1 ? last : p.card.t - 0.1;
+    tl.to(b, { opacity: 0, duration: p.card.t - fadeFrom, ease: "power1.in" }, fadeFrom);
 
     var cta = block(L, "cta");
     cta.appendChild(el("div", "cta-pill", p.card.cta));
@@ -295,7 +310,7 @@
       sc.parts.forEach(function (p) {
         var f = BUILDERS[p.type];
         if (!f) throw new Error("SOS: no builder for part type " + p.type);
-        f(tl, sec, p, sc);
+        f(tl, sec, p, sc, cfg);
       });
     });
     captions(tl, cfg);
