@@ -171,6 +171,7 @@
     var L = layer(tl, sec, p, sc, "stack");
     var c = block(L, "stack-chart");
     c.appendChild(el("div", "stack-title", p.title));
+    if (p.subtitle && p.subtitle.text) c.appendChild(el("div", "stack-sub", p.subtitle.text)); // shown from the part start (PRD-14)
     var bar = el("div", "stack-bar");
     var seg = {};
     p.segments.forEach(function (s) {
@@ -259,6 +260,7 @@
   };
 
   // Captions: each chunk shows and hides on its word times; each word takes the accent colour while spoken.
+  // A number run (class "num", sos.css) is invisible in its chunk until its cue (PRD-14): its space is kept, so the line does not jump.
   function captions(tl, cfg) {
     cfg.captions.forEach(function (c, k) {
       var node = document.getElementById("cap-" + k);
@@ -268,6 +270,7 @@
       c.words.forEach(function (w) {
         var span = document.getElementById("cw-" + w.i);
         if (!span) throw new Error("SOS: missing caption word " + w.i);
+        if (w.num) tl.set(span, { opacity: 1 }, w.start);
         tl.set(span, { color: ACCENT }, w.start);
         tl.set(span, { color: CAP_BASE }, w.end);
       });
