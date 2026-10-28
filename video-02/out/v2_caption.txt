@@ -1,20 +1,20 @@
-Dulu hampir 1 dari 5 rumah tangga di Indonesia belum berlistrik. Sekarang tinggal kurang dari 2 per 1.000.
+⚡ 12 tahun lalu, hampir 1 dari 5 rumah tangga di Indonesia belum berlistrik. Sekarang? Kurang dari 2 per 1.000.
 
-• Rasio elektrifikasi nasional: 80,51% (2013) → 99,83% (2025). Angka 2024 juga 99,83%.
-• Provinsi terendah (akhir 2023): Papua Pegunungan, 93,82%.
-• Di Papua Pegunungan, rumah tangga yang tersambung PLN baru 14,06%. Sebanyak 56,14% memakai lampu tenaga surya hemat energi (LTSHE), yang ikut dihitung "berlistrik".
-• Menurut ESDM, tingginya porsi listrik non-PLN dan LTSHE di Papua Tengah dan Papua Pegunungan disebabkan kondisi geografis, sebaran penduduk, dan kondisi jaringan listrik yang ada.
+📈 Rasio elektrifikasi nasional: 80,51% (2013) → 99,83% (2025). Angka 2024 juga 99,83%.
+📍 Provinsi terendah (akhir 2023): Papua Pegunungan, 93,82%.
+☀️ Di Papua Pegunungan, rumah tangga yang tersambung PLN baru 14,06%. Sebanyak 56,14% memakai lampu tenaga surya hemat energi (LTSHE), yang ikut dihitung "berlistrik".
+🏔️ Menurut ESDM, tingginya porsi listrik non-PLN dan LTSHE di Papua Tengah dan Papua Pegunungan disebabkan kondisi geografis, sebaran penduduk, dan kondisi jaringan listrik yang ada.
 
-Catatan: rasio elektrifikasi = rumah tangga berlistrik ÷ seluruh rumah tangga. "Berlistrik" mencakup listrik PLN, non-PLN, dan LTSHE, jadi belum tentu menyala 24 jam.
+ℹ️ Catatan: rasio elektrifikasi = rumah tangga berlistrik ÷ seluruh rumah tangga. "Berlistrik" mencakup listrik PLN, non-PLN, dan LTSHE, jadi belum tentu menyala 24 jam.
 
-Selamat Hari Listrik Nasional (27 Oktober).
+💡 Selamat Hari Listrik Nasional (27 Oktober)!
 
-Sumber: Kementerian ESDM, Handbook of Energy & Economic Statistics of Indonesia 2024–2025 dan Laporan Kinerja 2023 (angka 2013–2022 dibaca dari grafik).
+📚 Sumber: Kementerian ESDM, Handbook of Energy & Economic Statistics of Indonesia 2024–2025 dan Laporan Kinerja 2023 (angka 2013–2022 dibaca dari grafik).
 esdm.go.id/assets/media/content/content-handbook-of-energy-and-economic-statistics-of-indonesia-2025.pdf
 esdm.go.id/assets/media/content/content-handbook-of-energy-and-economic-statistics-of-indonesia-2024.pdf
 esdm.go.id/assets/media/content/content-laporan-kinerja-kementerian-esdm-tahun-2023.pdf
 
-Suara: elevenlabs.io (link afiliasi: https://try.elevenlabs.io/8lsqn9kliaot)
-Riset data & naskah dibantu Claude. Mau coba? Link referral ada di bio: kamu dapat 1 minggu Claude Pro gratis, dan aku dapat kredit pemakaian kalau kamu lanjut berlangganan. Kuota 3 orang.
+🎙️ Suara: elevenlabs.io (link afiliasi: https://try.elevenlabs.io/8lsqn9kliaot)
+🤖 Riset data & naskah dibantu Claude. Mau coba? Link referral ada di bio: kamu dapat 1 minggu Claude Pro gratis, dan aku dapat kredit pemakaian kalau kamu lanjut berlangganan. Kuota 3 orang.
 
 #HariListrikNasional #ListrikIndonesia #RasioElektrifikasi #DataIndonesia
