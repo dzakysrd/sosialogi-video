@@ -64,3 +64,6 @@ Riset data & naskah dibantu Claude. Mau coba? Link referral ada di bio: kamu dap
 - Output: `video-03/out/v1.mp4` (43.1 s, 1080x1920, 30 fps, -14.0 LUFS, true peak -4.2 dBFS). Approved by the user on 2026-10-28. Caption: `video-03/out/v1_caption.txt`.
 - Open before posting: the Claude referral line ("Kuota 3 orang") is copied from video-02 and not re-checked; ElevenLabs free-plan terms (Next steps 3).
 - Cosmetic, not fixed: `video-03/tools/lint.mjs` prints "lint video-02 (PRD-14)" in its header.
+
+## Outcome (2026-10-28)
+- Caption v1 written and committed (9c4edcc). The user asked for a revision with emoji; the main agent drafted it and the user approved it ("ok"). `video-03/out/v1_caption.txt` now holds the revised text; figures unchanged.
