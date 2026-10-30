@@ -1,5 +1,5 @@
 {
-  "_help": "Visual plan for Reel A (ep-reel-a, PRD-25): one entry per script_v4 scene, same ids and order. Part types as in video-02 (claim, textcard, close). Text lines are strings, or objects {text, cue?, accent?} (a cue makes the line appear at that word). A literal number is an object {text, spoken, cue, caption, check} with cue = spoken (tools/build.mjs numEl). A claim reveal without a number is {text, cue}. The close card has cta (handle), kicker (word above it) and no sources line. Temporary textcards stand in for diagrams until PRD-26. The build resolves all times; this file holds no timings.",
+  "_help": "Visual plan for Reel A (ep-reel-a). One entry per script_v4 scene, same ids and order. Part types: claim, textcard, close (PRD-25) and the PRD-26 diagram parts pncell, contrast, dcac, series, parallel. A field {text, cue} shows text at that word cue; a literal number is {text, spoken, cue, caption, check} (cue = spoken, tools/build.mjs numEl). The build resolves all times; this file holds no timings.",
   "scenes": [
     {
       "id": "s1_hook",
@@ -15,8 +15,13 @@
       "id": "s2_cahaya",
       "parts": [
         {
-          "type": "textcard",
-          "lines": ["CAHAYA -> LISTRIK", "(EFEK FOTOVOLTAIK)"]
+          "type": "pncell",
+          "headline": "CAHAYA -> LISTRIK",
+          "n": "n",
+          "p": "p",
+          "efek": {"text": "efek fotovoltaik", "cue": "efek fotovoltaik"},
+          "junction": {"text": "sambungan p-n", "cue": "sambungan pe-en"},
+          "electron": {"cue": "aliran elektron"}
         }
       ]
     },
@@ -24,8 +29,9 @@
       "id": "s3_kontras",
       "parts": [
         {
-          "type": "textcard",
-          "lines": ["PANEL SURYA", "CAHAYA -> LISTRIK", "SOLAR THERMAL", "COLLECTOR: PANAS"]
+          "type": "contrast",
+          "left": {"headline": "PANEL SURYA", "label": "LISTRIK"},
+          "right": {"cue": "solar thermal collector", "headline": ["SOLAR THERMAL", "COLLECTOR"], "label": "PANAS"}
         }
       ]
     },
@@ -33,13 +39,11 @@
       "id": "s4_dc",
       "parts": [
         {
-          "type": "textcard",
-          "lines": [
-            "ARUS SEARAH",
-            "DC",
-            {"text": "AC", "cue": "a-se", "accent": true},
-            {"text": "INVERTER", "cue": "inverter", "accent": true}
-          ]
+          "type": "dcac",
+          "headline": {"text": "ARUS SEARAH (DC)", "cue": "de-se"},
+          "dc": {"text": "DC", "cue": "de-se"},
+          "ac": {"text": "AC", "cue": "a-se"},
+          "inverter": {"text": "INVERTER", "cue": "inverter"}
         }
       ]
     },
@@ -47,14 +51,14 @@
       "id": "s5_seri",
       "parts": [
         {
-          "type": "textcard",
-          "lines": [
-            "SERI",
-            "ANGKA CONTOH",
-            {"text": "12 V", "spoken": "dua belas volt", "cue": "dua belas volt", "caption": "12 V", "check": "series_12v"},
-            {"text": "5 A", "spoken": "lima ampere", "cue": "lima ampere", "caption": "5 A", "check": "series_5a"},
-            {"text": "24 V", "spoken": "dua puluh empat volt", "cue": "dua puluh empat volt", "caption": "24 V", "check": "series_24v"}
-          ]
+          "type": "series",
+          "tag": "ANGKA CONTOH",
+          "headline": {"text": "SERI", "cue": "Disambung seri"},
+          "panel2": {"cue": "Dua panel"},
+          "v12": {"text": "12 V", "spoken": "dua belas volt", "cue": "dua belas volt", "caption": "12 V", "check": "series_12v"},
+          "a5": {"text": "5 A", "spoken": "lima ampere", "cue": "lima ampere", "caption": "5 A", "check": "series_5a"},
+          "v24": {"text": "24 V", "spoken": "dua puluh empat volt", "cue": "dua puluh empat volt", "caption": "24 V", "check": "series_24v"},
+          "tetap": {"text": "tetap", "cue": "tetap"}
         }
       ]
     },
@@ -62,12 +66,12 @@
       "id": "s6_paralel",
       "parts": [
         {
-          "type": "textcard",
-          "lines": [
-            "PARALEL",
-            {"text": "12 V", "spoken": "dua belas volt", "cue": "dua belas volt", "caption": "12 V", "check": "parallel_12v"},
-            {"text": "15 A", "spoken": "lima belas ampere", "cue": "lima belas ampere", "caption": "15 A", "check": "parallel_15a"}
-          ]
+          "type": "parallel",
+          "headline": "PARALEL",
+          "bus": {"cue": "tiga panel"},
+          "v12": {"text": "12 V", "spoken": "dua belas volt", "cue": "dua belas volt", "caption": "12 V", "check": "parallel_12v"},
+          "tetap": {"text": "tetap", "cue": "dua belas volt"},
+          "a15": {"text": "15 A", "spoken": "lima belas ampere", "cue": "lima belas ampere", "caption": "15 A", "check": "parallel_15a"}
         }
       ]
     },

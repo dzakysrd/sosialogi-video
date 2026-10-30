@@ -49,5 +49,5 @@ All step 6 outputs verbatim; list of files changed in the engine copy vs video-0
 - ep-reel-a/out/reel_a_v1.mp4: 1080x1920, 30 fps, 48.23 s, audio within 0.001 s of video; -13.9 LUFS, true peak -4.1 dBFS. Lint PASS (a-k, x), gates hook 3.225 s / 3.5, close 2.491 s / 7.2, total 48.227 s / 50. Literal checks series_12v, series_5a, series_24v, parallel_12v, parallel_15a true.
 - Captions show p-n, DC, AC and @RDNRE instead of the spoken forms (checked in the timeline).
 - Main agent looked at ep-reel-a/out/v1_sheet.jpg: numbers appear at their cues; s2-s6 are text placeholders as planned (PRD-26 replaces them with diagrams).
-- The sub-agent created a one-shot reminder trigger for itself; the main agent deleted it. Sub-agents must not schedule triggers.
+- The sub-agent created a one-shot reminder trigger ("PRD-25 render check") for itself; the main agent's delete was refused by the permission system, so it may still exist. Sub-agents must not schedule triggers.
 - raw.mp4 (intermediate render) is not committed.

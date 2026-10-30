@@ -82,44 +82,110 @@
       "t": 2.726
     },
     {
+      "scene": "s2_cahaya",
+      "where": "s2_cahaya part 0 (pncell).efek",
+      "phrase": "efek fotovoltaik",
+      "t": 7.042
+    },
+    {
+      "scene": "s2_cahaya",
+      "where": "s2_cahaya part 0 (pncell).junction",
+      "phrase": "sambungan pe-en",
+      "t": 10.929
+    },
+    {
+      "scene": "s2_cahaya",
+      "where": "s2_cahaya part 0 (pncell).electron",
+      "phrase": "aliran elektron",
+      "t": 12.415
+    },
+    {
+      "scene": "s3_kontras",
+      "where": "s3_kontras part 0 (contrast).right",
+      "phrase": "solar thermal collector",
+      "t": 18.902
+    },
+    {
       "scene": "s4_dc",
-      "where": "s4_dc part 0 (textcard).lines[2]",
+      "where": "s4_dc part 0 (dcac).headline",
+      "phrase": "de-se",
+      "t": 23.148
+    },
+    {
+      "scene": "s4_dc",
+      "where": "s4_dc part 0 (dcac).dc",
+      "phrase": "de-se",
+      "t": 23.148
+    },
+    {
+      "scene": "s4_dc",
+      "where": "s4_dc part 0 (dcac).ac",
       "phrase": "a-se",
       "t": 24.76
     },
     {
       "scene": "s4_dc",
-      "where": "s4_dc part 0 (textcard).lines[3]",
+      "where": "s4_dc part 0 (dcac).inverter",
       "phrase": "inverter",
       "t": 26.281
     },
     {
       "scene": "s5_seri",
-      "where": "s5_seri part 0 (textcard).lines[2]",
+      "where": "s5_seri part 0 (series).headline",
+      "phrase": "Disambung seri",
+      "t": 31.362
+    },
+    {
+      "scene": "s5_seri",
+      "where": "s5_seri part 0 (series).panel2",
+      "phrase": "Dua panel",
+      "t": 34.006
+    },
+    {
+      "scene": "s5_seri",
+      "where": "s5_seri part 0 (series).v12",
       "phrase": "dua belas volt",
       "t": 29.228
     },
     {
       "scene": "s5_seri",
-      "where": "s5_seri part 0 (textcard).lines[3]",
+      "where": "s5_seri part 0 (series).a5",
       "phrase": "lima ampere",
       "t": 30.459
     },
     {
       "scene": "s5_seri",
-      "where": "s5_seri part 0 (textcard).lines[4]",
+      "where": "s5_seri part 0 (series).v24",
       "phrase": "dua puluh empat volt",
       "t": 34.912
     },
     {
+      "scene": "s5_seri",
+      "where": "s5_seri part 0 (series).tetap",
+      "phrase": "tetap",
+      "t": 36.932
+    },
+    {
       "scene": "s6_paralel",
-      "where": "s6_paralel part 0 (textcard).lines[1]",
+      "where": "s6_paralel part 0 (parallel).bus",
+      "phrase": "tiga panel",
+      "t": 38.532
+    },
+    {
+      "scene": "s6_paralel",
+      "where": "s6_paralel part 0 (parallel).v12",
       "phrase": "dua belas volt",
       "t": 42.592
     },
     {
       "scene": "s6_paralel",
-      "where": "s6_paralel part 0 (textcard).lines[2]",
+      "where": "s6_paralel part 0 (parallel).tetap",
+      "phrase": "dua belas volt",
+      "t": 42.592
+    },
+    {
+      "scene": "s6_paralel",
+      "where": "s6_paralel part 0 (parallel).a15",
       "phrase": "lima belas ampere",
       "t": 44.543
     },

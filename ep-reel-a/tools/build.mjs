@@ -418,6 +418,24 @@ const RESOLVE = {
   },
 };
 
+// PRD-26 diagram parts (pncell, contrast, dcac, series, parallel): fields are resolved generically. A {cue} becomes {t} (a word
+// cue); a literal number ({spoken, caption, check, ...}) is a registry number (numEl); any other string may not carry a digit.
+function resolveDeep(node, si, where) {
+  if (Array.isArray(node)) return node.map((x, k) => resolveDeep(x, si, `${where}[${k}]`));
+  if (node && typeof node === "object") {
+    if (node.spoken !== undefined) return numEl(node, si, where);
+    const out = {};
+    for (const [k, v] of Object.entries(node)) if (k !== "cue") out[k] = resolveDeep(v, si, `${where}.${k}`);
+    if (node.cue !== undefined) out.t = r3(cueIn(si, node.cue, where));
+    return out;
+  }
+  if (typeof node === "string" && /\d/.test(node)) bad(`${where}: "${node}" has a digit; a number needs a literal spoken form`);
+  return node;
+}
+for (const type of ["pncell", "contrast", "dcac", "series", "parallel"]) {
+  RESOLVE[type] = (p, si, where) => { const { type: _type, ...rest } = p; return resolveDeep(rest, si, where); };
+}
+
 // ---------- scenes ----------
 const sceneOut = [];
 const citations = [];

@@ -271,6 +271,282 @@
     }
   }
 
+  // ---------- PRD-26 diagrams: each part is one text block (data-tb, class dg) holding its labels (.dl) and one SVG drawing.
+  // Labels are HTML; drawings are SVG at 875 x 900 px inside the hero band (y 420..1320). Times come from the resolved cues.
+  var NS = "http://www.w3.org/2000/svg";
+  var GROUND = "#0B1B3F";
+  var PANEL = "#1B4FA8";
+  var WIRE = "#9fb2cc";
+
+  function sv(parent, tag, attrs) {
+    var n = document.createElementNS(NS, tag);
+    Object.keys(attrs || {}).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    parent.appendChild(n);
+    return n;
+  }
+  function svgIn(parent, w, h) {
+    var s = sv(parent, "svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h, "class": "dg-svg" });
+    s.style.width = w + "px";
+    s.style.height = h + "px";
+    return s;
+  }
+  // a label at (x, y) in its parent; w (optional) sets the width and centres the text; px is the font size
+  function txt(parent, text, cls, x, y, w, px) {
+    var d = el("div", "dl " + cls, text);
+    d.style.left = x + "px";
+    d.style.top = y + "px";
+    if (w) { d.style.width = w + "px"; d.style.textAlign = "center"; }
+    if (px) d.style.fontSize = px + "px";
+    parent.appendChild(d);
+    return d;
+  }
+  // a centred label with a badge (bordered pill) or a tag (accent box) around its text
+  function boxed(parent, text, cls, x, y, w, px) {
+    var c = txt(parent, "", "", x, y, w, px);
+    c.appendChild(el("span", cls, text));
+    return c;
+  }
+  // a line or path drawn from nothing (pathLength 1): dash offset 1 -> 0 over dur seconds from t
+  function draw(tl, node, t, dur) {
+    node.setAttribute("pathLength", "1");
+    node.style.strokeDasharray = "1";
+    tl.fromTo(node, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: dur, ease: "power1.inOut" }, t);
+  }
+  function fadeIn(tl, node, t, dur) {
+    tl.fromTo(node, { opacity: 0 }, { opacity: 1, duration: dur || 0.3, ease: "power1.out" }, t);
+  }
+  function diagram(L, id) {
+    var b = block(L, id);
+    b.classList.add("dg");
+    return b;
+  }
+  // a dot that travels a route (points in drawing px) from its start point, one tween per leg, at speed px/s
+  function travel(tl, dot, route, t0, speed) {
+    var tc = t0;
+    tl.set(dot, { opacity: 1 }, t0);
+    for (var i = 1; i < route.length; i++) {
+      var len = Math.abs(route[i][0] - route[i - 1][0]) + Math.abs(route[i][1] - route[i - 1][1]);
+      tl.to(dot, { x: route[i][0] - route[0][0], y: route[i][1] - route[0][1], duration: len / speed, ease: "none" }, tc);
+      tc += len / speed;
+    }
+    tl.to(dot, { opacity: 0, duration: 0.1 }, tc);
+  }
+
+  // ---------- pncell (s2): the cell cross-section, photons, the junction glow, the wire loop and the bulb ----------
+  function pncell(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "pncell");
+    var b = diagram(L, "pncell");
+    txt(b, p.headline, "disp", 0, 0, 875, 96);
+    var s = svgIn(b, 875, 900);
+
+    // photons: wave arrows falling onto the cell in pulses until the part ends (deterministic)
+    var photons = [240, 320, 400, 480, 560, 640].map(function (x) {
+      var outer = sv(s, "g", { transform: "translate(" + x + " 110)" });
+      var g = sv(outer, "g", {});
+      sv(g, "path", { d: "M0 0 q-10 12 0 24 t0 24 t0 24", fill: "none", stroke: ACCENT, "stroke-width": 6, "stroke-linecap": "round" });
+      sv(g, "polygon", { points: "-12,70 12,70 0,88", fill: ACCENT });
+      return g;
+    });
+    for (var k = 0; p.from + k * 1.2 + 0.2 < p.to; k++) {
+      photons.forEach(function (g, j) {
+        var t = p.from + 0.2 + k * 1.2 + j * 0.12;
+        if (t + 0.6 > p.to) return;
+        tl.fromTo(g, { opacity: 0, y: 0 }, { opacity: 1, y: 90, duration: 0.5, ease: "power1.in" }, t);
+        tl.to(g, { opacity: 0, duration: 0.1 }, t + 0.5);
+      });
+    }
+
+    // the cell: n on top, p below; the junction between them
+    sv(s, "rect", { x: 200, y: 230, width: 475, height: 175, fill: BAD });
+    sv(s, "rect", { x: 200, y: 405, width: 475, height: 175, fill: PANEL });
+    var glow = sv(s, "rect", { x: 186, y: 384, width: 503, height: 42, rx: 21, fill: ACCENT, opacity: 0 });
+    var junction = sv(s, "rect", { x: 200, y: 400, width: 475, height: 10, fill: WIRE });
+    [[p.n, 230], [p.p, 405]].forEach(function (lay) {
+      var d = txt(b, lay[0], "disp", 200, lay[1], 475, 150);
+      d.style.height = "175px";
+      d.style.display = "flex";
+      d.style.alignItems = "center";
+      d.style.justifyContent = "center";
+    });
+    tl.to(junction, { attr: { fill: ACCENT }, duration: 0.2 }, p.junction.t);
+    tl.fromTo(glow, { opacity: 0 }, { opacity: 0.45, duration: 0.4, ease: "power1.out" }, p.junction.t);
+    var efek = txt(b, p.efek.text, "body acc", 0, 620, 875, 48);
+    fadeIn(tl, efek, p.efek.t);
+    var jl = txt(b, p.junction.text, "body", 0, 680, 875, 44);
+    fadeIn(tl, jl, p.junction.t);
+
+    // the external loop: two wires from the cell to a bulb; electrons travel the loop when the cue is spoken
+    var wire1 = sv(s, "path", { d: "M200 300 H90 V820 H740 V774", fill: "none", stroke: WIRE, "stroke-width": 6, "stroke-linejoin": "round" });
+    var wire2 = sv(s, "path", { d: "M675 480 H830 V700 H800", fill: "none", stroke: WIRE, "stroke-width": 6, "stroke-linejoin": "round" });
+    draw(tl, wire1, p.electron.t, 0.2);
+    draw(tl, wire2, p.electron.t, 0.2);
+    var glowB = sv(s, "circle", { cx: 740, cy: 700, r: 110, fill: ACCENT, opacity: 0 });
+    var bulbFill = sv(s, "circle", { cx: 740, cy: 700, r: 60, fill: ACCENT, opacity: 0 });
+    var bulbOutline = sv(s, "circle", { cx: 740, cy: 700, r: 60, fill: "none", stroke: "#ffffff", "stroke-width": 6 });
+    var bulbBase = sv(s, "rect", { x: 716, y: 752, width: 48, height: 22, rx: 4, fill: WIRE });
+    var filament = sv(s, "path", { d: "M724 712 L732 686 L740 712 L748 686 L756 712", fill: "none", stroke: "#ffffff", "stroke-width": 4 });
+    [bulbOutline, bulbBase, filament].forEach(function (n) { fadeIn(tl, n, p.electron.t, 0.2); });
+    tl.fromTo(bulbFill, { opacity: 0 }, { opacity: 1, duration: 0.3 }, p.electron.t + 0.5);
+    tl.fromTo(glowB, { opacity: 0 }, { opacity: 0.35, duration: 0.3 }, p.electron.t + 0.5);
+    var route = [[200, 300], [90, 300], [90, 820], [740, 820], [740, 774]];
+    for (var d = 0; d < 3; d++) {
+      var dot = sv(s, "circle", { cx: 200, cy: 300, r: 10, fill: BAD, stroke: "#ffffff", "stroke-width": 2, opacity: 0 });
+      travel(tl, dot, route, p.electron.t + 0.1 + d * 0.2, 1100);
+    }
+  }
+
+  // ---------- contrast (s3): left PV panel -> bolt; right solar thermal collector -> flame, settling at 45% ----------
+  function contrast(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "contrast");
+    var b = diagram(L, "contrast");
+    var s = svgIn(b, 875, 900);
+    sv(s, "line", { x1: 437, y1: 90, x2: 437, y2: 820, stroke: WIRE, "stroke-width": 3, opacity: 0.6 });
+    txt(b, p.left.headline, "disp", 0, 0, 420, 80);
+    var pv = sv(s, "g", {});
+    sv(pv, "rect", { x: 60, y: 150, width: 300, height: 180, rx: 10, fill: BAD, stroke: WIRE, "stroke-width": 4 });
+    [135, 210, 285].forEach(function (x) { sv(pv, "line", { x1: x, y1: 150, x2: x, y2: 330, stroke: GROUND, "stroke-width": 4 }); });
+    [210, 270].forEach(function (y) { sv(pv, "line", { x1: 60, y1: y, x2: 360, y2: y, stroke: GROUND, "stroke-width": 4 }); });
+    var bolt = sv(s, "polygon", { points: "230,372 170,462 210,462 190,540 262,436 222,436 250,372", fill: ACCENT, opacity: 0 });
+    var left = txt(b, p.left.label, "disp acc", 0, 560, 420, 72);
+    fadeIn(tl, bolt, p.from + 0.8);
+    fadeIn(tl, left, p.from + 0.8);
+
+    // right half: appears at its cue, then settles at 45% opacity
+    var rh = el("div", "rhalf");
+    rh.style.position = "absolute";
+    rh.style.left = "455px";
+    rh.style.top = "0px";
+    rh.style.width = "420px";
+    rh.style.height = "900px";
+    b.appendChild(rh);
+    txt(rh, p.right.headline[0], "disp", 0, 0, 420, 64);
+    txt(rh, p.right.headline[1], "disp", 0, 66, 420, 64);
+    var rs = svgIn(rh, 420, 900);
+    for (var i = 0; i < 5; i++) sv(rs, "rect", { x: 35 + i * 72, y: 180, width: 56, height: 150, rx: 28, fill: PANEL, stroke: WIRE, "stroke-width": 6 });
+    sv(rs, "rect", { x: 15, y: 330, width: 390, height: 12, rx: 6, fill: WIRE });
+    sv(rs, "path", { d: "M210 370 C170 410 180 460 210 468 C240 460 250 410 210 370 Z", fill: ACCENT });
+    txt(rh, p.right.label, "disp acc", 0, 500, 420, 72);
+    tl.fromTo(rh, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, p.right.t);
+    tl.to(rh, { opacity: 0.45, duration: 0.4, ease: "power1.inOut" }, p.right.t + 0.6);
+  }
+
+  // ---------- dcac (s4): PV panel -> DC wire with arrows; DC label; INVERTER drops in; AC sine wave ends at a house ----------
+  function dcac(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "dcac");
+    var b = diagram(L, "dcac");
+    var head = txt(b, p.headline.text, "disp", 0, 0, 875, 96);
+    fadeIn(tl, head, p.headline.t);
+    var s = svgIn(b, 875, 900);
+    var pat = sv(sv(s, "defs", {}), "pattern", { id: "dcChev", x: 0, y: 0, width: 80, height: 40, patternUnits: "userSpaceOnUse" });
+    sv(pat, "path", { d: "M20 8 L40 20 L20 32", fill: "none", stroke: ACCENT, "stroke-width": 6, "stroke-linecap": "round", "stroke-linejoin": "round" });
+    var pv = sv(s, "g", {});
+    sv(pv, "rect", { x: 20, y: 415, width: 130, height: 90, rx: 8, fill: BAD, stroke: WIRE, "stroke-width": 4 });
+    sv(pv, "line", { x1: 65, y1: 415, x2: 65, y2: 505, stroke: GROUND, "stroke-width": 3 });
+    sv(pv, "line", { x1: 105, y1: 415, x2: 105, y2: 505, stroke: GROUND, "stroke-width": 3 });
+    sv(pv, "line", { x1: 20, y1: 460, x2: 150, y2: 460, stroke: GROUND, "stroke-width": 3 });
+    sv(s, "line", { x1: 150, y1: 460, x2: 510, y2: 460, stroke: BAD, "stroke-width": 10 });
+    sv(s, "rect", { x: 150, y: 440, width: 360, height: 40, fill: "url(#dcChev)" });
+    // the arrows move one way: the pattern shifts by one tile (80 px) in 0.8 s, repeated
+    tl.fromTo(pat, { attr: { x: 0 } }, { attr: { x: 80 }, duration: 0.8, ease: "none", repeat: 6 }, p.from);
+    var dc = txt(b, p.dc.text, "disp acc", 150, 340, 180, 64);
+    fadeIn(tl, dc, p.dc.t);
+    var inv = el("div", "dl disp acc", p.inverter.text);
+    inv.style.cssText += ";left:330px;top:410px;width:180px;height:100px;border:6px solid " + ACCENT + ";background:" + GROUND + ";display:flex;align-items:center;justify-content:center;font-size:44px;";
+    b.appendChild(inv);
+    tl.fromTo(inv, { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, p.inverter.t);
+    var ac = txt(b, p.ac.text, "disp acc", 540, 330, 120, 64);
+    fadeIn(tl, ac, p.ac.t);
+    var sine = sv(s, "path", { d: "M510 460 q24 -60 48 0 t48 0 t48 0 t48 0", fill: "none", stroke: ACCENT, "stroke-width": 8, "stroke-linecap": "round" });
+    draw(tl, sine, p.ac.t, 0.6);
+    var link = sv(s, "line", { x1: 702, y1: 460, x2: 735, y2: 490, stroke: "#ffffff", "stroke-width": 6 });
+    draw(tl, link, p.ac.t + 0.5, 0.2);
+    var house = sv(s, "g", {});
+    sv(house, "polyline", { points: "735,490 785,440 835,490", fill: "none", stroke: "#ffffff", "stroke-width": 6, "stroke-linejoin": "round" });
+    sv(house, "rect", { x: 745, y: 490, width: 80, height: 60, fill: "none", stroke: "#ffffff", "stroke-width": 6 });
+    sv(house, "rect", { x: 775, y: 515, width: 20, height: 35, fill: "#ffffff" });
+    fadeIn(tl, house, p.ac.t + 0.5);
+  }
+
+  // ---------- series (s5): one panel, 12 V and 5 A; two panels joined in series; the voltage becomes 24 V; 5 A stays ----------
+  function series(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "series");
+    var b = diagram(L, "series");
+    txt(b, "", "", 0, 0, 875, 44).appendChild(el("span", "tag", p.tag));
+    var head = txt(b, p.headline.text, "disp", 0, 90, 875, 130);
+    fadeIn(tl, head, p.headline.t);
+    var s = svgIn(b, 875, 900);
+    // a panel group: 300 x 200 with 4 x 3 cells, a + terminal (accent) at its left top and a - terminal (blue) at its right top
+    function panelG(x, y) {
+      var g = sv(s, "g", {});
+      sv(g, "rect", { x: x, y: y, width: 300, height: 200, rx: 12, fill: PANEL, stroke: BAD, "stroke-width": 5 });
+      for (var r = 0; r < 3; r++) for (var c = 0; c < 4; c++) sv(g, "rect", { x: x + 18 + c * 68, y: y + 18 + r * 60, width: 56, height: 48, rx: 4, fill: BAD });
+      sv(g, "line", { x1: x + 30, y1: y - 22, x2: x + 30, y2: y, stroke: WIRE, "stroke-width": 6 });
+      sv(g, "line", { x1: x + 270, y1: y - 22, x2: x + 270, y2: y, stroke: WIRE, "stroke-width": 6 });
+      sv(g, "circle", { cx: x + 30, cy: y - 22, r: 22, fill: ACCENT });
+      sv(g, "circle", { cx: x + 270, cy: y - 22, r: 22, fill: BAD });
+      sv(g, "path", { d: "M" + (x + 20) + " " + (y - 22) + " H" + (x + 40) + " M" + (x + 30) + " " + (y - 32) + " V" + (y - 12), stroke: GROUND, "stroke-width": 4 });
+      sv(g, "path", { d: "M" + (x + 260) + " " + (y - 22) + " H" + (x + 280), stroke: GROUND, "stroke-width": 4 });
+      return g;
+    }
+    var g1 = panelG(288, 300);
+    var g2 = panelG(508, 300);
+    g2.setAttribute("opacity", "0");
+    tl.fromTo(g1, { x: 0 }, { x: -220, duration: 0.6, ease: "power2.inOut" }, p.panel2.t);
+    tl.fromTo(g2, { x: 300, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, p.panel2.t);
+    // the series wire: from the - terminal of panel 1 to the + terminal of panel 2
+    var wire = sv(s, "line", { x1: 338, y1: 278, x2: 538, y2: 278, stroke: BAD, "stroke-width": 8 });
+    draw(tl, wire, p.panel2.t + 0.6, 0.4);
+
+    var v12 = txt(b, p.v12.text, "disp", 0, 540, 440, 180);
+    fadeIn(tl, v12, p.v12.t);
+    var v24 = txt(b, p.v24.text, "disp acc", 0, 540, 440, 180);
+    tl.to(v12, { opacity: 0, duration: 0.15 }, p.v24.t);
+    fadeIn(tl, v24, p.v24.t);
+    var a5 = txt(b, p.a5.text, "disp", 440, 540, 435, 180);
+    fadeIn(tl, a5, p.a5.t);
+    var tetap = boxed(b, p.tetap.text, "badge", 440, 740, 435, 40);
+    fadeIn(tl, tetap, p.tetap.t);
+  }
+
+  // ---------- parallel (s6): three panels between a + bus (accent, left) and a - bus (blue, right); 12 V stays; 15 A rises ----------
+  function parallel(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "parallel");
+    var b = diagram(L, "parallel");
+    txt(b, p.headline, "disp", 0, 0, 875, 110);
+    var s = svgIn(b, 875, 900);
+    var busP = sv(s, "line", { x1: 240, y1: 150, x2: 240, y2: 526, stroke: ACCENT, "stroke-width": 12, "stroke-linecap": "round" });
+    var busN = sv(s, "line", { x1: 640, y1: 150, x2: 640, y2: 526, stroke: BAD, "stroke-width": 12, "stroke-linecap": "round" });
+    draw(tl, busP, p.bus.t, 0.6);
+    draw(tl, busN, p.bus.t, 0.6);
+    for (var k = 0; k < 3; k++) {
+      var y = 150 + k * 140;
+      var g = sv(s, "g", {});
+      sv(g, "rect", { x: 300, y: y, width: 280, height: 96, rx: 8, fill: PANEL, stroke: BAD, "stroke-width": 4 });
+      for (var r = 0; r < 2; r++) for (var c = 0; c < 6; c++) sv(g, "rect", { x: 314 + c * 44, y: y + 14 + r * 40, width: 36, height: 32, rx: 3, fill: BAD });
+      var wp = sv(s, "line", { x1: 240, y1: y + 48, x2: 300, y2: y + 48, stroke: ACCENT, "stroke-width": 6 });
+      var wn = sv(s, "line", { x1: 580, y1: y + 48, x2: 640, y2: y + 48, stroke: BAD, "stroke-width": 6 });
+      fadeIn(tl, g, p.bus.t);
+      draw(tl, wp, p.bus.t + 0.2 + k * 0.1, 0.3);
+      draw(tl, wn, p.bus.t + 0.2 + k * 0.1, 0.3);
+    }
+    // the current: dots climb both buses at the 15 A cue
+    [[240, ACCENT], [640, BAD]].forEach(function (bus) {
+      for (var d = 0; d < 2; d++) {
+        var dot = sv(s, "circle", { cx: bus[0], cy: 526, r: 9, fill: bus[1], stroke: "#ffffff", "stroke-width": 2, opacity: 0 });
+        var t0 = p.a15.t + d * 0.2;
+        tl.set(dot, { opacity: 1 }, t0);
+        tl.to(dot, { y: -366, duration: 0.7, ease: "none" }, t0);
+        tl.to(dot, { opacity: 0, duration: 0.1 }, t0 + 0.7);
+      }
+    });
+    var v12 = txt(b, p.v12.text, "disp", 0, 580, 440, 160);
+    fadeIn(tl, v12, p.v12.t);
+    var tetap = boxed(b, p.tetap.text, "badge", 0, 760, 440, 40);
+    fadeIn(tl, tetap, p.tetap.t);
+    var a15 = txt(b, p.a15.text, "disp acc", 440, 580, 435, 160);
+    fadeIn(tl, a15, p.a15.t);
+  }
+
   var BUILDERS = {
     claim: claim,
     pair: pair,
@@ -279,6 +555,11 @@
     rankbars: rankbars,
     stack: stack,
     close: close,
+    pncell: pncell,
+    contrast: contrast,
+    dcac: dcac,
+    series: series,
+    parallel: parallel,
   };
 
   // Captions: each chunk shows and hides on its word times; each word takes the accent colour while spoken.
