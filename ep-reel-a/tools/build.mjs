@@ -432,7 +432,7 @@ function resolveDeep(node, si, where) {
   if (typeof node === "string" && /\d/.test(node)) bad(`${where}: "${node}" has a digit; a number needs a literal spoken form`);
   return node;
 }
-for (const type of ["pncell", "contrast", "dcac", "series", "parallel"]) {
+for (const type of ["hook", "pncell", "contrast", "dcac", "series", "parallel"]) {
   RESOLVE[type] = (p, si, where) => { const { type: _type, ...rest } = p; return resolveDeep(rest, si, where); };
 }
 

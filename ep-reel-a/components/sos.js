@@ -555,7 +555,77 @@
     fadeIn(tl, a15, p.a15.t);
   }
 
+  // ---------- hook (s1, PRD-28): the headline, a tilted PV panel and a struck thermometer are all there from frame 0.
+  // At the cue "cahaya" the thermometer and strike fade, a sun with rays comes in top-left of the panel, the cells brighten
+  // and line 2 cross-fades to the reveal line. Line 1 stays. Lines after line 1 are replaced; the drawing moves down with them. ----------
+  var RED = "#E5484D";
+  var CELL_LIT = "#6FB0FF";
+  function hook(tl, sec, p, sc) {
+    var L = layer(tl, sec, p, sc, "hook");
+    var b = diagram(L, "hook");
+    var t = p.reveal.t;
+    var replaced = [];
+    p.headline.forEach(function (ln, i) {
+      var d = txt(b, "", "disp", 0, 110 * i, 875, 110);
+      d.style.textAlign = "center";
+      var k = ln.indexOf(p.accent);
+      if (k >= 0) {
+        d.appendChild(document.createTextNode(ln.slice(0, k)));
+        d.appendChild(el("span", "acc", p.accent));
+        d.appendChild(document.createTextNode(ln.slice(k + p.accent.length)));
+      } else {
+        d.appendChild(document.createTextNode(ln));
+      }
+      if (i > 0) replaced.push(d);
+    });
+    var rv = txt(b, p.reveal.text, "disp acc", 0, 110, 875, 110);
+    rv.style.textAlign = "center";
+    var dy = 110 * (p.headline.length - 2); // the drawing sits below the headline
+    var s = svgIn(b, 875, 900);
+    s.style.top = dy + "px";
+
+    // thermometer (tube 56 px wide, 304 px tall with the bulb) and the strike
+    var th = sv(s, "g", {});
+    sv(th, "rect", { x: 772, y: 380, width: 56, height: 220, rx: 28, fill: "none", stroke: "#ffffff", "stroke-width": 8 });
+    sv(th, "rect", { x: 786, y: 470, width: 28, height: 150, fill: ACCENT });
+    sv(th, "circle", { cx: 800, cy: 640, r: 44, fill: ACCENT, stroke: "#ffffff", "stroke-width": 8 });
+    [420, 490, 560].forEach(function (y) { sv(th, "line", { x1: 836, y1: y, x2: 858, y2: y, stroke: "#ffffff", "stroke-width": 6, "stroke-linecap": "round" }); });
+    var strike = sv(s, "line", { x1: 735, y1: 350, x2: 870, y2: 700, stroke: RED, "stroke-width": 18, "stroke-linecap": "round" });
+
+    // sun, top-left of the panel, with five rays drawn outwards towards the panel
+    var sun = { x: 150, y: 300, r: 70 };
+    var sunG = sv(s, "g", {});
+    sv(sunG, "circle", { cx: sun.x, cy: sun.y, r: sun.r, fill: ACCENT });
+    var aim = Math.atan2(620 - sun.y, 350 - sun.x);
+    var rays = [-0.6, -0.3, 0, 0.3, 0.6].map(function (d) {
+      var a = aim + d;
+      return sv(sunG, "line", {
+        x1: sun.x + 92 * Math.cos(a), y1: sun.y + 92 * Math.sin(a),
+        x2: sun.x + 150 * Math.cos(a), y2: sun.y + 150 * Math.sin(a),
+        stroke: ACCENT, "stroke-width": 10, "stroke-linecap": "round"
+      });
+    });
+
+    // panel: 460 x 290 px, tilted 10 degrees clockwise, 4 x 3 cells
+    var pg = sv(s, "g", { transform: "translate(350 620) rotate(10)" });
+    sv(pg, "rect", { x: -230, y: -145, width: 460, height: 290, rx: 14, fill: PANEL, stroke: BAD, "stroke-width": 6 });
+    var cells = [];
+    for (var r = 0; r < 3; r++) for (var c = 0; c < 4; c++) {
+      cells.push(sv(pg, "rect", { x: -198 + c * 104, y: -117 + r * 84, width: 84, height: 66, rx: 6, fill: BAD }));
+    }
+
+    // timing: all from the cue; everything else is visible from frame 0
+    tl.to([th, strike], { opacity: 0, duration: 0.3, ease: "power1.in" }, t);
+    tl.fromTo(sunG, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, t + 0.05);
+    rays.forEach(function (ray) { draw(tl, ray, t + 0.1, 0.4); });
+    cells.forEach(function (cell) { tl.to(cell, { attr: { fill: CELL_LIT }, duration: 0.4, ease: "power1.out" }, t); });
+    // line 2 swap: the old line fades out over 0.12 s from the cue, then the reveal fades in over 0.15 s from cue + 0.12 s
+    tl.to(replaced, { opacity: 0, duration: 0.12, ease: "power1.in" }, t);
+    tl.fromTo(rv, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power1.out" }, t + 0.12);
+  }
+
   var BUILDERS = {
+    hook: hook,
     claim: claim,
     pair: pair,
     grid: grid,

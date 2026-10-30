@@ -77,7 +77,7 @@
   "cues": [
     {
       "scene": "s1_hook",
-      "where": "s1_hook part 0 (claim).reveal",
+      "where": "s1_hook part 0 (hook).reveal",
       "phrase": "cahaya",
       "t": 2.726
     },

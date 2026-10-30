@@ -5,9 +5,10 @@
       "id": "s1_hook",
       "parts": [
         {
-          "type": "claim",
-          "lines": ["BUKAN", "PANAS."],
-          "reveal": {"text": "CAHAYA.", "cue": "cahaya"}
+          "type": "hook",
+          "headline": ["PANEL SURYA", "NGGAK BUTUH PANAS"],
+          "accent": "PANAS",
+          "reveal": {"text": "BUTUH CAHAYA.", "cue": "cahaya"}
         }
       ]
     },
