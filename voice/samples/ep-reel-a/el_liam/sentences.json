@@ -1,0 +1,67 @@
+[
+  {
+    "text": "Panel surya nggak butuh panas.",
+    "start": 0.0,
+    "end": 1.44
+  },
+  {
+    "text": "Yang dia butuh: cahaya.",
+    "start": 1.6,
+    "end": 3.225
+  },
+  {
+    "text": "Sel surya mengubah energi cahaya langsung jadi listrik lewat efek fotovoltaik.",
+    "start": 3.385,
+    "end": 8.052
+  },
+  {
+    "text": "Cahaya yang diserap sel melepaskan elektron di sambungan pe-en, dan aliran elektron itulah listriknya.",
+    "start": 8.212,
+    "end": 14.156
+  },
+  {
+    "text": "Kalau yang mengubah sinar matahari jadi panas, itu alat yang berbeda: solar thermal collector.",
+    "start": 14.316,
+    "end": 20.26
+  },
+  {
+    "text": "Listrik dari panel itu arus searah, atau de-se.",
+    "start": 20.42,
+    "end": 23.683
+  },
+  {
+    "text": "Untuk diubah ke a-se, sering dipakai inverter.",
+    "start": 23.843,
+    "end": 26.839
+  },
+  {
+    "text": "Ambil satu panel sebagai contoh: dua belas volt, lima ampere.",
+    "start": 26.999,
+    "end": 31.202
+  },
+  {
+    "text": "Disambung seri, tegangannya dijumlah.",
+    "start": 31.362,
+    "end": 33.846
+  },
+  {
+    "text": "Dua panel jadi dua puluh empat volt, arusnya tetap lima ampere.",
+    "start": 34.006,
+    "end": 38.07
+  },
+  {
+    "text": "Kalau tiga panel disambung paralel, arusnya yang dijumlah.",
+    "start": 38.23,
+    "end": 41.55
+  },
+  {
+    "text": "Tegangannya tetap dua belas volt, arusnya jadi lima belas ampere.",
+    "start": 41.71,
+    "end": 45.576
+  },
+  {
+    "text": "Yuk, follow et er de en er e.",
+    "start": 45.736,
+    "end": 48.325
+  }
+]

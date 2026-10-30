@@ -1,0 +1,572 @@
+[
+  {
+    "text": "Panel",
+    "start": 0.0,
+    "end": 0.313
+  },
+  {
+    "text": "surya",
+    "start": 0.36,
+    "end": 0.627
+  },
+  {
+    "text": "nggak",
+    "start": 0.65,
+    "end": 0.789
+  },
+  {
+    "text": "butuh",
+    "start": 0.813,
+    "end": 1.022
+  },
+  {
+    "text": "panas",
+    "start": 1.045,
+    "end": 1.44
+  },
+  {
+    "text": "Yang",
+    "start": 1.6,
+    "end": 1.786
+  },
+  {
+    "text": "dia",
+    "start": 1.832,
+    "end": 1.96
+  },
+  {
+    "text": "butuh",
+    "start": 2.006,
+    "end": 2.412
+  },
+  {
+    "text": "cahaya",
+    "start": 2.726,
+    "end": 3.225
+  },
+  {
+    "text": "Sel",
+    "start": 3.385,
+    "end": 3.617
+  },
+  {
+    "text": "surya",
+    "start": 3.675,
+    "end": 3.989
+  },
+  {
+    "text": "mengubah",
+    "start": 4.058,
+    "end": 4.476
+  },
+  {
+    "text": "energi",
+    "start": 4.546,
+    "end": 4.894
+  },
+  {
+    "text": "cahaya",
+    "start": 4.952,
+    "end": 5.324
+  },
+  {
+    "text": "langsung",
+    "start": 5.382,
+    "end": 5.811
+  },
+  {
+    "text": "jadi",
+    "start": 6.137,
+    "end": 6.322
+  },
+  {
+    "text": "listrik",
+    "start": 6.369,
+    "end": 6.705
+  },
+  {
+    "text": "lewat",
+    "start": 6.763,
+    "end": 6.984
+  },
+  {
+    "text": "efek",
+    "start": 7.042,
+    "end": 7.274
+  },
+  {
+    "text": "fotovoltaik",
+    "start": 7.332,
+    "end": 8.052
+  },
+  {
+    "text": "Cahaya",
+    "start": 8.212,
+    "end": 8.641
+  },
+  {
+    "text": "yang",
+    "start": 8.699,
+    "end": 8.827
+  },
+  {
+    "text": "diserap",
+    "start": 8.862,
+    "end": 9.21
+  },
+  {
+    "text": "sel",
+    "start": 9.28,
+    "end": 9.524
+  },
+  {
+    "text": "melepaskan",
+    "start": 9.768,
+    "end": 10.325
+  },
+  {
+    "text": "elektron",
+    "start": 10.394,
+    "end": 10.789
+  },
+  {
+    "text": "di",
+    "start": 10.824,
+    "end": 10.882
+  },
+  {
+    "text": "sambungan",
+    "start": 10.929,
+    "end": 11.335
+  },
+  {
+    "text": "pe-en",
+    "start": 11.405,
+    "end": 11.764
+  },
+  {
+    "text": "dan",
+    "start": 12.148,
+    "end": 12.322
+  },
+  {
+    "text": "aliran",
+    "start": 12.415,
+    "end": 12.751
+  },
+  {
+    "text": "elektron",
+    "start": 12.809,
+    "end": 13.146
+  },
+  {
+    "text": "itulah",
+    "start": 13.216,
+    "end": 13.541
+  },
+  {
+    "text": "listriknya",
+    "start": 13.599,
+    "end": 14.156
+  },
+  {
+    "text": "Kalau",
+    "start": 14.316,
+    "end": 14.606
+  },
+  {
+    "text": "yang",
+    "start": 14.664,
+    "end": 14.78
+  },
+  {
+    "text": "mengubah",
+    "start": 14.827,
+    "end": 15.175
+  },
+  {
+    "text": "sinar",
+    "start": 15.21,
+    "end": 15.465
+  },
+  {
+    "text": "matahari",
+    "start": 15.523,
+    "end": 15.988
+  },
+  {
+    "text": "jadi",
+    "start": 16.069,
+    "end": 16.324
+  },
+  {
+    "text": "panas",
+    "start": 16.371,
+    "end": 16.812
+  },
+  {
+    "text": "itu",
+    "start": 17.195,
+    "end": 17.427
+  },
+  {
+    "text": "alat",
+    "start": 17.485,
+    "end": 17.694
+  },
+  {
+    "text": "yang",
+    "start": 17.741,
+    "end": 17.834
+  },
+  {
+    "text": "berbeda",
+    "start": 17.88,
+    "end": 18.345
+  },
+  {
+    "text": "solar",
+    "start": 18.902,
+    "end": 19.262
+  },
+  {
+    "text": "thermal",
+    "start": 19.355,
+    "end": 19.715
+  },
+  {
+    "text": "collector",
+    "start": 19.773,
+    "end": 20.26
+  },
+  {
+    "text": "Listrik",
+    "start": 20.42,
+    "end": 20.792
+  },
+  {
+    "text": "dari",
+    "start": 20.85,
+    "end": 21.012
+  },
+  {
+    "text": "panel",
+    "start": 21.07,
+    "end": 21.349
+  },
+  {
+    "text": "itu",
+    "start": 21.419,
+    "end": 21.651
+  },
+  {
+    "text": "arus",
+    "start": 21.732,
+    "end": 21.953
+  },
+  {
+    "text": "searah",
+    "start": 21.976,
+    "end": 22.44
+  },
+  {
+    "text": "atau",
+    "start": 22.765,
+    "end": 23.056
+  },
+  {
+    "text": "de-se",
+    "start": 23.148,
+    "end": 23.683
+  },
+  {
+    "text": "Untuk",
+    "start": 23.843,
+    "end": 24.133
+  },
+  {
+    "text": "diubah",
+    "start": 24.18,
+    "end": 24.551
+  },
+  {
+    "text": "ke",
+    "start": 24.598,
+    "end": 24.679
+  },
+  {
+    "text": "a-se",
+    "start": 24.76,
+    "end": 25.26
+  },
+  {
+    "text": "sering",
+    "start": 25.55,
+    "end": 25.805
+  },
+  {
+    "text": "dipakai",
+    "start": 25.84,
+    "end": 26.212
+  },
+  {
+    "text": "inverter",
+    "start": 26.281,
+    "end": 26.839
+  },
+  {
+    "text": "Ambil",
+    "start": 26.999,
+    "end": 27.336
+  },
+  {
+    "text": "satu",
+    "start": 27.405,
+    "end": 27.614
+  },
+  {
+    "text": "panel",
+    "start": 27.672,
+    "end": 27.986
+  },
+  {
+    "text": "sebagai",
+    "start": 28.044,
+    "end": 28.357
+  },
+  {
+    "text": "contoh",
+    "start": 28.404,
+    "end": 28.903
+  },
+  {
+    "text": "dua",
+    "start": 29.228,
+    "end": 29.472
+  },
+  {
+    "text": "belas",
+    "start": 29.53,
+    "end": 29.762
+  },
+  {
+    "text": "volt",
+    "start": 29.843,
+    "end": 30.157
+  },
+  {
+    "text": "lima",
+    "start": 30.459,
+    "end": 30.702
+  },
+  {
+    "text": "ampere",
+    "start": 30.76,
+    "end": 31.202
+  },
+  {
+    "text": "Disambung",
+    "start": 31.362,
+    "end": 31.954
+  },
+  {
+    "text": "seri",
+    "start": 32.012,
+    "end": 32.43
+  },
+  {
+    "text": "tegangannya",
+    "start": 32.651,
+    "end": 33.231
+  },
+  {
+    "text": "dijumlah",
+    "start": 33.289,
+    "end": 33.846
+  },
+  {
+    "text": "Dua",
+    "start": 34.006,
+    "end": 34.25
+  },
+  {
+    "text": "panel",
+    "start": 34.297,
+    "end": 34.598
+  },
+  {
+    "text": "jadi",
+    "start": 34.668,
+    "end": 34.854
+  },
+  {
+    "text": "dua",
+    "start": 34.912,
+    "end": 35.098
+  },
+  {
+    "text": "puluh",
+    "start": 35.144,
+    "end": 35.353
+  },
+  {
+    "text": "empat",
+    "start": 35.376,
+    "end": 35.632
+  },
+  {
+    "text": "volt",
+    "start": 35.701,
+    "end": 36.038
+  },
+  {
+    "text": "arusnya",
+    "start": 36.398,
+    "end": 36.862
+  },
+  {
+    "text": "tetap",
+    "start": 36.932,
+    "end": 37.292
+  },
+  {
+    "text": "lima",
+    "start": 37.362,
+    "end": 37.571
+  },
+  {
+    "text": "ampere",
+    "start": 37.617,
+    "end": 38.07
+  },
+  {
+    "text": "Kalau",
+    "start": 38.23,
+    "end": 38.485
+  },
+  {
+    "text": "tiga",
+    "start": 38.532,
+    "end": 38.787
+  },
+  {
+    "text": "panel",
+    "start": 38.834,
+    "end": 39.101
+  },
+  {
+    "text": "disambung",
+    "start": 39.147,
+    "end": 39.577
+  },
+  {
+    "text": "paralel",
+    "start": 39.612,
+    "end": 40.111
+  },
+  {
+    "text": "arusnya",
+    "start": 40.447,
+    "end": 40.854
+  },
+  {
+    "text": "yang",
+    "start": 40.9,
+    "end": 41.016
+  },
+  {
+    "text": "dijumlah",
+    "start": 41.051,
+    "end": 41.55
+  },
+  {
+    "text": "Tegangannya",
+    "start": 41.71,
+    "end": 42.244
+  },
+  {
+    "text": "tetap",
+    "start": 42.291,
+    "end": 42.534
+  },
+  {
+    "text": "dua",
+    "start": 42.592,
+    "end": 42.79
+  },
+  {
+    "text": "belas",
+    "start": 42.836,
+    "end": 43.057
+  },
+  {
+    "text": "volt",
+    "start": 43.138,
+    "end": 43.463
+  },
+  {
+    "text": "arusnya",
+    "start": 43.788,
+    "end": 44.195
+  },
+  {
+    "text": "jadi",
+    "start": 44.276,
+    "end": 44.473
+  },
+  {
+    "text": "lima",
+    "start": 44.543,
+    "end": 44.775
+  },
+  {
+    "text": "belas",
+    "start": 44.822,
+    "end": 45.042
+  },
+  {
+    "text": "ampere",
+    "start": 45.123,
+    "end": 45.576
+  },
+  {
+    "text": "Yuk",
+    "start": 45.736,
+    "end": 46.015
+  },
+  {
+    "text": "follow",
+    "start": 46.456,
+    "end": 46.793
+  },
+  {
+    "text": "et",
+    "start": 46.862,
+    "end": 46.978
+  },
+  {
+    "text": "er",
+    "start": 47.048,
+    "end": 47.199
+  },
+  {
+    "text": "de",
+    "start": 47.28,
+    "end": 47.489
+  },
+  {
+    "text": "en",
+    "start": 47.64,
+    "end": 47.826
+  },
+  {
+    "text": "er",
+    "start": 47.907,
+    "end": 48.046
+  },
+  {
+    "text": "e",
+    "start": 48.116,
+    "end": 48.325
+  }
+]

@@ -1,0 +1,163 @@
+{
+  "version": "v3",
+  "status": "v3 (2026-10-30): CTA follow @RDNRE; spoken forms for p-n, DC, AC",
+  "word_count_target": [
+    85,
+    110
+  ],
+  "max_seconds": 45,
+  "cta": "Follow @RDNRE",
+  "sources_line": "Sumber: Wikipedia (Solar cell, Photovoltaic effect)",
+  "sources_placement": "caption only, not on screen",
+  "scenes": [
+    {
+      "id": "s1_hook",
+      "vo_text": "Panel surya nggak butuh panas. Yang dia butuh: cahaya.",
+      "on_screen_text": "BUKAN PANAS. -> at 'cahaya': CAHAYA.",
+      "visual": "Textcard (f): BUKAN PANAS. from frame 1; CAHAYA. appears at the word 'cahaya'",
+      "cue_words": [
+        "panas",
+        "cahaya"
+      ],
+      "numbers": [],
+      "fact_refs": [
+        "A PV cell converts light directly into electricity by the photovoltaic effect"
+      ],
+      "vo_max_seconds": 3.5
+    },
+    {
+      "id": "s2_cahaya",
+      "vo_text": "Sel surya mengubah energi cahaya langsung jadi listrik lewat efek fotovoltaik. Cahaya yang diserap sel melepaskan elektron di sambungan pe-en, dan aliran elektron itulah listriknya.",
+      "on_screen_text": "CAHAYA -> LISTRIK (efek fotovoltaik)",
+      "visual": "(a) panel close-up; photon arrows hit the cell; electrons move through the p-n junction; + and - terminals light up.",
+      "cue_words": [
+        "efek fotovoltaik",
+        "sambungan pe-en"
+      ],
+      "numbers": [],
+      "fact_refs": [
+        "A PV cell converts light directly into electricity by the photovoltaic effect",
+        "Light frees electron-hole pairs at a p-n junction (mechanism)"
+      ],
+      "caption_display": {
+        "pe-en": "p-n"
+      }
+    },
+    {
+      "id": "s3_kontras",
+      "vo_text": "Kalau yang mengubah sinar matahari jadi panas, itu alat yang berbeda: solar thermal collector.",
+      "on_screen_text": "PANEL SURYA: CAHAYA -> LISTRIK / SOLAR THERMAL COLLECTOR: PANAS",
+      "visual": "(b) contrast card: left 'cahaya -> listrik' (panel surya), right 'panas -> solar thermal collector'; the right side is dimmed as the VO says it is a different device.",
+      "cue_words": [
+        "solar thermal collector"
+      ],
+      "numbers": [],
+      "fact_refs": [
+        "Cell output is heat-driven: NOT supported. The mechanism is light; heat is a loss factor"
+      ]
+    },
+    {
+      "id": "s4_dc",
+      "vo_text": "Listrik dari panel itu arus searah, atau de-se. Untuk diubah ke a-se, sering dipakai inverter.",
+      "on_screen_text": "ARUS SEARAH (DC)",
+      "visual": "(c) DC symbol (straight line and dashed line) on the panel output; a short inverter box appears at the cue 'inverter'.",
+      "cue_words": [
+        "arus searah",
+        "inverter"
+      ],
+      "numbers": [],
+      "fact_refs": [
+        "Output is DC; an inverter is needed to supply AC loads"
+      ],
+      "caption_display": {
+        "de-se": "DC",
+        "a-se": "AC"
+      }
+    },
+    {
+      "id": "s5_seri",
+      "vo_text": "Ambil satu panel sebagai contoh: dua belas volt, lima ampere. Disambung seri, tegangannya dijumlah. Dua panel jadi dua puluh empat volt, arusnya tetap lima ampere.",
+      "on_screen_text": "ANGKA CONTOH: 12 V 5 A -> 2 PANEL SERI: 24 V 5 A",
+      "visual": "(d) series wiring animation: two panels joined end to end; a voltage counter adds 12 V + 12 V; current meter stays at 5 A.",
+      "cue_words": [
+        "dua belas volt",
+        "Dua panel",
+        "dua puluh empat volt"
+      ],
+      "numbers": [
+        {
+          "show": "12 V",
+          "spoken": "dua belas volt",
+          "derive": "illustrative example panel set by PRD-20 (label ANGKA CONTOH); not a datasheet value"
+        },
+        {
+          "show": "5 A",
+          "spoken": "lima ampere",
+          "derive": "illustrative example panel set by PRD-20 (label ANGKA CONTOH)"
+        },
+        {
+          "show": "2",
+          "spoken": "Dua",
+          "derive": "count of panels in series (arithmetic)"
+        },
+        {
+          "show": "24 V",
+          "spoken": "dua puluh empat volt",
+          "derive": "arithmetic: 2 x 12 V = 24 V in series"
+        }
+      ],
+      "fact_refs": [
+        "Series adds voltage, parallel adds current",
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "s6_paralel",
+      "vo_text": "Kalau tiga panel disambung paralel, arusnya yang dijumlah. Tegangannya tetap dua belas volt, arusnya jadi lima belas ampere.",
+      "on_screen_text": "3 PANEL PARALEL: 12 V 15 A",
+      "visual": "(e) parallel wiring animation: three panels joined side by side; a current counter adds 5 A + 5 A + 5 A; voltage meter stays at 12 V.",
+      "cue_words": [
+        "tiga panel",
+        "dua belas volt",
+        "lima belas ampere"
+      ],
+      "numbers": [
+        {
+          "show": "3",
+          "spoken": "tiga",
+          "derive": "count of panels in parallel (example set by PRD-20)"
+        },
+        {
+          "show": "12 V",
+          "spoken": "dua belas volt",
+          "derive": "arithmetic: parallel keeps voltage at 12 V"
+        },
+        {
+          "show": "15 A",
+          "spoken": "lima belas ampere",
+          "derive": "arithmetic: 3 x 5 A = 15 A in parallel"
+        }
+      ],
+      "fact_refs": [
+        "Series adds voltage, parallel adds current",
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "s7_cta",
+      "vo_text": "Yuk, follow et er de en er e.",
+      "on_screen_text": "FOLLOW @RDNRE",
+      "visual": "Kartu penutup (g): FOLLOW @RDNRE",
+      "cue_words": [
+        "follow"
+      ],
+      "numbers": [],
+      "fact_refs": [
+        "none"
+      ],
+      "caption_display": {
+        "et er de en er e": "@RDNRE"
+      }
+    }
+  ]
+}
