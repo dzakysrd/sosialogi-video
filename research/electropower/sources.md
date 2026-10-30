@@ -1,4 +1,43 @@
-# Sources used (PRD-19)
+# Sources used (PRD-19, updated in PRD-19b)
+
+## PRD-19b access log (this session, curl unless noted; HTTP status as returned)
+
+Opened and saved (LOCKED sources):
+| URL | HTTP | Saved as | Used for |
+|---|---|---|---|
+| https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=ALLSKY_SFC_SW_DWN,ALLSKY_SFC_SW_DNI,ALLSKY_SFC_SW_DIFF&community=RE&longitude=106.85&latitude=-6.2&format=JSON | 200 | raw/nasa_power_climatology_jakarta.json (sha256 6fc1cfdc66e14eda98a177ddc0c1cafde35cdc2e6e2684d92f9c63d632f1a4b6) | N1-N5, B12a, B13, C9a |
+| https://en.wikipedia.org/w/index.php?title=Solar_irradiance&action=raw | 200 | raw/wiki_Solar_irradiance.wikitext | C1, C2, C13 |
+| https://en.wikipedia.org/w/index.php?title=Solar_cell&action=raw | 200 | raw/wiki_Solar_cell.wikitext | A1, A2, A4b, A9, A10 |
+| https://en.wikipedia.org/w/index.php?title=Photovoltaic_effect&action=raw | 200 | raw/wiki_Photovoltaic_effect.wikitext | A3 |
+| https://en.wikipedia.org/w/index.php?title=Solar_panel&action=raw | 200 | raw/wiki_Solar_panel.wikitext | A8, B3, A4b |
+| https://en.wikipedia.org/w/index.php?title=Pyranometer&action=raw | 200 | raw/wiki_Pyranometer.wikitext | C5 |
+| https://en.wikipedia.org/w/index.php?title=Pyrheliometer&action=raw | 200 | raw/wiki_Pyrheliometer.wikitext | C7 |
+| https://en.wikipedia.org/w/index.php?title=Peak_sun_hours&action=raw | 404 | not kept | no such page at that title (B1 not upgraded from Wikipedia) |
+| https://en.wikipedia.org/w/index.php?title=Standard_test_condition&action=raw | 404 | not kept | no such page at that title (STC taken from "Solar panel") |
+| https://www.esdm.go.id/id/berita-unit/direktorat-jenderal-ebtke/ditjen-ebtke-dan-giz-luncurkan-buku-dos-and-donts-dorong-peningkatan-kualitas-instalasi-plts-off-grid | 200 | raw/esdm_dosdonts_news.html | A15, A17, A16 (no PDF link on page) |
+| https://globalsolaratlas.info/ | 200 | not kept | checked for API documentation: none on the homepage (G2) |
+| https://globalsolaratlas.info/download/world | 200 | not kept | checked for a point endpoint: none found (G2) |
+
+Failed (error recorded):
+| URL | Error | Rows affected |
+|---|---|---|
+| https://api.globalsolaratlas.info/data/lta?lat=-6.2&lon=106.85 (and a second variant with loc=) | curl: (56) CONNECT tunnel failed, response 403; agent proxy: connect_rejected for api.globalsolaratlas.info:443 (host not allowed for this session). Twice | G1, G2 |
+| https://www.solar-electric.com/lib/wind-sun/SLP150S-24U-data-sheet.pdf | CONNECT 403 | A6, A13 stay SNIPPET; D1 |
+| https://www.solar-electric.com/lib/wind-sun/SLP020-12C1D2-data-sheet.pdf | CONNECT 403 | D1 |
+| https://www.mrsolar.com/content/pdf/SolarLand/Panels/SLP050-12C.pdf | CONNECT 403 | D1 |
+| https://www.pluginsolar.co.uk/wp-content/uploads/2025/12/Sandtoft-In-Roof-Solar-IRS-Datasheet.pdf | CONNECT 403 | D1 |
+| https://www.solartraders.com/uploads/production/data_sheet/file/2075/KD-P275_1640x992x35_.pdf | CONNECT 403 | D1 |
+| Manufacturer download pages: jinkosolar.com/en/site/downloads, jasolar.com, trinasolar.com/en-glb/resources/downloads, longi.com/en/download/, canadiansolar.com/resources/datasheets/, lg-solar.com, us.jinko.com, risensolar.com, qcells.com, vsun.com | CONNECT 403 (curl exit 56) | D1, D2 |
+| Domain roots pluginsolar.co.uk, solartraders.com, mrsolar.com, emarineinc.com | CONNECT 403 | D1 |
+| https://iesr.or.id, https://www.nrel.gov, https://nrel.gov | not retried this session; PRD-19 recorded them as refused (403 / DNS) | B4, B5, C3 stay SNIPPET or UNVERIFIED |
+| https://www.esdm.go.id book PDF | no PDF link found on the news page; WebSearch found none official | A16 UNVERIFIED |
+
+WebSearch used in PRD-19b: 3 queries (datasheet, Global Solar Atlas API, ESDM book), plus 18 in PRD-19. Results from these are snippet-only and were not used to lock values.
+Search results that pointed at third-party Global Solar Atlas wrappers and Solargis APIs were not used (not the official source, or subscription-only).
+
+## PRD-19 snippet sources (below). Statuses in this older list are superseded by facts.md where facts.md says LOCKED.
+
+
 
 Status of access in this session:
 - **Opened (page body read): none.** No page was read in full.

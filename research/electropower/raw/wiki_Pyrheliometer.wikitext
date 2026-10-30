@@ -1,0 +1,38 @@
+{{Short description|Instrument for measuring direct-beam solar irradiance}}
+[[File:MS-57 Pyrheliometer.jpg|alt=ISO 9060:2018 Class A Pyrheliometer|thumb|ISO 9060:2018 Class A, fast response & spectrally flat, pyrheliometer]]
+[[File:1913 Balloon Borne Pyrheliometer.jpg|thumb|1913 Balloon Borne Pyrheliometer]]
+[[File:DR01 pyrheliometer 1.jpg|thumb|Typical pyrheliometer, for measurement of direct solar radiation]]
+
+[[File:DR01 pyrheliometer linedrawing.pdf|thumb|Pyrheliometer: (3) body, (4) protection cap, (5) window with heater, (2) sight, (1) humidity indicator, (7) cable]]
+
+A '''pyrheliometer''' is an instrument that can measure direct beam [[solar irradiance]].<ref>{{Cite web|url=https://www.kippzonen.com/ProductGroup/8/Pyrheliometers |archiveurl=https://web.archive.org/web/20090412235813/http://www.kippzonen.com/?productgroup%2F881%2FPyrheliometers.aspx |url-status=dead|title=Pyrheliometer|archivedate=April 12, 2009|website=kippzonen.com}}</ref> Sunlight enters the instrument through a window and is directed onto a [[thermopile]] which converts heat to an electrical signal that can be recorded. The signal voltage is converted via a formula to measure watts per square metre.
+
+==Standards==
+Pyrheliometer measurement specifications are subject to [[International Organization for Standardization]] (ISO) and [[World Meteorological Organization]] (WMO) standards.
+Comparisons between pyrheliometers for intercalibration are carried out regularly to measure the amount of solar energy received.
+The aim of the International Pyrheliometer Comparisons,<ref>{{Cite web|url=http://www.pmodwrc.ch/pmod.php?topic=ipc_menu|title=welcome to pmodwrc|date=April 16, 2010|archive-url=https://web.archive.org/web/20100416034810/http://www.pmodwrc.ch/pmod.php?topic=ipc_menu|archive-date=2010-04-16}}</ref> which take place every 5 years at the World Radiation Centre<ref>{{Cite web|url=http://www.pmodwrc.ch/pmod.php?topic=world_radiation_center|title=welcome to pmodwrc|date=July 2, 2007|archive-url=https://web.archive.org/web/20070702010053/http://www.pmodwrc.ch/pmod.php?topic=world_radiation_center|archive-date=2007-07-02}}</ref> in [[Davos]], is to ensure the world-wide transfer of the World Radiometric Reference.
+During this event, all participants bring their instruments, solar-tracking and data acquisition systems to Davos to conduct simultaneous solar radiation measurements with the World Standard Group.<ref>{{Cite web|url=https://www.pmodwrc.ch/ |title=Startseite|website=PMOD/WRC}}</ref>
+
+==Applications==
+Typical pyrheliometer measurement applications include scientific meteorological and climate observations, material testing research, and assessment of the efficiency of [[Solar thermal collector|solar collector]]s and [[Photovoltaics|photovoltaic devices]].
+
+== Usage ==
+Pyrheliometers are typically mounted on a [[solar tracker]]. As the pyrheliometer only 'sees' the solar disk, it needs to be placed on a device that follows the path of the sun.
+
+==See also==
+* [[Actinometer]]
+* [[Active cavity radiometer]]
+* [[Bolometer]]
+* [[Pyrometer]]
+* [[Solar constant]]
+
+==References==
+{{reflist}}
+<!--Specifications, drawings and pictures courtesy of Hukseflux Thermal Sensors, [http://www.hukseflux.com www.Hukseflux.com]-->
+
+==External links==
+*{{commons-inline}}
+{{Meteorological equipment}}
+[[Category:Measuring instruments]]
+[[Category:Radiometry]]
+[[Category:Meteorological instrumentation and equipment]]

@@ -1,0 +1,40 @@
+{{distinguish|Photoelectric effect}}
+{{short description|Electric current generation from light}}
+[[File:Mafate Marla solar panel dsc00633.jpg|thumb|Mafate Marla solar panel ]]
+The '''photovoltaic effect''' is a [[physical property|physical]] phenomenon in which a semiconductor material generates electric energy upon being exposed to light.<ref name = "Solar Cells">{{Cite web|url=http://www.chemistryexplained.com/Ru-Sp/Solar-Cells.html|title=Solar Cells - Chemistry Encyclopedia - structure, metal, equation, The pn Junction |website=www.chemistryexplained.com}}</ref>
+
+The photovoltaic effect is closely related to the [[photoelectric effect]]. For both phenomena, light is absorbed, causing excitation of an [[electron]] or other [[charge carrier]] to a higher-energy state. The main distinction is that the term ''photoelectric effect'' is usually used when the electron is ejected out of the material (usually into a vacuum), and ''photovoltaic effect'' is used when the excited charge carrier is still contained within the material. In either case, an [[electric potential]] (or voltage) is produced by the separation of charges, and the light has to have a sufficient energy to overcome the potential barrier for excitation. The physical essence of the difference is usually that photoelectric emission separates the charges by [[ballistic conduction]] and photovoltaic emission separates them by diffusion, but some "hot carrier" photovoltaic devices concepts blur this distinction.
+
+==History==
+The first demonstration of the photovoltaic effect, by [[Edmond Becquerel]] in 1839, used an electrochemical cell. He explained his discovery in ''[[Comptes rendus de l'Académie des sciences]]'', "the production of an electric current when two plates of platinum or gold immersed in an acid, neutral, or alkaline solution are exposed in an uneven way to solar radiation."<ref>{{cite book | last= Palz| first= Wolfgang| date= 2010| title= Power for the World - The Emergence of Electricity from the Sun| location= Belgium| publisher= Pan Stanford Publishing| page=6| isbn= 978-981-4303-38-5|url=https://books.google.com/books?id=sEINA3tyLUAC&q=%22Power+for+the+World+-+The+Emergence+of+Electricity+from+the+Sun%22}}</ref>
+
+The first solar cell, consisting of a layer of [[selenium]] covered with a thin film of gold, was experimented by [[Charles Fritts]] in 1884, but it had a very poor efficiency.<ref name="guarnieri 7-1">{{Cite journal |last=Guarnieri |first=M. |year=2015 |title=More light on information|journal=IEEE Industrial Electronics Magazine |volume=9 |issue=4 |pages=58–61 |doi=10.1109/MIE.2015.2485182 |s2cid=13343534}}</ref> However, the most familiar form of the photovoltaic effect uses solid-state devices, mainly in [[photodiode]]s. When sunlight or other sufficiently energetic light is incident upon the photodiode, the electrons present in the [[Valence and conduction bands|valence band]] absorb energy and, being excited, jump to the conduction band and become free. These excited electrons diffuse, and some reach the rectifying junction (usually a diode [[p–n junction]]) where they are accelerated into the n-type semiconductor material by the built-in potential ([[Galvani potential]]). This generates an [[electromotive force]] and an electric current, and thus some of the light energy is converted into electric energy. The photovoltaic effect can also occur when two photons are absorbed simultaneously in a process called [[two-photon photovoltaic effect]].
+[[File:Effetphotovoltaic.jpg|thumb|[[Band diagram]] illustration of the photovoltaic effect. [[Photon|Photons]] give their energy to electrons in the depletion or quasi-neutral regions. These move from the [[valence band]] to the [[conduction band]]. Depending on the location, [[Electron|electrons]] and [[Electron hole|holes]] are accelerated by drift electric field ''E''<sub>drift</sub>, which gives generation [[photocurrent]], or by scattering electric field ''E''<sub>scatt</sub>, which gives scattering photocurrent.<ref name="a7">R.Delamare, O.Bulteel, D.Flandre, Conversion lumière/électricité: notions fondamentales et exemples de recherche</ref>]]
+
+==Physics==
+In addition to the direct photovoltaic excitation of free electrons, an electric current can also arise through the [[Seebeck effect]]. When a conductive or semiconductive material is heated by absorption of electromagnetic radiation, the heating can lead to increased temperature gradients in the semiconductor material or differentials between materials. These thermal differences in turn may generate a voltage because the electron energy levels are shifted differently in different areas, creating a potential difference between those areas which in turn create an electric current. The relative contributions of the photovoltaic effect versus the Seebeck effect depend on many characteristics of the constituent materials.{{Citation needed|date=August 2021}}
+
+All above effects generate direct current, the first demonstration of the alternating current photovoltaic effect (AC PV) was done by Dr. Haiyang Zou and Prof. Zhong Lin Wang at the [[Georgia Institute of Technology]] in 2017. The AC PV effect is the generation of alternating current (AC) in the nonequilibrium states when the light periodically shines at the junction or interface of material.<ref>{{Cite journal|last1=Zou|first1=Haiyang|last2=Dai|first2=Guozhang|last3=Wang|first3=Aurelia Chi|last4=Li|first4=Xiaogan|last5=Zhang|first5=Steven L.|last6=Ding|first6=Wenbo|last7=Zhang|first7=Lei|last8=Zhang|first8=Ying|last9=Wang|first9=Zhong Lin|date=2020-02-03|title=Alternating Current Photovoltaic Effect|journal=Advanced Materials|volume=32|issue=11|language=en|article-number=1907249|doi=10.1002/adma.201907249|pmid=32009275|issn=0935-9648|doi-access=free|bibcode=2020AdM....3207249Z }}</ref> The AC PV effect is based on the capacitive model that the current strongly depends on the frequency of the chopper. The AC PV effect is suggested to be a result of the relative shift and realignment between the quasi-Fermi levels of the semiconductors adjacent to the junction/interface under the nonequilibrium conditions. The electrons flow in the external circuit back and forth to balance the potential difference between two electrodes. The organic solar cell, which the materials have no initial carrier concentration, does not have the AC PV effect.
+
+==Solar cells==
+In most photovoltaic applications, the [[radiation]] source is sunlight, and the devices are called [[solar cells]]. In the case of a semiconductor p–n (diode) junction solar cell, illuminating the material creates an electric current because excited electrons and the remaining holes are swept in different directions by the built-in electric field of the depletion region.<ref>[http://scienzagiovane.unibo.it/English/solar-energy/3-photovoltaic-effect.html The photovoltaic effect]. Scienzagiovane.unibo.it (2006-12-01). Retrieved on 2010-12-12.</ref> 
+
+The AC PV is operated at the non-equilibrium conditions. The first study was based on a p-Si/TiO<sub>2</sub> [[Nanofilms|nanofilm]]. It is found that except for the DC output generated by the conventional PV effect based on a p–n junction, AC current is also produced when a flashing light is illuminated at the interface. The AC PV effect does not follow Ohm's law, being based on the capacitive model that the current strongly depends on the frequency of the chopper, but voltage is independent of the frequency. The peak current of AC at high switching frequency can be much higher than that from DC. The magnitude of the output is also associated with the light absorption of materials.
+
+==See also==
+* [[Theory of solar cells]]
+* [[Electromotive force#Solar cell|Electromotive force in solar cells]]
+* [[Photoelectric effect]]
+
+==References==
+{{reflist}}
+
+{{Solar energy}}
+
+{{Authority control}}
+
+[[Category:Electrical phenomena]]
+[[Category:Energy conversion]]
+[[Category:Photovoltaics]]
+[[Category:Quantum chemistry]]
+[[Category:Electrochemistry]]

@@ -1,0 +1,139 @@
+{{short description|Instrument for measuring solar irradiance}}
+
+A '''pyranometer''' ({{ety|el|''πῦρ'' (pyr)|fire||''ἄνω'' (ano)|above, sky}}) is a type of [[actinometer]] used for measuring [[solar irradiance]] on a planar surface and it is designed to measure the solar radiation [[flux density]] (W/m<sup>2</sup>) from the hemisphere above within a wavelength range 0.3 μm to 3 μm.
+
+A pyranometer with natural output does not require any power to operate as its transducers generates an electrical signal proportional to the solar irradiance. However, recent technical development includes use of electronics in pyranometers, which do require (low) external power.
+
+== Explanation ==
+[[File:Solar Spectrum and Spectral-Response.png|454x454px|right|Spectrum and spectral response]]
+The solar radiation [[spectrum]] that reaches Earth's surface extends its wavelength approximately from 300&nbsp;nm to 2800&nbsp;nm.
+Depending on the type of pyranometer used, irradiance measurements with different degrees of spectral sensitivity will be obtained.
+
+To make a measurement of [[irradiance]], it is required by definition that the response to "beam" radiation varies with the [[cosine]] of the angle of incidence. This ensures a full response when the solar radiation hits the sensor perpendicularly (normal to the surface, sun at zenith, 0° angle of incidence), zero response when the sun is at the horizon (90° angle of incidence, 90° zenith angle), and 0.5 at a 60° angle of incidence. It follows that a pyranometer should have a so-called "directional response" or "cosine response" that is as close as possible to the ideal cosine characteristic.
+
+== Types ==
+Following the definitions noted in the ISO 9060,<ref>[https://www.iso.org/standard/67464.html ISO9060] :2018 Classification of Pyranometers</ref> three types of pyranometer can be recognized and grouped in two different technologies: [[thermopile]] technology and silicon semiconductor technology.
+
+The light sensitivity, known as ''''spectral response'''', depends on the type of pyranometer. The figure here above shows the spectral responses of the three types of pyranometer in relation to the solar radiation spectrum. The solar radiation spectrum represents the spectrum of sunlight that reaches the Earth's surface at sea level, at midday with A.M. ([[Air mass (solar energy)|air mass]]) = 1.5.<br />
+The latitude and altitude influence this spectrum. The spectrum is influenced also by [[aerosol]] and pollution.
+
+=== Thermopile pyranometers ===
+A '''thermopile pyranometer''' (also called [[Thermoelectric materials|thermo-electric]] pyranometer) is a sensor based on [[thermopile]]s designed to measure the broad band of the solar radiation flux density from a 180° field of view angle. A thermopile pyranometer thus usually measures from 300 to 2800&nbsp;nm with a largely flat spectral sensitivity (see the spectral response graph) The first generation of thermopile pyranometers had the active part of the sensor equally divided in black and white sectors. Irradiation was calculated from the differential measure between the temperature of the black sectors, exposed to the sun, and the temperature of the white sectors, sectors not exposed to the sun or better said in the shades.
+[[File:EKO Pyranometer.jpg|alt=https://eko-instruments.com/product-category/market-leading-pyranometers/|thumb|Pyranometer]]
+In all thermopile technology, irradiation is proportional to the difference between the temperature of the sun exposed area and the temperature of the shadow area.
+
+==== Design ====
+[[File:SR20 pyranometer linedrawing.pdf|thumb|229x229px|Linedrawing of a pyranometer, showing essential parts: (1) cable, (3) pyranometer and (5) glass domes, (4) black detector surface, (6) sun screen, (7) desiccant indicator, (9) levelling feet, (10) bubble level, (11) connector]]
+In order to attain the proper directional and spectral characteristics, a thermopile pyranometer is constructed with the following main components:
+* A [[thermopile]] sensor with a black coating. It absorbs all solar radiation, has a flat spectrum covering the 300 to 50,000 nanometer range, and has a near-perfect cosine response.
+* A glass dome. It limits the spectral response from 300 to 2,800 nanometers (cutting off the part above 2,800&nbsp;nm), while preserving the 180° field of view. It also shields the thermopile sensor from convection. Many, but not all, first-class and secondary standard pyranometers (see ISO 9060 classification of thermopile pyranometers) include a second glass dome as an additional "radiation shield", resulting in a better thermal equilibrium between the sensor and inner dome, compared to some single dome models by the same manufacturer. The effect of having a second dome, in these cases, is a strong reduction of instrument offsets. Class A, single dome models, with low zero-offset (+/- 1 W/m<sup>2</sup>) are available.
+
+In the modern thermopile pyranometers the active (hot) junctions of the thermopile are located beneath the black coating surface and are heated by the radiation absorbed from the black coating.<ref>{{Cite web |date=2013-06-01 |title=The Working Principle of a Thermopile Pyranometer |url=https://www.kippzonen.com/press-release-and-news/the-working-principle-of-a-thermopile-pyranometer |access-date=2026-08-23 |website=www.kippzonen.com |language=en}}</ref> The passive (cold) junctions of the thermopile are fully protected from solar radiation and in thermal contact with the pyranometer housing, which serves as a heat-sink.  This prevents any alteration from yellowing or decay when measuring the temperature in the shade, thus impairing the measure of the solar irradiance.
+
+The thermopile generates a small voltage in proportion to the temperature difference between the black coating surface and the instrument housing. This is of the order of 10 μV (microvolts) per W/m2, so on a sunny day the output will be around 10 mV (millivolts). Each pyranometer has a unique sensitivity, unless otherwise equipped with electronics for [[Calibration|signal calibration]].
+
+==== Usage ====
+[[File:Thermopile pyranometer as part of MeteoStation.jpg|thumb|left|Thermopile pyranometer as part of a meteorological station]]
+{{CSS image crop
+|Image=Photovoltaic pyranometer on POA.jpg
+|bSize=1154
+|cWidth=300
+|cHeight=200
+|oTop=300
+|oLeft=620
+|Description=Photovoltaic pyranometer on a plane of arrays
+}}
+Thermopile pyranometers are frequently used in [[meteorology]], [[climatology]], [[climate change (general concept)|climate change]] research, [[building engineering physics]], [[photovoltaic system]]s, and monitoring of [[photovoltaic power stations]].
+
+The solar energy industry, in a 2017 standard, IEC 61724-1:2017,<ref>[https://webstore.iec.ch/publication/33622 IEC 61724-1:2017]</ref> has defined the type and number of pyranometers that should be used depending on the size and category of solar power plant. That norm advises to install thermopile pyranometers horizontally (GHI, Global Horizontal Irradiation), and to install photovoltaic pyranometers in the plane of PV modules (POA, Plane Of Array) to enhance accuracy in Performance Ratio calculation.
+
+For monitoring of operational PV power plants, pyranometers play an essential role in verifying the solar irradiance available at any given time or over a certain time period. Due to weather variability, redundancy, and the spatial scale of contemporary solar plants (above 100MWp), multiple pyranometers are installed to provide accurate solar irradiation for each section of the PV power plant. IEC 61724-1:2017<ref>{{Cite web |title=IEC 61724-1:2017 {{!}} IEC |url=https://webstore.iec.ch/en/publication/33622 |access-date=2024-09-04 |website=webstore.iec.ch}}</ref> international standard for example calls for at least 4 Class A thermopile pyranometers to be installed at 100MWp PV power plant at all times.
+However in 2021 the IEC 61724-1 was revised in [https://webstore.iec.ch/en/publication/65561  IEC 61724-1:2021] and published
+
+
+Solar measurements can can be advantageously processed by software that does not limit itself to finding the P.R.(Performance Ratio) but also finds Key Performance Indicators (KPI) such as Performance Ratio, metrics used in asset health monitoring or various contractual scenarios relating to energy produced (billing) or asset management (i.e. O&M). In these calculations, the measured sum of PV module's in-plane irradiation over a certain period is used as the determinant to which normalized produced PV electricity is compared to.  Energy Performance Index is increasingly being used instead of the older Performance ratio metric.
+
+Some secondary standard pyranometers are equipped with integrated dome heating systems designed to reduce measurement errors caused by dew, frost, or snow accumulation on the sensor. These heating mechanisms help maintain the optical clarity of the dome surface in cold or humid environments, ensuring uninterrupted and accurate solar irradiance readings. For example, the MS-80SH model by EKO Instruments incorporates such a heating system in compliance with the ISO 9060:2018 Class A standard, and is used in high-latitude or alpine regions where frost-related interference is common. [https://eko-instruments.com/product/ms-80sh-pyranometer-with-heater/]
+
+=== Photovoltaic pyranometer – silicon photodiode ===
+Also known as a '''photoelectric pyranometer''' in the ISO 9060,<ref>ISO9060 – Paragraph 4.2 (2016)</ref> a photodiode-based pyranometer can detect the portion of the solar spectrum between 400&nbsp;nm and 1100&nbsp;nm. The photodiode converts the aforementioned solar spectrum frequencies into current at high speed, thanks to the [[photoelectric effect]]. The conversion is influenced by the temperature with a raise in current produced by the raise in temperature (about 0,1% • °C)
+
+==== Design ====
+[[File:Photodiode pyranometer.jpg|300x300px|thumb|A photodiode pyranometer, model Quantum]]
+A photodiode-based pyranometer is composed by a housing dome, a [[photodiode]], and a diffuser or optical filters. The photodiode has a small surface area and acts as a sensor. The current generated by the photodiode is proportional to irradiance; an output circuit, such as a [[transimpedance amplifier]], generates a voltage directly proportional to the photocurrent. The output is usually on the order of millivolts, the same order of magnitude as thermopile-type pyranometers.
+
+==== Usage ====
+Photodiode-based pyranometers are implemented where the quantity of irradiation of the visible solar spectrum, or of certain portions such as UV, IR or PAR ([[photosynthetically active radiation]]), needs to be calculated. This is done by using diodes with specific spectral responses.
+Photodiode-based pyranometers are the core of [[Light meter|luxmeters]] used in photography, cinema and lighting technique. Sometimes they are also installed close to modules of photovoltaic systems.
+
+=== Photovoltaic pyranometer – photovoltaic cell ===
+Built around the 2000s concurrently with the spread of photovoltaic systems, the '''photovoltaic pyranometer''' is an evolution of the photodiode pyranometer. It is a response to the need for a reference photovoltaic cell when measuring the power of photovoltaic cells and modules.<ref>IEC 60904-4:Procedures for establishing calibration traceability</ref> Specifically, each cell and module is tested through flash tests by their respective manufacturers, and thermopile pyranometers do not possess the adequate speed of response nor the same spectral response of a cell. This would create obvious mismatch when measuring power, which would need to be quantified.<ref>EN 60904-2: Requirements for reference solar devices</ref><ref>EN 60904-7: Computation of spectral mismatch correction</ref> In the technical documents, this pyranometer is also known as "reference cell".
+[[File:Sunmeter-35rid.jpg|300x300px|thumb|A photovoltaic pyranometer, Model SM1 PRO]]
+The active part of the sensor is composed of a photovoltaic cell working in near short-circuit condition. As such, the generated current is directly proportionate to the solar radiation hitting the cell in a range between 350&nbsp;nm and 1150&nbsp;nm. When invested by a luminous radiation in the mentioned range, it produces current as a consequence of the [[photovoltaic effect]]. Its sensitivity is not flat, but it is same as that of Silicon photovoltaic cell. See the Spectral Response graph at the top of this page.
+
+==== Design ====
+A photovoltaic pyranometer is essentially assembled with the following parts:
+* A metallic container with a fixing staff
+* A small photovoltaic cell
+* Signal conditioning electronics
+Silicon sensors such as the photodiode and the photovoltaic cell vary the output in function of temperature. In the more recent models, the electronics compensate the signal with the temperature, therefore removing the influence of temperature out of the values of solar irradiance. Inside several models, the case houses a board for the amplification and [[Signal conditioning|conditioning of the signal]].
+
+==== Usage ====
+[[File:3S-IS+.png|thumb|300x300px|3S-IS+ Solar Irradiance Sensor]]
+Photovoltaic pyranometers are used in solar simulators and alongside photovoltaic systems for the calculation of photovoltaic module effective power and system performance. Because the spectral response of a photovoltaic pyranometer is similar to that of a photovoltaic module, it may also be used for preliminary diagnosis of malfunction in photovoltaic systems.
+
+Reference PV Cell or Solar Irradiance Sensor may have up to 5 inputs ensuring the connection of Module Temperature Sensor, Ambient Temperature Sensor, Wind speed sensor, Wind Direction Sensor, and Relative Humidity, with only one Modbus RTU output connected directly to the Datalogger. This feature is one of the main differences between the Thermopile Pyranometer and the Irradiance Sensor.
+
+== Standardization and calibration ==
+Both thermopile-type and photovoltaic pyranometers are manufactured according to standards.
+
+=== Thermopile pyranometers ===
+[[File:3S-TP-MB.jpg|thumb|3S-TP-MB-A Class A Fast Response & Spectrally Flat Pyranometer]]
+Thermopile pyranometers follow the ISO 9060 standard, which is also adopted by the [[World Meteorological Organization]] (WMO). This standard discriminates three classes.
+
+The latest version of [https://www.iso.org/standard/67464.html ISO 9060], from 2018 uses the following classification: Class A for best performing, followed by Class B and Class C, while the older [https://www.iso.org/standard/16629.html ISO 9060 standard from 1990] used ambiguous terms as "secondary standard", "first class" and "second class".,<ref>{{cite web |url=http://www.iso.org/iso/catalogue_detail.htm?csnumber=16629 |title=ISO 9060:1990 Classification of Pyranometers}}</ref>
+
+Differences in classes are due to a certain number of properties in the sensors: response time, thermal offsets, temperature dependence, directional error, non-stability, non-linearity, spectral selectivity and tilt response. These are all defined in ISO 9060. For a sensor to be classified in a certain category, it needs to fulfill all the minimum requirements for these properties.
+
+‘Fast response’ and ‘spectrally flat’ are two sub-classifications, included in ISO 9060:2018. They help to further distinguish and categorise sensors. To gain the ‘fast response’ classification, the response time for 95% of readings must be less than 0.5 seconds; while ‘spectrally flat’ can apply to sensors with a spectral selectivity of less than 3% in the 0,35 to 1,5 μm spectral range. While most Class A pyranometers are ‘spectrally flat’, sensors in the ‘fast response’ sub-classification are much rarer. Most Class A pyranometers have a response time of 5 seconds or more.
+
+The calibration is typically done having the World Radiometric Reference<ref>[https://www.pmodwrc.ch/pmod.php?topic=wrc World Radiometric Reference]</ref> (WRR) as an absolute reference. It is maintained by PMOD<ref>[https://www.pmodwrc.ch/ PMOD]</ref> in [[Davos]], [[Switzerland]].<ref>{{cite web |url=http://www.pmodwrc.ch/pmod.php?topic=wrc |title=World Radiometric Reference |access-date=2013-05-29 |archive-url=https://web.archive.org/web/20130430154202/http://www.pmodwrc.ch/pmod.php?topic=wrc |archive-date=2013-04-30 |url-status=dead}}</ref> In addition to the World Radiometric Reference, there are private laboratories such as ISO-Cal North America<ref>[http://isocalnorthamerica.com/ ISO-Cal North America]</ref> who have acquired accreditation for these unique calibrations. For the Class A pyranometer, calibration is done following ASTM G167,<ref>[https://www.astm.org/Standards/G167.htm ASTM G167]</ref> ISO 9847<ref>[https://www.iso.org/standard/17725.html ISO 9847]</ref> or ISO 9846.<ref>[https://www.iso.org/standard/17724.html ISO 9846]</ref><ref>ISO 9846:1993 -Calibration of a Pyranometer Using a Pyrheliometer</ref> Class B and class C pyranometers are usually calibrated according to ASTM E824<ref>[https://www.astm.org/Standards/E824.htm ASTM E824]</ref> and ISO 9847.<ref>[https://www.iso.org/standard/17725.html ISO 9847]</ref>
+
+=== Photovoltaic pyranometer ===
+Photovoltaic pyranometers are standardized and calibrated under IEC 60904-4 for primary reference samples and under IEC 60904-2 for secondary reference samples and the instruments intended for sale.
+
+In both standards, their respective traceability chain starts with the primary standard known as the group of cavity radiometer by the World Radiometric Reference (WRR).<ref>IEC 60904-4:Procedures for establishing calibration traceability- Table1 and Fig.1</ref>
+
+== Signal conditioning ==
+The natural output value of these pyranometers does not usually exceed tens of millivolt (mV). It is considered a "weak" signal, and as such, rather vulnerable to [[electromagnetic interference]]s, especially where the cable runs across decametrical distances or lies in photovoltaic systems. Thus, these sensors are frequently equipped with signal conditioning electronics, giving an output of 4-20 mA or 0-1 V.
+
+Another solution implies greater immunities to noises, like [[Modbus]] over [[RS-485]], suitable for ambiances with electromagnetic interferences typical of medium-large scale [[photovoltaic power station]]s, or [[SDI-12]] output, where sensors are part of a low power weather station. The equipped electronics often concur to easy integration in the system's [[SCADA]].
+
+Additional information can also be stored in the electronics of the sensor, like calibration history, serial number.
+
+== See also ==
+* [[Actinometer]]
+* [[Photodiode]]
+* [[Heat flux sensor]]
+* [[Net radiometer]]
+* [[Pyrgeometer]]
+* [[Pyrheliometer]]
+* [[Radiometer]]
+* [[Sunlight]]
+* [[Solar constant]]
+* [[Sun path]]
+
+== References ==
+{{Reflist}}
+
+== External links ==
+{{Commons}}
+* [http://www.meteo-technology.com/solar.htm Meteo-Technology instrumentation website]
+* [https://www.arcticsolar.no/en/measured-data/global-radiation Website showing measured data using a thermopile pyranometer north to the arctic circle]
+
+{{Meteorological equipment}}
+{{Authority control}}
+
+[[Category:Measuring instruments]]
+[[Category:Meteorological instrumentation and equipment]]
+[[Category:Swedish inventions]]

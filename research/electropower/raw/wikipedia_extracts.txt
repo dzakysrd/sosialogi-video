@@ -1,0 +1,43 @@
+Extracts from the English Wikipedia raw wikitext (action=raw), fetched with curl this session (HTTP 200).
+Condensed excerpts (symbols simplified, some text cut with [...]). The verbatim source is the full wikitext in wiki_<Page>.wikitext files saved next to this file, fetched with curl this session (HTTP 200).
+[Solar_irradiance, https://en.wikipedia.org/w/index.php?title=Solar_irradiance&action=raw]
+* '''Global horizontal irradiance (GHI)''' is the total irradiance from the Sun on a horizontal surface on Earth. For instantaneous measurement, it is the sum of direct irradiance (after accounting for the [[solar zenith angle]], <math>z</math>, of the Sun) and diffuse horizontal irradiance:<ref name=NREL_glossary_D>{{cite web|title=Solar Resource Glossary|url=https://www.nrel.gov/grid/solar-resource/solar-glossary|publisher=National Renewable Energy Laboratory|access-date=10 February 2025}}</ref><math display="block">\text{GHI} = \text{DHI} + \text{DNI} \times \cos (z)=\text{DHI} + \text{DirHI}</math>
+* '''Diffuse horizontal irradiance (DHI)''', or '''diffuse sky radiation''', is the radiation at the Earth's surface from light scattered by the atmosphere. It is measured on a horizontal surface with radiation coming from all points in the sky excluding ''circumsolar radiation'' (radiation coming from the sun disk). There would be almost no DHI in the absence of atmosphere.<ref name=NREL_glossary_D />
+* '''Direct normal irradiance''' (DNI), or '''beam radiation''', is measured perpendicularly to the Sun direction.<ref name="Kirk">Kirk, Alexander P. (2015), Solar Photovoltaic Cells Photons to Electricity, Elsevier, pages 9-24</ref>
+[Photovoltaic modules and STC, Solar_irradiance page]
+* Photovoltaic panels are rated under standard conditions to determine the Wp (peak watts) rating, [cites IEA PVPS glossary, STC entry] which can then be used with insolation, adjusted by factors such as tilt, tracking and shading, to determine the expected output.
+
+[Solar_cell, https://en.wikipedia.org/w/index.php?title=Solar_cell&action=raw]
+A '''solar cell,''' also known as a '''photovoltaic cell''' ('''PV cell'''), is an electronic device that converts the energy of [[light]] directly into [[electricity]] by using the [[photovoltaic effect]].
+[contrast with thermal collector, Solar_cell page]
+In contrast to outputting power directly, a [[solar thermal collector]] [[Absorption (electromagnetic radiation)|absorbs sunlight]], to produce either: * direct heat as a "solar thermal module" or "solar hot water panel" * indirect heat to be used to spin turbines in [[electrical power generation]].
+[p-n junction, Solar_cell page]
+A solar cell is made of [[List of semiconductor materials|semiconducting materials]], such as [[silicon]], that have been fabricated into a [[p-n junction]].
+In operation, [[photon]]s in [[sunlight]] hit the solar cell and are absorbed by the semiconductor. When the photons are absorbed, [[electrons]] are [[Excited state|excited]] from the [[Valence and conduction bands|valence band to the conduction band]] ... producing [[Semiconductor#Charge carriers (electrons and holes)|electron-hole pairs]].
+The most commonly known solar cell is configured as a large-area [[p-n junction]] made from silicon.
+[temperature, Solar_cell page]
+There are multiple input factors that affect the output power of solar cells, such as [[temperature]], material properties, weather conditions, [[solar irradiance]] and more. [cites Al-Ezzi and Ansari 2022, Applied System Innovation]
+A solar cell has a voltage dependent efficiency curve, temperature coefficients, and allowable shadow angles.
+
+[Photovoltaic_effect, https://en.wikipedia.org/w/index.php?title=Photovoltaic_effect&action=raw]
+The '''photovoltaic effect''' is a [[physical property|physical]] phenomenon in which a semiconductor material generates electric energy upon being exposed to light.
+However, the most familiar form of the photovoltaic effect uses solid-state devices, mainly in [[photodiode]]s. When sunlight or other sufficiently energetic light is incident upon the photodiode, the electrons present in the ...
+In most photovoltaic applications, the [[radiation]] source is sunlight, and the devices are called [[solar cells]]. In the case of a semiconductor p-n (diode) junction solar cell, illuminating the material creates an electric current because excited electrons and the remaining holes are swept in different directions by the built-in electric field of the depletion region. [cites scienzagiovane.unibo.it, retrieved 2010-12-12]
+
+[Solar_panel, https://en.wikipedia.org/w/index.php?title=Solar_panel&action=raw]
+Photovoltaic modules consist of a large number of solar cells and use light energy from the Sun to generate electricity through the [[photovoltaic effect]].
+Temperature sensitivity is usually described by temperature coefficients, each of which expresses the derivative of the parameter to which it refers with respect to the junction temperature. The values of these parameters can be found in any data sheet of the photovoltaic module; are the following:
+- beta: V_OC variation coefficient with respect to T, given by dV_OC/dT.
+- alpha: Coefficient of variation of I_SC with respect to T, given by dI_SC/dT.
+- delta: Coefficient of variation of P_max with respect to T, given by dP_max/dT.
+Module performance is generally rated under standard test conditions: [[irradiance]] of 1,000 W/m2, solar [[spectrum]] of AM 1.5 and module temperature at 25 C. [cites Dunlop, James P., Photovoltaic systems, 3rd ed., American Technical Publishers, 2012]
+The peak power rating, Wp, is the maximum output under standard test conditions (not the maximum possible output).
+
+[Pyranometer, https://en.wikipedia.org/w/index.php?title=Pyranometer&action=raw]
+A '''pyranometer''' ... is a type of [[actinometer]] used for measuring [[solar irradiance]] on a planar surface and it is designed to measure the solar radiation [[flux density]] (W/m2) from the hemisphere above within a wavelength range 0.3 um to 3 um.
+To make a measurement of [[irradiance]], it is required by definition that the response to "beam" radiation varies with the [[cosine]] of the angle of incidence. [...] zero response when the sun is at the horizon (90 degree angle of incidence, 90 degree zenith angle), and 0.5 at a 60 degree angle of incidence.
+[no line found on this page describing a shade-ball or shading-disc DHI measurement: UNVERIFIED]
+
+[Pyrheliometer, https://en.wikipedia.org/w/index.php?title=Pyrheliometer&action=raw]
+A '''pyrheliometer''' is an instrument that can measure direct beam [[solar irradiance]]. [cites Kipp & Zonen product page]
+As the pyrheliometer only 'sees' the solar disk, it needs to be placed on a device that follows the path of the sun.
