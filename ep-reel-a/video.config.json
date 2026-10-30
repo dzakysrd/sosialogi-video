@@ -3,4 +3,4 @@
  "hook_max_s": 3.5, "close_max_s": 7.2, "total_max_s": 50, "tail_s": 0.25,
  "loudness": {"I": -14, "TP": -1.5, "LRA": 11},
  "voice": {"dir": "../voice/samples/ep-reel-a", "variant": "el_liam_cta"},
- "inputs": {"script": "../research/electropower/reel-a/script_v4.json", "scenes": "scenes.json"}, "output": "out/reel_a_v2.mp4"}
+ "inputs": {"script": "../research/electropower/reel-a/script_v4.json", "scenes": "scenes.json"}, "output": "out/reel_a_v3.mp4"}
