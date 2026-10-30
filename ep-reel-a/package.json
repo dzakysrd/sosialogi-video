@@ -1,0 +1,13 @@
+{
+  "name": "ep-reel-a",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "dev": "npm run build && npx --yes hyperframes@0.8.206 preview",
+    "lint": "node tools/lint.mjs",
+    "check": "npm run build && npm run lint && npx --yes hyperframes@0.8.206 check",
+    "render": "bash tools/render.sh",
+    "publish": "npx --yes hyperframes@0.8.206 publish"
+  }
+}

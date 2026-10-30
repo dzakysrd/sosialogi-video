@@ -1,0 +1,85 @@
+{
+  "_help": "Visual plan for Reel A (ep-reel-a, PRD-25): one entry per script_v4 scene, same ids and order. Part types as in video-02 (claim, textcard, close). Text lines are strings, or objects {text, cue?, accent?} (a cue makes the line appear at that word). A literal number is an object {text, spoken, cue, caption, check} with cue = spoken (tools/build.mjs numEl). A claim reveal without a number is {text, cue}. The close card has cta (handle), kicker (word above it) and no sources line. Temporary textcards stand in for diagrams until PRD-26. The build resolves all times; this file holds no timings.",
+  "scenes": [
+    {
+      "id": "s1_hook",
+      "parts": [
+        {
+          "type": "claim",
+          "lines": ["BUKAN", "PANAS."],
+          "reveal": {"text": "CAHAYA.", "cue": "cahaya"}
+        }
+      ]
+    },
+    {
+      "id": "s2_cahaya",
+      "parts": [
+        {
+          "type": "textcard",
+          "lines": ["CAHAYA -> LISTRIK", "(EFEK FOTOVOLTAIK)"]
+        }
+      ]
+    },
+    {
+      "id": "s3_kontras",
+      "parts": [
+        {
+          "type": "textcard",
+          "lines": ["PANEL SURYA", "CAHAYA -> LISTRIK", "SOLAR THERMAL", "COLLECTOR: PANAS"]
+        }
+      ]
+    },
+    {
+      "id": "s4_dc",
+      "parts": [
+        {
+          "type": "textcard",
+          "lines": [
+            "ARUS SEARAH",
+            "DC",
+            {"text": "AC", "cue": "a-se", "accent": true},
+            {"text": "INVERTER", "cue": "inverter", "accent": true}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s5_seri",
+      "parts": [
+        {
+          "type": "textcard",
+          "lines": [
+            "SERI",
+            "ANGKA CONTOH",
+            {"text": "12 V", "spoken": "dua belas volt", "cue": "dua belas volt", "caption": "12 V", "check": "series_12v"},
+            {"text": "5 A", "spoken": "lima ampere", "cue": "lima ampere", "caption": "5 A", "check": "series_5a"},
+            {"text": "24 V", "spoken": "dua puluh empat volt", "cue": "dua puluh empat volt", "caption": "24 V", "check": "series_24v"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s6_paralel",
+      "parts": [
+        {
+          "type": "textcard",
+          "lines": [
+            "PARALEL",
+            {"text": "12 V", "spoken": "dua belas volt", "cue": "dua belas volt", "caption": "12 V", "check": "parallel_12v"},
+            {"text": "15 A", "spoken": "lima belas ampere", "cue": "lima belas ampere", "caption": "15 A", "check": "parallel_15a"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s7_cta",
+      "parts": [
+        {
+          "type": "close",
+          "block": [],
+          "card": {"cue": "follow", "kicker": "FOLLOW", "cta": "@RDNRE"}
+        }
+      ]
+    }
+  ]
+}
